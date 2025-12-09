@@ -325,7 +325,7 @@ export default function Index() {
       {/* Departments Section */}
       <section id="departemen" className="relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-black overflow-hidden">
         <Decor className="bottom-0 left-0 w-96 h-96 opacity-20 rotate-90" />
-        
+
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20">
             <div className="bg-white px-8 py-3 inline-block font-black text-2xl text-black rounded mb-8">
@@ -333,17 +333,7 @@ export default function Index() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {departments.map((dept, idx) => (
-              <button
-                key={idx}
-                className="relative overflow-hidden group rounded-full py-4 px-6 border-2 border-primary bg-transparent hover:bg-primary text-white hover:text-black font-black transition duration-300 transform hover:scale-105"
-              >
-                <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-100 transition duration-300"></div>
-                <span className="relative">{dept}</span>
-              </button>
-            ))}
-          </div>
+          <DepartemenCarousel departments={departments} />
         </div>
       </section>
 

@@ -67,10 +67,10 @@ const Navbar = () => {
           onClick={() => handleScrollTo("home")}
           className="cursor-pointer font-black text-xl tracking-tighter flex items-center gap-2"
         >
-          <div className="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center text-black">
+          {/* <div className="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center text-black">
             <Terminal size={18} />
-          </div>
-          <span>HMPSTI</span>
+          </div> */}
+          <span>KABINET INNOVARA</span>
         </div>
 
         {/* Desktop Menu */}

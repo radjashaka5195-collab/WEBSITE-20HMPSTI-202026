@@ -16,6 +16,10 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { MouseEvent, useState, useEffect } from "react";
 
+// --- KONFIGURASI WARNA (Agar Konsisten) ---
+// Primary (Highlight/Text): #33A5D3
+// Secondary (Base/Structure): #1D77BF
+
 // --- Utility ---
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -23,12 +27,11 @@ function cn(...inputs: ClassValue[]) {
 
 // --- Components Internal ---
 
-// 1. MODERN NAVBAR (Full Screen Mobile Menu)
+// 1. MODERN NAVBAR
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Deteksi Scroll untuk ubah background navbar
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -37,7 +40,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock Body Scroll saat menu mobile terbuka
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -54,13 +56,13 @@ const Navbar = () => {
   ];
 
   const handleScrollTo = (id: string) => {
-    setIsMobileMenuOpen(false); // Tutup menu dulu
+    setIsMobileMenuOpen(false); 
     setTimeout(() => {
       const element = document.getElementById(id);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
       }
-    }, 300); // Delay sedikit biar animasi tutup selesai
+    }, 300);
   };
 
   return (
@@ -69,7 +71,7 @@ const Navbar = () => {
         className={cn(
           "fixed top-0 left-0 right-0 z-[100] transition-all duration-300",
           isScrolled 
-            ? "bg-black/80 backdrop-blur-md border-b border-[#33A5D3]/20 py-4" 
+            ? "bg-black/80 backdrop-blur-md border-b border-[#1D77BF]/30 py-4" 
             : "bg-transparent border-transparent py-6"
         )}
       >
@@ -79,8 +81,7 @@ const Navbar = () => {
             onClick={() => handleScrollTo("home")}
             className="relative z-[101] cursor-pointer font-black text-xl tracking-tighter flex items-center gap-2 text-white"
           >
-             {/* Icon Box Gradient */}
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white bg-gradient-to-br from-[#1D77BF] to-[#33A5D3]">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white bg-gradient-to-br from-[#1D77BF] to-[#33A5D3] shadow-[0_0_15px_rgba(51,165,211,0.5)]">
                <Terminal size={18} />
             </div>
             <span>KABINET INNOVARA</span>
@@ -92,7 +93,7 @@ const Navbar = () => {
               <button
                 key={link.name}
                 onClick={() => handleScrollTo(link.id)}
-                className="text-sm font-medium text-white/70 hover:text-[#33A5D3] transition-colors uppercase tracking-wider"
+                className="text-sm font-medium text-white/70 hover:text-[#33A5D3] transition-colors uppercase tracking-wider hover:drop-shadow-[0_0_8px_rgba(51,165,211,0.8)]"
               >
                 {link.name}
               </button>
@@ -113,7 +114,7 @@ const Navbar = () => {
                   exit={{ rotate: 90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <X size={24} />
+                  <X size={24} className="text-[#33A5D3]" />
                 </motion.div>
               ) : (
                 <motion.div
@@ -141,15 +142,12 @@ const Navbar = () => {
             transition={{ duration: 0.5, ease: [0.32, 0, 0.67, 0] }}
             className="fixed inset-0 z-[90] bg-[#050505] md:hidden flex flex-col justify-center items-center"
           >
-            {/* Background Decoration */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                {/* Pakai warna #1D77BF untuk blob */}
                 <div className="absolute -top-[20%] -right-[20%] w-[80vw] h-[80vw] bg-[#1D77BF]/20 blur-[100px] rounded-full"></div>
                 <div className="absolute -bottom-[20%] -left-[20%] w-[80vw] h-[80vw] bg-[#33A5D3]/20 blur-[100px] rounded-full"></div>
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
             </div>
 
-            {/* Menu Links */}
             <div className="flex flex-col gap-8 text-center relative z-10">
               {navLinks.map((link, i) => (
                 <motion.button
@@ -166,12 +164,11 @@ const Navbar = () => {
               ))}
             </div>
 
-            {/* Footer Kecil di Menu */}
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="absolute bottom-10 text-[#33A5D3] font-mono text-xs uppercase tracking-widest"
+              className="absolute bottom-10 text-[#1D77BF] font-mono text-xs uppercase tracking-widest"
             >
               HMPSTI 2026
             </motion.div>
@@ -182,7 +179,7 @@ const Navbar = () => {
   );
 };
 
-// Efek Spotlight pada Card (Updated Color)
+// Efek Spotlight (Fixed Color RGB: 51, 165, 211)
 function SpotlightCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -207,10 +204,10 @@ function SpotlightCard({ children, className = "" }: { children: React.ReactNode
           background: useMotionTemplate`
             radial-gradient(
               650px circle at ${mouseX}px ${mouseY}px,
-              rgba(51, 165, 211, 0.25), 
+              rgba(51, 165, 211, 0.2), 
               transparent 80%
             )
-          `, // Menggunakan RGB dari #33A5D3 (51, 165, 211)
+          `, 
         }}
       />
       <div className="relative h-full">{children}</div>
@@ -277,7 +274,7 @@ const InfiniteMarquee = ({ items }: { items: string[] }) => {
             className="flex items-center gap-4 text-xl sm:text-2xl md:text-4xl font-black text-white/20 hover:text-[#33A5D3] transition-colors duration-300 cursor-default uppercase"
           >
             <span>{item}</span>
-            <StarIcon className="w-3 h-3 md:w-4 md:h-4 text-[#1D77BF]/50" />
+            <StarIcon className="w-3 h-3 md:w-4 md:h-4 text-[#1D77BF]" />
           </div>
         ))}
       </div>
@@ -314,13 +311,11 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-[#050505] text-white selection:bg-[#33A5D3] selection:text-black overflow-x-hidden font-sans">
       
-      {/* 1. Pasang Navbar Baru Disini */}
       <Navbar />
 
       {/* --- BACKGROUND FX --- */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
-        {/* Updated Orb Colors */}
         <div className="absolute top-[-20%] left-[-10%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-[#1D77BF]/10 blur-[80px] md:blur-[120px] rounded-full animate-pulse-slow"></div>
         <div className="absolute bottom-[-10%] right-[-10%] w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-[#33A5D3]/10 blur-[80px] md:blur-[120px] rounded-full animate-pulse-slow delay-1000"></div>
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:20px_20px] md:bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
@@ -335,9 +330,9 @@ export default function Index() {
             animate={{ scale: 1, opacity: 1 }}
             className="flex items-center justify-center gap-3 mb-6"
           >
-            <div className="h-[1px] w-8 md:w-16 bg-[#33A5D3]/50"></div>
+            <div className="h-[1px] w-8 md:w-16 bg-[#1D77BF]/50"></div>
             <span className="text-[#33A5D3] font-mono tracking-[0.2em] md:tracking-[0.4em] text-[10px] md:text-sm uppercase font-bold">HMPSTI 2026</span>
-            <div className="h-[1px] w-8 md:w-16 bg-[#33A5D3]/50"></div>
+            <div className="h-[1px] w-8 md:w-16 bg-[#1D77BF]/50"></div>
           </motion.div>
 
           <div className="relative w-full">
@@ -354,14 +349,13 @@ export default function Index() {
                 initial={{ y: 50, opacity: 0 }} 
                 animate={{ y: 0, opacity: 1 }} 
                 transition={{ duration: 0.8, delay: 0.1 }} 
-                // Menggunakan Gradient Text dari Biru Muda ke Putih untuk kesan modern
-                className="block text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-[#33A5D3] text-[13vw] sm:text-[12vw] lg:text-[10rem]"
+                // Gradient Text Consistent
+                className="block text-transparent bg-clip-text bg-gradient-to-br from-white via-[#33A5D3] to-[#1D77BF] text-[13vw] sm:text-[12vw] lg:text-[10rem]"
               >
                 Innovara
               </motion.span>
             </h1>
             
-            {/* Decor Element */}
             <motion.div style={{ rotate }} className="absolute -right-2 -top-4 md:right-10 md:top-0 text-[#33A5D3] opacity-80 hidden sm:block">
                <StarIcon size={32} className="md:w-16 md:h-16 animate-spin-slow" fill="currentColor" />
             </motion.div>
@@ -376,8 +370,8 @@ export default function Index() {
           <FadeIn delay={0.6} className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center w-full px-4 sm:px-0">
             <button 
               onClick={() => scrollToSection('visi')} 
-              // Gradient Button
-              className="group w-full sm:w-auto relative px-8 py-3 md:py-4 bg-gradient-to-r from-[#1D77BF] to-[#33A5D3] text-white font-black uppercase tracking-wider hover:opacity-90 transition-all clip-path-slant shadow-[0_0_20px_rgba(51,165,211,0.3)] hover:shadow-[0_0_30px_rgba(51,165,211,0.5)]"
+              // Button Consistent with Hero Gradient
+              className="group w-full sm:w-auto relative px-8 py-3 md:py-4 bg-gradient-to-r from-[#1D77BF] to-[#33A5D3] text-white font-black uppercase tracking-wider hover:opacity-90 transition-all clip-path-slant shadow-[0_0_20px_rgba(51,165,211,0.4)]"
             >
               <span className="flex items-center justify-center gap-2 text-sm md:text-base">
                 Explore Vision <ArrowRight className="w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:translate-x-1" />
@@ -405,7 +399,7 @@ export default function Index() {
               
               <div className="space-y-10 md:space-y-12">
                 <FadeIn delay={0.2} direction="right">
-                  <div className="relative pl-6 md:pl-8 border-l-2 border-[#1D77BF]/50">
+                  <div className="relative pl-6 md:pl-8 border-l-2 border-[#1D77BF]">
                     <h3 className="text-4xl sm:text-5xl md:text-6xl font-black text-[#33A5D3] mb-2">INNOVA</h3>
                     <p className="text-[10px] md:text-sm font-mono text-white/40 mb-3 uppercase tracking-widest">// Root Word: Innovation</p>
                     <p className="text-base md:text-xl text-white/80">
@@ -442,25 +436,25 @@ export default function Index() {
         </div>
       </section>
 
-      {/* --- TIGA PILAR --- */}
+      {/* --- TIGA PILAR (UNIFORM COLORS) --- */}
       <section className="relative z-10 py-20 md:py-32 px-4">
         <div className="max-w-6xl mx-auto">
           <SectionHeading title="3 Pilar Aksi" subtitle="Core Values" />
           
           <div className="relative grid md:grid-cols-3 gap-6 md:gap-8">
-            <div className="hidden md:block absolute top-24 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+            <div className="hidden md:block absolute top-24 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#1D77BF]/40 to-transparent"></div>
             
             {[
-              { icon: Users, title: "KOLABORASI", color: "text-[#33A5D3]" },
-              { icon: Lightbulb, title: "INOVASI", color: "text-[#1D77BF]" },
-              { icon: Target, title: "PRESTASI", color: "text-white" }
+              { icon: Users, title: "KOLABORASI" },
+              { icon: Lightbulb, title: "INOVASI" },
+              { icon: Target, title: "PRESTASI" }
             ].map((item, idx) => (
               <FadeIn key={idx} delay={idx * 0.2}>
                 <div className="relative group bg-[#0a0a0a] border border-white/10 p-6 md:p-8 rounded-2xl hover:border-[#33A5D3]/50 transition-all duration-500 text-center h-full">
-                  <div className={cn("w-16 h-16 md:w-20 md:h-20 mx-auto bg-white/5 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-white/10 group-hover:bg-[#1D77BF]/10", item.color)}>
+                  <div className="w-16 h-16 md:w-20 md:h-20 mx-auto bg-white/5 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-white/10 group-hover:bg-[#1D77BF]/10 text-[#33A5D3]">
                     <item.icon size={28} className="md:w-9 md:h-9" />
                   </div>
-                  <h3 className="text-lg md:text-2xl font-black mb-4 tracking-wider">{item.title}</h3>
+                  <h3 className="text-lg md:text-2xl font-black mb-4 tracking-wider text-white">{item.title}</h3>
                   <div className="h-[2px] w-0 group-hover:w-full bg-[#33A5D3] transition-all duration-500 mx-auto opacity-50 mb-4"></div>
                 </div>
               </FadeIn>

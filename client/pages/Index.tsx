@@ -142,7 +142,7 @@ export default function Index() {
           </h1>
 
           <p className="text-lg sm:text-xl text-white/80 max-w-2xl mx-auto mt-8 leading-relaxed">
-            Membangun masa depan melalui kolaborasi, inovasi, dan prestasi
+            HMPSTI 2026
           </p>
 
           <button className="mt-12 px-8 py-4 bg-primary text-black font-bold rounded-full hover:bg-yellow-400 transition transform hover:scale-105">

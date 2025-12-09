@@ -84,12 +84,12 @@ const Navbar = () => {
               {link.name}
             </button>
           ))}
-          <button 
+          {/* <button 
              onClick={() => handleScrollTo("visi")}
              className="px-5 py-2 bg-white/10 hover:bg-yellow-500 hover:text-black border border-white/10 rounded-full transition-all text-sm font-bold"
           >
             Gabung
-          </button>
+          </button> */}
         </div>
 
         {/* Mobile Toggle */}

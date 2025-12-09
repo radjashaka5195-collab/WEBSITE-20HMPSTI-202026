@@ -4,6 +4,33 @@ import { useEffect, useRef, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoPlay from "embla-carousel-autoplay";
 
+function DepartemenCarousel({ departments }: { departments: string[] }) {
+  const [emblaRef] = useEmblaCarousel(
+    { loop: true, align: "start" },
+    [AutoPlay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: false })]
+  );
+
+  return (
+    <div className="overflow-hidden">
+      <div className="embla" ref={emblaRef}>
+        <div className="embla__container flex gap-4">
+          {departments.map((dept, idx) => (
+            <div
+              key={idx}
+              className="embla__slide flex-shrink-0 w-full sm:w-80 min-w-0"
+            >
+              <button className="w-full relative overflow-hidden group rounded-full py-4 px-6 border-2 border-primary bg-transparent hover:bg-primary text-white hover:text-black font-black transition duration-300 transform hover:scale-105">
+                <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                <span className="relative">{dept}</span>
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Index() {
   const Decor = ({ className = "" }) => (
     <svg className={`absolute ${className}`} viewBox="0 0 200 200" width="200" height="200" fill="none">

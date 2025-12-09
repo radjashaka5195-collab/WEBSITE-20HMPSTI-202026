@@ -57,6 +57,8 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        gold: "#FCD34D",
+        magenta: "#EC4899",
       },
       borderRadius: {
         lg: "var(--radius)",

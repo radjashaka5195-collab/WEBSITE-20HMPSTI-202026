@@ -4,19 +4,26 @@ import { useEffect, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 
 function DepartemenCarousel({ departments }: { departments: string[] }) {
-  const [emblaRef] = useEmblaCarousel(
-    { loop: true, align: "start" },
-    [AutoPlay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: false })]
-  );
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
+
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const autoScroll = setInterval(() => {
+      emblaApi.scrollNext();
+    }, 4000);
+
+    return () => clearInterval(autoScroll);
+  }, [emblaApi]);
 
   return (
     <div className="overflow-hidden">
       <div className="embla" ref={emblaRef}>
-        <div className="embla__container flex gap-4">
+        <div className="flex gap-4">
           {departments.map((dept, idx) => (
             <div
               key={idx}
-              className="embla__slide flex-shrink-0 w-full sm:w-80 min-w-0"
+              className="flex-shrink-0 w-full sm:w-80 min-w-0"
             >
               <button className="w-full relative overflow-hidden group rounded-full py-4 px-6 border-2 border-primary bg-transparent hover:bg-primary text-white hover:text-black font-black transition duration-300 transform hover:scale-105">
                 <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-100 transition duration-300"></div>

@@ -1,11 +1,20 @@
 "use client";
 
 import { Header } from "@/components/Header";
-import { Brain, Radio, Zap, ArrowRight, Star as StarIcon, Target, Users, Lightbulb } from "lucide-react";
-import { useScroll, useTransform } from "framer-motion";
-import { motion } from "framer-motion";
+import { 
+  ArrowRight, 
+  Star as StarIcon, 
+  Target, 
+  Users, 
+  Lightbulb, 
+  ChevronDown, 
+  Zap,
+  Terminal
+} from "lucide-react";
+import { useScroll, useTransform, useMotionTemplate, useMotionValue, motion } from "framer-motion";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { MouseEvent } from "react";
 
 // --- Utility ---
 function cn(...inputs: ClassValue[]) {
@@ -14,21 +23,66 @@ function cn(...inputs: ClassValue[]) {
 
 // --- Components ---
 
+// Efek Spotlight pada Card
+function SpotlightCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  return (
+    <div
+      className={cn(
+        "group relative border border-white/10 bg-white/5 overflow-hidden rounded-xl",
+        className
+      )}
+      onMouseMove={handleMouseMove}
+    >
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(
+              650px circle at ${mouseX}px ${mouseY}px,
+              rgba(234, 179, 8, 0.15),
+              transparent 80%
+            )
+          `,
+        }}
+      />
+      <div className="relative h-full">{children}</div>
+    </div>
+  );
+}
+
 const FadeIn = ({
   children,
   className,
   delay = 0,
+  direction = "up"
 }: {
   children: React.ReactNode;
   className?: string;
   delay?: number;
+  direction?: "up" | "down" | "left" | "right";
 }) => {
+  const directions = {
+    up: { y: 40, x: 0 },
+    down: { y: -40, x: 0 },
+    left: { x: 40, y: 0 },
+    right: { x: -40, y: 0 },
+  };
+  
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, ...directions[direction] }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+      transition={{ duration: 0.8, delay, ease: [0.21, 0.47, 0.32, 0.98] }} // Custom spring-like easing
       className={className}
     >
       {children}
@@ -36,38 +90,35 @@ const FadeIn = ({
   );
 };
 
-const GlassCard = ({
-  children,
-  className,
-  hoverEffect = true,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  hoverEffect?: boolean;
-}) => (
-  <div
-    className={cn(
-      "relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 transition-all duration-300",
-      hoverEffect && "hover:border-yellow-500/50 hover:bg-white/[0.08] hover:shadow-[0_0_30px_-10px_rgba(253,224,71,0.3)]",
-      className
+const SectionHeading = ({ title, subtitle, align = "center" }: { title: string, subtitle?: string, align?: "left" | "center" }) => (
+  <div className={cn("mb-16", align === "center" ? "text-center" : "text-left")}>
+    {subtitle && (
+      <motion.span 
+        initial={{ opacity: 0, letterSpacing: "0em" }}
+        whileInView={{ opacity: 1, letterSpacing: "0.2em" }}
+        className="text-yellow-500 font-mono text-sm uppercase tracking-widest mb-2 block"
+      >
+        {subtitle}
+      </motion.span>
     )}
-  >
-    {children}
+    <h2 className="text-4xl md:text-6xl font-black text-white uppercase leading-tight">
+      {title}
+    </h2>
+    <div className={cn("h-1 w-24 bg-yellow-500 mt-6", align === "center" && "mx-auto")} />
   </div>
 );
 
 const InfiniteMarquee = ({ items }: { items: string[] }) => {
   return (
-    <div className="relative flex overflow-x-hidden group mask-gradient-x">
-      <div className="animate-marquee flex whitespace-nowrap gap-8 py-4">
+    <div className="relative flex overflow-x-hidden group mask-gradient-x border-y border-white/10 bg-white/[0.02]">
+      <div className="animate-marquee flex whitespace-nowrap gap-12 py-6">
         {[...items, ...items, ...items].map((item, idx) => (
           <div
             key={idx}
-            className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/80 to-white/20 stroke-text hover:text-yellow-400 transition-colors duration-300 cursor-default uppercase"
-            style={{ WebkitTextStroke: "1px rgba(255,255,255,0.1)" }}
+            className="flex items-center gap-4 text-2xl md:text-4xl font-black text-white/20 hover:text-yellow-500 transition-colors duration-300 cursor-default uppercase"
           >
-            {item}
-            <span className="mx-8 text-yellow-500/40">•</span>
+            <span>{item}</span>
+            <StarIcon className="w-4 h-4 text-white/10" />
           </div>
         ))}
       </div>
@@ -80,340 +131,319 @@ const InfiniteMarquee = ({ items }: { items: string[] }) => {
 export default function Index() {
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, 20]);
 
-  // Data sesuai PDF Page 2
+  // Scroll Handler
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // Data
   const evaluationPoints = [
-    {
-      number: "01",
-      description:
-        "Kurangnya profesionalitas dalam internal himpunan. Sistem penilaian pengurus saat ini terlalu fokus pada karakter personal bukannya berdasarkan KPI sehingga rentan terjadinya ketidakadilan karena faktor kedekatan pertemanan.",
-    },
-    {
-      number: "02",
-      description:
-        "Himpunan minim adanya kegiatan pembinaan rutin untuk meningkatkan soft skill dan hard skill yang manfaatnya sangat dirasakan mahasiswa teknologi informasi.",
-    },
-    {
-      number: "03",
-      description:
-        "Penampungan aspirasi mahasiswa TI kurang menyebar. Wadah aspirasi mahasiswa saat ini hanya menjadi formalitas tanpa adanya tindak lanjut yang transparan dan solutif.",
-    },
-    {
-      number: "04",
-      description:
-        "Penempatan program pelatihan yang tidak sesuai dengan fungsi utama departemennya. Contohnya berani bicara di departemen perhubungan yang seharusnya ada di departemen PSDM. Perhubungan seharusnya hanya berfokus pada eksternal saja.",
-    },
+    { number: "01", title: "Profesionalitas", desc: "Kurangnya profesionalitas internal. Penilaian terlalu personal, bukan berbasis KPI, memicu ketidakadilan." },
+    { number: "02", title: "Pembinaan", desc: "Minim pembinaan rutin. Mahasiswa butuh soft skill & hard skill yang dampaknya nyata." },
+    { number: "03", title: "Aspirasi", desc: "Aspirasi tidak menyebar. Wadah saat ini hanya formalitas tanpa tindak lanjut transparan." },
+    { number: "04", title: "Salah Kamar", desc: "Penempatan program tidak sesuai fungsi departemen (Contoh: Public Speaking di Perhubungan, harusnya PSDM)." },
   ];
 
-  // Data sesuai PDF Page 6
   const missions = [
-    {
-      text: "Membangun tata kelola organisasi yang Profesional berbasis kinerja (KPI).",
-    },
-    {
-      text: "Mempererat rasa kebersamaan serta menjalin kolaborasi dengan organisasi, institusi, dan industri.",
-    },
-    {
-      text: "Menjadi jembatan aspirasi mahasiswa TI dengan memperhatikan hak, kebutuhan, dan kesejahteraan bersama.",
-    },
-    {
-      text: "Meningkatkan kualitas mahasiswa melalui program pengembangan, guna meningkatkan Hard Skill dan Soft Skill mahasiswa untuk mencetak segudang Prestasi.",
-    },
-    {
-      text: "Menghadirkan Inovasi program kerja yang tepat sasaran dan fungsional.",
-    },
+    { text: "Tata kelola organisasi Profesional berbasis kinerja (KPI)." },
+    { text: "Kolaborasi erat dengan organisasi, institusi, dan industri." },
+    { text: "Jembatan aspirasi: memperhatikan hak & kesejahteraan." },
+    { text: "Pengembangan Hard/Soft Skill untuk mencetak Prestasi." },
+    { text: "Inovasi program kerja yang tepat sasaran & fungsional." },
   ];
 
-  // Data sesuai PDF Page 8
   const departments = [
-    "PSDM",
-    "INOVASI DAN TEKNOLOGI",
-    "MEDIA DAN INFORMASI DIGITAL",
-    "ADVOKESMA",
-    "HUBUNGAN EKSTERNAL",
-    "EKONOMI KREATIF",
-    "KREATIFITAS DAN OLAHRAGA",
+    "PSDM", "Inovasi & Teknologi", "Media & Informasi Digital", "Advokesma", "Hubungan Eksternal", "Ekonomi Kreatif", "Kreatifitas & Olahraga"
   ];
 
   return (
     <div className="min-h-screen bg-[#050505] text-white selection:bg-yellow-500 selection:text-black overflow-x-hidden font-sans">
       <Header />
 
-      {/* Background Elements */}
+      {/* --- BACKGROUND FX --- */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-yellow-500/10 blur-[120px] rounded-full mix-blend-screen animate-pulse-slow"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/10 blur-[120px] rounded-full mix-blend-screen animate-pulse-slow delay-1000"></div>
+        {/* Animated Orbs */}
+        <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] bg-yellow-600/10 blur-[120px] rounded-full animate-pulse-slow"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-indigo-900/20 blur-[120px] rounded-full animate-pulse-slow delay-1000"></div>
+        {/* Grid Lines */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
       </div>
 
-      {/* Hero Section (Page 1) */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 px-4 overflow-hidden">
-        <motion.div
-          style={{ y }}
-          className="relative z-10 text-center max-w-6xl mx-auto"
-        >
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
+      {/* --- HERO SECTION --- */}
+      <section className="relative h-screen flex flex-col items-center justify-center px-4 overflow-hidden">
+        <motion.div style={{ y }} className="relative z-10 text-center max-w-7xl mx-auto mt-10">
+          
+          <motion.div 
+            initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="mb-6 inline-block"
+            className="flex items-center justify-center gap-2 mb-8"
           >
-            <span className="px-4 py-1.5 rounded-full border border-yellow-500/30 bg-yellow-500/10 text-yellow-500 text-sm font-mono tracking-widest uppercase backdrop-blur-md">
-              HMPSTI 2026
-            </span>
+            <div className="h-[1px] w-12 bg-yellow-500/50"></div>
+            <span className="text-yellow-500 font-mono tracking-[0.3em] text-sm uppercase">HMPSTI 2026</span>
+            <div className="h-[1px] w-12 bg-yellow-500/50"></div>
           </motion.div>
 
-          <h1 className="text-6xl sm:text-7xl md:text-9xl font-black leading-tight tracking-tighter mb-4 uppercase">
-            <motion.span
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="block text-white"
-            >
-              KABINET
-            </motion.span>
-            <motion.span
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="block text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 via-yellow-500 to-yellow-700 relative drop-shadow-sm"
-            >
-              INNOVARA
-            </motion.span>
-          </h1>
-          
-          {/* Decorative Stars from PDF */}
-          <StarIcon className="absolute top-1/4 right-0 w-8 h-8 text-yellow-400 animate-pulse fill-yellow-400" />
-          <StarIcon className="absolute bottom-1/4 left-10 w-6 h-6 text-white animate-pulse" />
+          <div className="relative">
+            <h1 className="text-7xl sm:text-8xl md:text-[10rem] font-black leading-[0.85] tracking-tighter uppercase select-none">
+              <motion.span initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8 }} className="block text-white/20">Kabinet</motion.span>
+              <motion.span initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.1 }} className="block text-white">Innovara</motion.span>
+            </h1>
+            
+            {/* Decor Element */}
+            <motion.div style={{ rotate }} className="absolute -right-8 -top-8 md:right-10 md:top-0 text-yellow-500 opacity-80">
+               <StarIcon size={64} fill="currentColor" className="animate-spin-slow" />
+            </motion.div>
+          </div>
 
-          <FadeIn delay={0.6}>
-            <button className="mt-12 group relative px-8 py-4 bg-white text-black font-bold rounded-full overflow-hidden transition-all hover:scale-105 hover:bg-yellow-400">
-              <span className="relative z-10 flex items-center gap-2">
-                Explore Vision <ArrowRight className="w-5 h-5" />
+          <FadeIn delay={0.4} className="mt-12 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-white/60 leading-relaxed">
+              Mewujudkan era baru melalui <span className="text-yellow-400 font-bold">Inovasi</span> yang berdampak dan <span className="text-yellow-400 font-bold">Kolaborasi</span> tanpa batas.
+            </p>
+          </FadeIn>
+
+          <FadeIn delay={0.6} className="mt-12 flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <button 
+              onClick={() => scrollToSection('visi')} 
+              className="group relative px-8 py-4 bg-yellow-500 text-black font-black uppercase tracking-wider hover:bg-yellow-400 transition-all clip-path-slant"
+            >
+              <span className="flex items-center gap-2">
+                Explore Vision <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
               </span>
             </button>
           </FadeIn>
         </motion.div>
+
+        {/* Scroll Indicator */}
+        <motion.div 
+          animate={{ y: [0, 10, 0] }} 
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="absolute bottom-10 text-white/30 cursor-pointer"
+          onClick={() => scrollToSection('evaluasi')}
+        >
+          <ChevronDown size={32} />
+        </motion.div>
       </section>
 
-      {/* Evaluation Section (Page 2) */}
-      <section className="relative z-10 py-32 px-4">
+      {/* --- EVALUASI --- */}
+      <section id="evaluasi" className="relative z-10 py-32 px-4">
         <div className="max-w-7xl mx-auto">
-          <FadeIn className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-black mb-4 uppercase">
-              <span className="text-white">Poin Evaluasi</span>{" "}
-              <span className="text-yellow-500">HMPSTI 2025</span>
-            </h2>
-          </FadeIn>
+          <SectionHeading title="Poin Evaluasi" subtitle="Refleksi 2025" />
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {evaluationPoints.map((point, idx) => (
               <FadeIn key={idx} delay={idx * 0.1}>
-                <GlassCard className="h-full group hover:bg-white/5">
-                  <div className="flex gap-6 items-start">
-                    <div className="flex-shrink-0 w-16 h-16 rounded-full bg-yellow-500 text-black flex items-center justify-center text-2xl font-black">
-                      {point.number}
-                    </div>
-                    <div>
-                      <p className="text-white/80 leading-relaxed text-sm md:text-base">
-                        {/* Highlight keywords based on PDF bold text assumption */}
-                        {point.description.split(" ").map((word, i) => {
-                          const highlight = ["KPI", "soft", "hard", "skill", "minim", "pembinaan", "rutin", "kurang", "menyebar", "tidak", "sesuai"].some(k => word.toLowerCase().includes(k));
-                          return (
-                            <span key={i} className={highlight ? "text-red-400 font-bold" : ""}>
-                              {word}{" "}
-                            </span>
-                          )
-                        })}
-                      </p>
+                <SpotlightCard className="h-full bg-black p-6 flex flex-col">
+                  <div className="mb-4 flex items-center justify-between">
+                    <span className="text-4xl font-black text-white/10">{point.number}</span>
+                    <div className="h-2 w-2 bg-yellow-500 rounded-full animate-pulse"></div>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3 uppercase">{point.title}</h3>
+                  <p className="text-white/60 text-sm leading-relaxed flex-grow">
+                    {point.desc}
+                  </p>
+                  <div className="mt-4 pt-4 border-t border-white/5">
+                    <div className="flex items-center gap-2 text-xs text-red-400 font-mono uppercase">
+                      <Zap size={12} /> Priority Fix
                     </div>
                   </div>
-                </GlassCard>
+                </SpotlightCard>
               </FadeIn>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Filosofi Section (Page 3) */}
-      <section id="filosofi" className="relative z-10 py-24 px-4 bg-gradient-to-b from-black to-[#0a0a0a]">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <FadeIn>
-              <h2 className="text-5xl md:text-7xl font-black mb-12 leading-none uppercase">
-                Filosofi
-                <br />
-                <span className="text-yellow-500">INNOVARA</span>
-              </h2>
+      {/* --- FILOSOFI --- */}
+      <section className="relative z-10 py-32 bg-[#080808] border-y border-white/5">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <div>
+              <SectionHeading title="Filosofi Nama" subtitle="Meaning" align="left" />
+              
+              <div className="space-y-12">
+                <FadeIn delay={0.2} direction="right">
+                  <div className="relative pl-8 border-l-2 border-yellow-500/30">
+                    <h3 className="text-5xl md:text-6xl font-black text-yellow-500 mb-2">INNOVA</h3>
+                    <p className="text-sm font-mono text-white/40 mb-4 uppercase tracking-widest">// Root Word: Innovation</p>
+                    <p className="text-xl text-white/80">
+                      Semangat menciptakan hal baru yang <span className="text-white font-bold">beda</span> dari sebelumnya. Bukan sekadar rutinitas.
+                    </p>
+                  </div>
+                </FadeIn>
 
-              <div className="space-y-8">
-                <GlassCard className="border-l-4 border-l-yellow-500">
-                  <div className="mb-2 bg-yellow-500 w-fit px-2 py-1 text-black font-bold text-sm rounded">KATA DASAR</div>
-                  <h3 className="text-3xl font-bold mb-3 text-yellow-500">INNOVA</h3>
-                  <p className="text-white text-lg">
-                    diambil dari kata <i className="text-yellow-200">innovation</i> atau inovasi yang berarti menciptakan hal baru yang beda dari sebelumnya.
-                  </p>
-                </GlassCard>
-
-                <GlassCard className="border-l-4 border-l-yellow-500">
-                   <div className="mb-2 bg-white w-fit px-2 py-1 text-black font-bold text-sm rounded">AKHIRAN</div>
-                  <h3 className="text-3xl font-bold text-white mb-3">RA</h3>
-                  <p className="text-white text-lg">
-                    diambil dari kata <i className="text-yellow-200">era</i> atau zaman. zaman yang dimana aspirasi didengar, Kolaborasi yang terbuka dan Prestasi terbentuk melalui pembinaan yang ada.
-                  </p>
-                </GlassCard>
+                <FadeIn delay={0.4} direction="right">
+                  <div className="relative pl-8 border-l-2 border-white/20">
+                    <h3 className="text-5xl md:text-6xl font-black text-white mb-2">RA</h3>
+                    <p className="text-sm font-mono text-white/40 mb-4 uppercase tracking-widest">// Suffix: Era / Zaman</p>
+                    <p className="text-xl text-white/80">
+                      Dimulainya zaman dimana aspirasi didengar & kolaborasi terbuka lebar.
+                    </p>
+                  </div>
+                </FadeIn>
               </div>
-            </FadeIn>
+            </div>
 
-             {/* Visual representation right side */}
-            <FadeIn delay={0.3} className="hidden lg:flex items-center justify-center relative">
-               <div className="absolute w-[500px] h-[500px] bg-yellow-500/10 rounded-full blur-3xl"></div>
-               <img 
-                src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format&fit=crop" 
-                alt="Students Crowd" 
-                className="relative z-10 rounded-2xl opacity-60 grayscale hover:grayscale-0 transition duration-700 mask-image-gradient"
-               />
-               <div className="absolute inset-0 z-20 flex items-end justify-center pb-10">
-                   <h3 className="text-4xl font-black uppercase italic tracking-tighter">"Satu Hati, Satu Gerak"</h3>
+            {/* Abstract Graphic */}
+            <FadeIn direction="left" className="relative hidden lg:block h-[500px]">
+               <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/20 to-purple-900/20 rounded-3xl blur-3xl"></div>
+               <div className="relative h-full border border-white/10 bg-white/5 backdrop-blur-md rounded-3xl p-10 flex flex-col justify-between overflow-hidden">
+                  <div className="text-[12rem] font-black text-white/5 absolute -top-10 -right-10 leading-none">26</div>
+                  <Terminal className="w-16 h-16 text-yellow-500 mb-6" />
+                  <div>
+                    <h4 className="text-3xl font-bold mb-2">"Satu Hati, Satu Gerak"</h4>
+                    <div className="h-1 w-full bg-gradient-to-r from-yellow-500 to-transparent"></div>
+                  </div>
                </div>
             </FadeIn>
           </div>
         </div>
       </section>
 
-      {/* Tiga Pilar Aksi (Page 4) */}
-      <section className="relative z-10 py-32 px-4">
-        <div className="max-w-7xl mx-auto">
-           <FadeIn className="text-center mb-20">
-            <h2 className="text-5xl font-black text-white uppercase">Tiga Pilar Aksi</h2>
-            <div className="h-1 w-24 bg-white mx-auto mt-6"></div>
-           </FadeIn>
-
-           <div className="grid md:grid-cols-3 gap-8 relative">
-              {/* Line Connector */}
-              <div className="hidden md:block absolute top-1/2 left-0 w-full h-[1px] bg-white/20 -translate-y-1/2 z-0"></div>
-
-              {[
-                  { icon: Users, title: "KOLABORASI", color: "bg-yellow-500 text-black" },
-                  { icon: Lightbulb, title: "INOVASI", color: "bg-purple-600 text-white" },
-                  { icon: Target, title: "PRESTASI", color: "bg-white text-black" }
-              ].map((item, idx) => (
-                  <FadeIn key={idx} delay={idx * 0.2} className="relative z-10">
-                      <div className="flex flex-col items-center text-center group">
-                          <div className={cn(
-                              "w-24 h-24 rounded-full flex items-center justify-center mb-8 border-4 border-[#050505] transition-transform duration-300 group-hover:scale-110 shadow-[0_0_20px_rgba(0,0,0,0.5)]",
-                              item.color
-                          )}>
-                              <item.icon size={40} />
-                          </div>
-                          <h3 className="text-3xl font-black tracking-widest">{item.title}</h3>
-                      </div>
-                  </FadeIn>
-              ))}
-           </div>
-        </div>
-      </section>
-
-      {/* Visi (Page 5) */}
-      <section className="relative z-10 py-24 bg-[#0a0a0a] overflow-hidden">
-        <div className="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-red-900/20 to-transparent pointer-events-none"></div>
-        <div className="max-w-5xl mx-auto px-4 text-center">
-            <FadeIn>
-                <div className="inline-block bg-white text-black text-6xl font-black px-6 py-2 mb-12">VISI</div>
-                <h3 className="text-2xl md:text-4xl font-medium text-white leading-relaxed">
-                    "Mewujudkan Himpunan Mahasiswa Teknologi Informasi sebagai Rumah <span className="text-red-500 font-bold">Kolaborasi</span> yang menciptakan <span className="text-red-500 font-bold">Inovasi</span> untuk mewujudkan <span className="text-red-500 font-bold">Prestasi</span>"
-                </h3>
-            </FadeIn>
-        </div>
-      </section>
-
-      {/* Misi (Page 6) */}
-      <section className="relative z-10 py-24 px-4">
-        <div className="max-w-6xl mx-auto">
-             <div className="text-center mb-16">
-                 <div className="inline-block bg-white text-black text-6xl font-black px-6 py-2">MISI</div>
-             </div>
-
-             <div className="grid gap-6">
-                {missions.map((m, i) => (
-                    <FadeIn key={i} delay={i * 0.1}>
-                        <div className="flex gap-6 items-center p-6 border-b border-white/10 hover:bg-white/5 transition-colors">
-                            <div className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
-                                0{i+1}
-                            </div>
-                            <p className="text-lg md:text-xl text-white/90">
-                                {m.text.split(" ").map((word, idx) => {
-                                    // Simple highlighting logic based on PDF colors
-                                    const isRed = ["Profesional", "kolaborasi", "jembatan", "aspirasi", "pengembangan", "Hard", "Soft", "Skill", "Prestasi", "Inovasi"].includes(word.replace(/[^a-zA-Z]/g, ""));
-                                    return <span key={idx} className={isRed ? "text-red-400 font-bold" : ""}>{word} </span>
-                                })}
-                            </p>
-                        </div>
-                    </FadeIn>
-                ))}
-             </div>
-        </div>
-      </section>
-
-      {/* Program Unggulan (Page 7) */}
+      {/* --- TIGA PILAR --- */}
       <section className="relative z-10 py-32 px-4">
         <div className="max-w-6xl mx-auto">
-             <div className="grid md:grid-cols-2 gap-12 items-center">
-                <FadeIn>
-                    <h3 className="text-white text-4xl font-bold uppercase leading-none mb-2">PROGRAM<br/><span className="text-yellow-500">UNGGULAN</span></h3>
-                    <div className="bg-yellow-500 text-black text-3xl font-black inline-block px-4 py-2 mt-4 mb-8">INNO CLASS</div>
-                    
-                    <p className="text-xl text-white/80 mb-8 leading-relaxed">
-                        Pelatihan rutin <span className="text-red-400 font-bold">Hard Skill & Soft Skill</span> yang terbuka agar seluruh mahasiswa TI memiliki kesempatan yang sama untuk <span className="text-red-400 font-bold">berkembang</span>.
+          <SectionHeading title="3 Pilar Aksi" subtitle="Core Values" />
+          
+          <div className="relative grid md:grid-cols-3 gap-8">
+            {/* Connecting Line */}
+            <div className="hidden md:block absolute top-24 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+            
+            {[
+              { icon: Users, title: "KOLABORASI", color: "text-blue-400" },
+              { icon: Lightbulb, title: "INOVASI", color: "text-yellow-400" },
+              { icon: Target, title: "PRESTASI", color: "text-red-400" }
+            ].map((item, idx) => (
+              <FadeIn key={idx} delay={idx * 0.2}>
+                <div className="relative group bg-[#0a0a0a] border border-white/10 p-8 rounded-2xl hover:border-white/30 transition-all duration-500 text-center">
+                  <div className={cn("w-20 h-20 mx-auto bg-white/5 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-white/10", item.color)}>
+                    <item.icon size={36} />
+                  </div>
+                  <h3 className="text-2xl font-black mb-4 tracking-wider">{item.title}</h3>
+                  <div className="h-[2px] w-0 group-hover:w-full bg-current transition-all duration-500 mx-auto opacity-50 mb-4"></div>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* --- VISI & MISI --- */}
+      <section id="visi" className="relative z-10 py-32 bg-white/5 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16">
+          
+          {/* Visi */}
+          <div className="relative">
+             <div className="sticky top-32">
+               <span className="text-yellow-500 font-mono tracking-widest uppercase mb-4 block">Visi Utama</span>
+               <h2 className="text-5xl md:text-6xl font-black leading-tight mb-8">
+                 RUMAH <br/> 
+                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">KOLABORASI</span>
+               </h2>
+               <p className="text-xl md:text-2xl leading-relaxed text-white/80 border-l-4 border-yellow-500 pl-6 py-2">
+                 "Mewujudkan Himpunan Mahasiswa Teknologi Informasi sebagai Rumah <span className="text-white font-bold">Kolaborasi</span> yang menciptakan <span className="text-white font-bold">Inovasi</span> untuk mewujudkan <span className="text-white font-bold">Prestasi</span>."
+               </p>
+             </div>
+          </div>
+
+          {/* Misi */}
+          <div>
+            <span className="text-white/50 font-mono tracking-widest uppercase mb-8 block text-right">Misi Kami</span>
+            <div className="space-y-6">
+              {missions.map((m, i) => (
+                <FadeIn key={i} delay={i * 0.1} direction="left">
+                  <div className="group flex gap-6 p-6 rounded-xl bg-black/40 border border-white/5 hover:border-yellow-500/50 transition-all duration-300">
+                    <div className="text-4xl font-black text-white/10 group-hover:text-yellow-500 transition-colors">0{i+1}</div>
+                    <p className="text-lg text-white/90 self-center">
+                      {m.text.split(" ").map((word, wIdx) => {
+                        const highlight = ["Profesional", "Kolaborasi", "Hard", "Soft", "Prestasi", "Inovasi"].some(k => word.includes(k));
+                        return <span key={wIdx} className={highlight ? "text-yellow-400 font-bold" : ""}>{word} </span>
+                      })}
                     </p>
+                  </div>
                 </FadeIn>
+              ))}
+            </div>
+          </div>
 
-                <FadeIn delay={0.2}>
-                    <div className="bg-[#111] p-8 rounded-xl border-l-4 border-yellow-500 relative">
-                        <div className="bg-yellow-500 text-black font-bold px-3 py-1 absolute -top-4 left-4">OUTPUT</div>
-                        <p className="text-lg text-white/90 pt-2">
-                             Terwujudnya peningkatan kualitas <span className="text-red-400 font-bold">Soft skill</span> dan <span className="text-red-400 font-bold">Hard Skill</span> mahasiswa TI, sehingga melahirkan SDM yang berkompeten dan siap bersaing.
-                        </p>
-                    </div>
-                </FadeIn>
-             </div>
         </div>
       </section>
 
-      {/* Departemen (Page 8) */}
-      <section className="py-32 relative z-10 border-t border-white/10 bg-black">
-         <div className="text-center mb-16">
-             <div className="inline-block bg-white text-black text-4xl font-black px-8 py-2 uppercase">DEPARTEMEN</div>
-         </div>
-         <InfiniteMarquee items={departments} />
-      </section>
-      
-      {/* Footer / Thank You (Page 9) */}
-      <section className="h-[50vh] flex items-center justify-center relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-t from-yellow-900/20 to-transparent"></div>
-          <motion.h2 
-            initial={{ scale: 0.5, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            transition={{ type: "spring", bounce: 0.5 }}
-            className="text-6xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 uppercase tracking-tighter"
-          >
-              THANK YOU
-          </motion.h2>
+      {/* --- PROGRAM UNGGULAN --- */}
+      <section className="relative z-10 py-32 px-4">
+        <div className="max-w-5xl mx-auto relative">
+          <div className="absolute inset-0 bg-yellow-500/20 blur-[100px] rounded-full"></div>
+          
+          <SpotlightCard className="bg-[#080808] p-8 md:p-16 border-yellow-500/20">
+            <div className="grid md:grid-cols-2 gap-12 items-center relative z-10">
+              <div>
+                <div className="inline-block bg-yellow-500 text-black font-bold px-3 py-1 text-xs uppercase tracking-widest mb-6 rounded-sm">Flagship Program</div>
+                <h2 className="text-5xl md:text-7xl font-black mb-6 leading-none">
+                  INNO <span className="text-white/30 italic font-serif">CLASS</span>
+                </h2>
+                <p className="text-lg text-white/70 mb-8 leading-relaxed">
+                  Pelatihan rutin <strong className="text-white">Hard Skill & Soft Skill</strong>. Bukan sekadar webinar, tapi kurikulum terstruktur agar seluruh mahasiswa TI punya kesempatan berkembang yang sama.
+                </p>
+                
+                <div className="p-4 bg-white/5 rounded-lg border border-white/10">
+                  <h4 className="text-yellow-500 font-bold text-sm uppercase mb-2">Target Output</h4>
+                  <p className="text-sm text-white/80">Melahirkan SDM berkompeten yang siap bersaing di industri.</p>
+                </div>
+              </div>
+
+              {/* Visual Element */}
+              <div className="relative aspect-square md:aspect-video bg-gradient-to-tr from-gray-900 to-black rounded-xl border border-white/10 flex items-center justify-center overflow-hidden group">
+                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-50"></div>
+                 <div className="text-center group-hover:scale-110 transition-transform duration-500">
+                    <StarIcon className="w-20 h-20 text-yellow-500 mx-auto mb-4 animate-pulse" />
+                    <span className="text-2xl font-bold tracking-widest">JOIN US</span>
+                 </div>
+              </div>
+            </div>
+          </SpotlightCard>
+        </div>
       </section>
 
+      {/* --- DEPARTEMEN --- */}
+      <section className="py-20 bg-black border-t border-white/10">
+        <div className="text-center mb-10">
+          <span className="text-xs font-mono text-white/30 uppercase tracking-[0.5em]">Departemen Struktur</span>
+        </div>
+        <InfiniteMarquee items={departments} />
+      </section>
+
+      {/* --- FOOTER --- */}
+      <section className="h-[40vh] flex flex-col items-center justify-center relative bg-black overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-yellow-900/20 via-black to-black"></div>
+        <motion.h2 
+          whileInView={{ scale: [0.9, 1], opacity: [0, 1] }}
+          transition={{ duration: 1 }}
+          className="relative z-10 text-6xl md:text-9xl font-black text-white uppercase tracking-tighter"
+        >
+          Thank You
+        </motion.h2>
+        <p className="relative z-10 text-white/40 mt-4 font-mono text-sm">© INNOVARA 2026</p>
+      </section>
+
+      {/* Custom Styles */}
       <style jsx global>{`
         @keyframes marquee {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
         .animate-marquee {
-          animation: marquee 30s linear infinite;
+          animation: marquee 40s linear infinite;
         }
         .mask-gradient-x {
            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
-        .stroke-text {
-           -webkit-text-stroke: 1px rgba(255,255,255,0.2); 
+        .clip-path-slant {
+          clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
         }
       `}</style>
     </div>

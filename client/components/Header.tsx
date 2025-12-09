@@ -10,26 +10,48 @@ export function Header() {
             <span className="text-primary ml-2">INNOVARA</span>
           </div>
         </Link>
-        
+
         <div className="hidden md:flex items-center gap-8">
-          <a href="#filosofi" className="text-white/80 hover:text-primary transition">
+          <a
+            href="#filosofi"
+            className="text-white/80 hover:text-primary transition"
+          >
             Filosofi
           </a>
-          <a href="#visi-misi" className="text-white/80 hover:text-primary transition">
+          <a
+            href="#visi-misi"
+            className="text-white/80 hover:text-primary transition"
+          >
             Visi & Misi
           </a>
-          <a href="#program" className="text-white/80 hover:text-primary transition">
+          <a
+            href="#program"
+            className="text-white/80 hover:text-primary transition"
+          >
             Program
           </a>
-          <a href="#departemen" className="text-white/80 hover:text-primary transition">
+          <a
+            href="#departemen"
+            className="text-white/80 hover:text-primary transition"
+          >
             Departemen
           </a>
         </div>
 
         <div className="md:hidden">
           <button className="text-primary p-2">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
             </svg>
           </button>
         </div>

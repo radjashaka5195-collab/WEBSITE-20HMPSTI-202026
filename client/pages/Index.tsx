@@ -36,13 +36,27 @@ function DepartemenCarousel({ departments }: { departments: string[] }) {
 
 export default function Index() {
   const Decor = ({ className = "" }) => (
-    <svg className={`absolute ${className}`} viewBox="0 0 200 200" width="200" height="200" fill="none">
-      <path d="M200 200 Q100 100, 0 200" stroke="white" strokeWidth="2" opacity="0.2" />
+    <svg
+      className={`absolute ${className}`}
+      viewBox="0 0 200 200"
+      width="200"
+      height="200"
+      fill="none"
+    >
+      <path
+        d="M200 200 Q100 100, 0 200"
+        stroke="white"
+        strokeWidth="2"
+        opacity="0.2"
+      />
     </svg>
   );
 
   const Star = ({ size = 20, className = "" }) => (
-    <div className={`absolute ${className}`} style={{ width: size, height: size }}>
+    <div
+      className={`absolute ${className}`}
+      style={{ width: size, height: size }}
+    >
       <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
         <path d="M12 2l3 7h7l-6 4 2 7-6-4-6 4 2-7-6-4h7z" />
       </svg>
@@ -73,7 +87,8 @@ export default function Index() {
     },
     {
       number: "04",
-      title: "Penempatan program pelatihan yang tidak sesuai dengan fungsi utama departemennya.",
+      title:
+        "Penempatan program pelatihan yang tidak sesuai dengan fungsi utama departemennya.",
       description:
         "Contohnya berani bicara di departemen perhubungan yang seharusnya ada di departemen psdm. Perhubungan seharusnya hanya berfokus pada eksternal saja",
       color: "bg-secondary",
@@ -83,17 +98,20 @@ export default function Index() {
   const missions = [
     {
       number: "01",
-      title: "Membangun tata kelola organisasi yang Profesional berbasis kinerja (KPI)",
+      title:
+        "Membangun tata kelola organisasi yang Profesional berbasis kinerja (KPI)",
       color: "bg-primary",
     },
     {
       number: "02",
-      title: "Mempererat rasa kebersamaan serta menjalin kolaborasi dengan organisasi, institusi, dan industri.",
+      title:
+        "Mempererat rasa kebersamaan serta menjalin kolaborasi dengan organisasi, institusi, dan industri.",
       color: "bg-secondary",
     },
     {
       number: "03",
-      title: "Menjadi jembatan aspirasi mahasiswa TI dengan memperhatikan hak, kebutuhan, dan kesejahteraan bersama.",
+      title:
+        "Menjadi jembatan aspirasi mahasiswa TI dengan memperhatikan hak, kebutuhan, dan kesejahteraan bersama.",
       color: "bg-primary",
     },
     {
@@ -104,7 +122,8 @@ export default function Index() {
     },
     {
       number: "05",
-      title: "Menghadirkan Inovasi program kerja yang tepat sasaran dan fungsional",
+      title:
+        "Menghadirkan Inovasi program kerja yang tepat sasaran dan fungsional",
       color: "bg-secondary",
     },
   ];
@@ -128,10 +147,26 @@ export default function Index() {
         <Decor className="top-0 left-0 w-96 h-96 opacity-30" />
         <Decor className="bottom-0 right-0 w-96 h-96 opacity-30 rotate-180" />
 
-        <Star size={60} className="top-20 left-10 text-primary opacity-70 shimmer" style={{ animationDelay: "0s" }} />
-        <Star size={40} className="top-32 right-20 text-white opacity-50 shimmer" style={{ animationDelay: "1s" }} />
-        <Star size={50} className="bottom-32 left-1/4 text-secondary opacity-60 shimmer" style={{ animationDelay: "0.5s" }} />
-        <Star size={35} className="bottom-20 right-1/3 text-primary opacity-70 shimmer" style={{ animationDelay: "1.5s" }} />
+        <Star
+          size={60}
+          className="top-20 left-10 text-primary opacity-70 shimmer"
+          style={{ animationDelay: "0s" }}
+        />
+        <Star
+          size={40}
+          className="top-32 right-20 text-white opacity-50 shimmer"
+          style={{ animationDelay: "1s" }}
+        />
+        <Star
+          size={50}
+          className="bottom-32 left-1/4 text-secondary opacity-60 shimmer"
+          style={{ animationDelay: "0.5s" }}
+        />
+        <Star
+          size={35}
+          className="bottom-20 right-1/3 text-primary opacity-70 shimmer"
+          style={{ animationDelay: "1.5s" }}
+        />
 
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-tight mb-6">
@@ -172,8 +207,12 @@ export default function Index() {
                     {point.number}
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-bold text-lg sm:text-xl mb-2 text-white">{point.title}</h3>
-                    <p className="text-white/70 leading-relaxed">{point.description}</p>
+                    <h3 className="font-bold text-lg sm:text-xl mb-2 text-white">
+                      {point.title}
+                    </h3>
+                    <p className="text-white/70 leading-relaxed">
+                      {point.description}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -183,7 +222,10 @@ export default function Index() {
       </section>
 
       {/* Philosophy Section */}
-      <section id="filosofi" className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section
+        id="filosofi"
+        className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      >
         <Decor className="top-0 right-0 w-96 h-96 opacity-20 rotate-90" />
 
         <div className="max-w-7xl mx-auto relative z-10">
@@ -201,8 +243,8 @@ export default function Index() {
                     INNOVA
                   </div>
                   <p className="text-white/80 leading-relaxed text-lg">
-                    diambil dari kata innovation atau inovasi yang berarti menciptakan hal baru yang beda dari
-                    sebelumnya
+                    diambil dari kata innovation atau inovasi yang berarti
+                    menciptakan hal baru yang beda dari sebelumnya
                   </p>
                 </div>
 
@@ -211,8 +253,9 @@ export default function Index() {
                     RA
                   </div>
                   <p className="text-white/80 leading-relaxed text-lg">
-                    diambil dari kata era atau zaman. zaman yang dimana aspirasi didengar, Kolaborasi yang terbuka
-                    dan Prestasi terbentuk melalui pembinaan yang ada
+                    diambil dari kata era atau zaman. zaman yang dimana aspirasi
+                    didengar, Kolaborasi yang terbuka dan Prestasi terbentuk
+                    melalui pembinaan yang ada
                   </p>
                 </div>
               </div>
@@ -220,8 +263,15 @@ export default function Index() {
 
             <div className="relative h-96 sm:h-[500px]">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-2xl"></div>
-              <Star size={80} className="top-10 right-10 text-primary shimmer" />
-              <Star size={60} className="bottom-20 left-5 text-secondary shimmer" style={{ animationDelay: "1s" }} />
+              <Star
+                size={80}
+                className="top-10 right-10 text-primary shimmer"
+              />
+              <Star
+                size={60}
+                className="bottom-20 left-5 text-secondary shimmer"
+                style={{ animationDelay: "1s" }}
+              />
             </div>
           </div>
         </div>
@@ -239,9 +289,21 @@ export default function Index() {
 
           <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
             {[
-              { icon: Brain, title: "KOLABORASI", desc: "Membangun kerjasama yang solid" },
-              { icon: Radio, title: "INOVASI", desc: "Menciptakan solusi baru dan kreatif" },
-              { icon: Zap, title: "PRESTASI", desc: "Meraih kesuksesan bersama" },
+              {
+                icon: Brain,
+                title: "KOLABORASI",
+                desc: "Membangun kerjasama yang solid",
+              },
+              {
+                icon: Radio,
+                title: "INOVASI",
+                desc: "Menciptakan solusi baru dan kreatif",
+              },
+              {
+                icon: Zap,
+                title: "PRESTASI",
+                desc: "Meraih kesuksesan bersama",
+              },
             ].map((pillar, idx) => {
               const Icon = pillar.icon;
               const colors = [
@@ -253,10 +315,14 @@ export default function Index() {
 
               return (
                 <div key={idx} className="group text-center">
-                  <div className={`w-24 h-24 mx-auto mb-6 ${color.bg} rounded-full flex items-center justify-center group-hover:scale-110 transition transform`}>
+                  <div
+                    className={`w-24 h-24 mx-auto mb-6 ${color.bg} rounded-full flex items-center justify-center group-hover:scale-110 transition transform`}
+                  >
                     <Icon className="w-12 h-12 text-black" />
                   </div>
-                  <h3 className="text-2xl font-black mb-3 text-white">{pillar.title}</h3>
+                  <h3 className="text-2xl font-black mb-3 text-white">
+                    {pillar.title}
+                  </h3>
                   <p className="text-white/70">{pillar.desc}</p>
                 </div>
               );
@@ -265,8 +331,15 @@ export default function Index() {
 
           <div className="mt-16 px-4 py-8 bg-white/5 rounded-xl border border-white/10">
             <p className="text-center text-white/80 text-lg leading-relaxed">
-              Kami berkomitmen untuk membangun <span className="text-primary font-bold">Himpunan Mahasiswa Teknologi Informasi</span> sebagai{" "}
-              <span className="text-primary font-bold">Rumah Kolaborasi</span> yang menciptakan <span className="text-primary font-bold">Inovasi</span> untuk mewujudkan{" "}
+              Kami berkomitmen untuk membangun{" "}
+              <span className="text-primary font-bold">
+                Himpunan Mahasiswa Teknologi Informasi
+              </span>{" "}
+              sebagai{" "}
+              <span className="text-primary font-bold">Rumah Kolaborasi</span>{" "}
+              yang menciptakan{" "}
+              <span className="text-primary font-bold">Inovasi</span> untuk
+              mewujudkan{" "}
               <span className="text-primary font-bold">Prestasi</span>
             </p>
           </div>
@@ -274,25 +347,38 @@ export default function Index() {
       </section>
 
       {/* Vision Section */}
-      <section id="visi-misi" className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section
+        id="visi-misi"
+        className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      >
         <Decor className="bottom-0 left-0 w-96 h-96 opacity-20" />
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="bg-white px-8 py-3 inline-block font-black text-2xl text-black rounded mb-8">VISI</div>
+              <div className="bg-white px-8 py-3 inline-block font-black text-2xl text-black rounded mb-8">
+                VISI
+              </div>
 
               <p className="text-white/80 text-xl leading-relaxed">
-                Mewujudkan <span className="text-primary font-bold">Himpunan Mahasiswa Teknologi Informasi</span> sebagai{" "}
-                <span className="text-primary font-bold">Rumah Kolaborasi</span> yang menciptakan{" "}
-                <span className="text-primary font-bold">Inovasi</span> untuk mewujudkan{" "}
+                Mewujudkan{" "}
+                <span className="text-primary font-bold">
+                  Himpunan Mahasiswa Teknologi Informasi
+                </span>{" "}
+                sebagai{" "}
+                <span className="text-primary font-bold">Rumah Kolaborasi</span>{" "}
+                yang menciptakan{" "}
+                <span className="text-primary font-bold">Inovasi</span> untuk
+                mewujudkan{" "}
                 <span className="text-primary font-bold">Prestasi</span>
               </p>
             </div>
 
             <div className="relative h-96 flex items-center justify-center">
               <div className="absolute inset-0 bg-gradient-to-br from-secondary/20 to-primary/20 rounded-2xl blur-2xl"></div>
-              <div className="relative text-6xl sm:text-7xl font-black text-primary/30">✨</div>
+              <div className="relative text-6xl sm:text-7xl font-black text-primary/30">
+                ✨
+              </div>
             </div>
           </div>
         </div>
@@ -302,7 +388,9 @@ export default function Index() {
       <section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black via-black to-black">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
-            <div className="bg-white px-8 py-3 inline-block font-black text-2xl text-black rounded mb-8">MISI</div>
+            <div className="bg-white px-8 py-3 inline-block font-black text-2xl text-black rounded mb-8">
+              MISI
+            </div>
           </div>
 
           <div className="relative">
@@ -316,7 +404,9 @@ export default function Index() {
                   >
                     {mission.number}
                   </div>
-                  <p className="text-white/80 leading-relaxed group-hover:text-white transition">{mission.title}</p>
+                  <p className="text-white/80 leading-relaxed group-hover:text-white transition">
+                    {mission.title}
+                  </p>
                 </div>
               ))}
             </div>
@@ -325,7 +415,10 @@ export default function Index() {
       </section>
 
       {/* Featured Program Section */}
-      <section id="program" className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section
+        id="program"
+        className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      >
         <Decor className="top-0 right-0 w-96 h-96 opacity-20 rotate-180" />
 
         <div className="max-w-7xl mx-auto relative z-10">
@@ -334,40 +427,63 @@ export default function Index() {
             <br />
             <span className="text-primary">UNGGULAN</span>
             <br />
-            <span className="bg-primary text-black px-4 inline-block mt-4">INNO CLASS</span>
+            <span className="bg-primary text-black px-4 inline-block mt-4">
+              INNO CLASS
+            </span>
           </h2>
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <p className="text-white/80 text-lg leading-relaxed mb-8">
-                Pelatihan rutin <span className="text-primary font-bold">Hard Skill & Soft Skill</span> yang terbuka agar seluruh mahasiswa TI memiliki kesempatan yang sama untuk berkembang
+                Pelatihan rutin{" "}
+                <span className="text-primary font-bold">
+                  Hard Skill & Soft Skill
+                </span>{" "}
+                yang terbuka agar seluruh mahasiswa TI memiliki kesempatan yang
+                sama untuk berkembang
               </p>
 
               <div className="bg-white/5 border border-primary/30 rounded-xl p-6">
                 <h3 className="text-primary font-black text-lg mb-3">OUTPUT</h3>
                 <p className="text-white/80 leading-relaxed">
-                  Terwujudnya peningkatan kualitas <span className="text-primary font-bold">Soft skill dan Hard Skill</span> mahasiswa TI, sehingga melahirkan SDM yang berkompeten dan siap
-                  bersaing
+                  Terwujudnya peningkatan kualitas{" "}
+                  <span className="text-primary font-bold">
+                    Soft skill dan Hard Skill
+                  </span>{" "}
+                  mahasiswa TI, sehingga melahirkan SDM yang berkompeten dan
+                  siap bersaing
                 </p>
               </div>
             </div>
 
             <div className="relative h-96">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl"></div>
-              <Star size={80} className="top-10 right-10 text-primary shimmer" />
-              <Star size={60} className="bottom-20 left-10 text-secondary shimmer" style={{ animationDelay: "1s" }} />
+              <Star
+                size={80}
+                className="top-10 right-10 text-primary shimmer"
+              />
+              <Star
+                size={60}
+                className="bottom-20 left-10 text-secondary shimmer"
+                style={{ animationDelay: "1s" }}
+              />
             </div>
           </div>
         </div>
       </section>
 
       {/* Departments Section */}
-      <section id="departemen" className="relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-black overflow-hidden">
+      <section
+        id="departemen"
+        className="relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-black overflow-hidden"
+      >
         <Decor className="bottom-0 left-0 w-96 h-96 opacity-20 rotate-90" />
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20">
-            <div className="bg-white px-8 py-3 inline-block font-black text-2xl text-black rounded mb-8">DEPARTEMEN</div>
+            <div className="bg-white px-8 py-3 inline-block font-black text-2xl text-black rounded mb-8">
+              DEPARTEMEN
+            </div>
           </div>
 
           <DepartemenCarousel departments={departments} />
@@ -379,8 +495,12 @@ export default function Index() {
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-3 gap-12 mb-12">
             <div>
-              <h3 className="text-primary font-black text-lg mb-4">KABINET INNOVARA</h3>
-              <p className="text-white/60">Membangun masa depan melalui kolaborasi, inovasi, dan prestasi.</p>
+              <h3 className="text-primary font-black text-lg mb-4">
+                KABINET INNOVARA
+              </h3>
+              <p className="text-white/60">
+                Membangun masa depan melalui kolaborasi, inovasi, dan prestasi.
+              </p>
             </div>
             <div>
               <h4 className="text-white font-bold mb-4">Navigasi</h4>
@@ -391,7 +511,10 @@ export default function Index() {
                   </a>
                 </li>
                 <li>
-                  <a href="#visi-misi" className="hover:text-primary transition">
+                  <a
+                    href="#visi-misi"
+                    className="hover:text-primary transition"
+                  >
                     Visi & Misi
                   </a>
                 </li>
@@ -401,7 +524,10 @@ export default function Index() {
                   </a>
                 </li>
                 <li>
-                  <a href="#departemen" className="hover:text-primary transition">
+                  <a
+                    href="#departemen"
+                    className="hover:text-primary transition"
+                  >
                     Departemen
                   </a>
                 </li>
@@ -410,7 +536,9 @@ export default function Index() {
             <div>
               <h4 className="text-white font-bold mb-4">Kontak</h4>
               <p className="text-white/60">HMPSTI 2025</p>
-              <p className="text-white/60 text-sm mt-2">Institut Teknologi Sumatera</p>
+              <p className="text-white/60 text-sm mt-2">
+                Institut Teknologi Sumatera
+              </p>
             </div>
           </div>
 
@@ -421,8 +549,15 @@ export default function Index() {
       </footer>
 
       {/* Decorative Elements */}
-      <Star size={40} className="fixed top-1/4 right-10 text-primary opacity-20 pointer-events-none shimmer" />
-      <Star size={30} className="fixed bottom-1/3 left-5 text-secondary opacity-20 pointer-events-none shimmer" style={{ animationDelay: "1s" }} />
+      <Star
+        size={40}
+        className="fixed top-1/4 right-10 text-primary opacity-20 pointer-events-none shimmer"
+      />
+      <Star
+        size={30}
+        className="fixed bottom-1/3 left-5 text-secondary opacity-20 pointer-events-none shimmer"
+        style={{ animationDelay: "1s" }}
+      />
     </div>
   );
 }

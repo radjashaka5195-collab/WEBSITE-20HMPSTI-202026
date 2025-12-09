@@ -129,9 +129,20 @@
   }
 
   .star-4::before {
-    content: '';
+    content: "";
     @apply absolute w-2 h-2 bg-primary rounded-full;
-    clip-path: polygon(50% 0%, 60% 35%, 95% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 5% 35%, 40% 35%);
+    clip-path: polygon(
+      50% 0%,
+      60% 35%,
+      95% 35%,
+      68% 57%,
+      79% 91%,
+      50% 70%,
+      21% 91%,
+      32% 57%,
+      5% 35%,
+      40% 35%
+    );
   }
 
   .glow-gold {
@@ -147,7 +158,8 @@
   }
 
   @keyframes shimmer {
-    0%, 100% {
+    0%,
+    100% {
       opacity: 1;
     }
     50% {
@@ -160,7 +172,8 @@
   }
 
   @keyframes float {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0px);
     }
     50% {
@@ -173,7 +186,8 @@
   }
 
   @keyframes floatSlower {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0px);
     }
     50% {

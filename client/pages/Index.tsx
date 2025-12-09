@@ -445,39 +445,6 @@ export default function Index() {
          </div>
          <InfiniteMarquee items={departments} />
       </section>
-
-      {/* Footer */}
-      <footer className="relative z-10 bg-[#020202] pt-20 pb-10 px-4 border-t border-white/10">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
-            <div className="max-w-sm">
-                <h2 className="text-2xl font-black text-white mb-6">INNOVARA<span className="text-primary">.</span></h2>
-                <p className="text-white/50 mb-6">
-                    Himpunan Mahasiswa Teknologi Informasi Institut Teknologi Sumatera.
-                </p>
-            </div>
-            <div className="grid grid-cols-2 gap-12">
-                <div>
-                    <h4 className="font-bold text-white mb-4">Navigasi</h4>
-                    <ul className="space-y-2 text-white/50 text-sm">
-                        <li className="hover:text-primary cursor-pointer transition">Filosofi</li>
-                        <li className="hover:text-primary cursor-pointer transition">Visi Misi</li>
-                        <li className="hover:text-primary cursor-pointer transition">Program</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 className="font-bold text-white mb-4">Connect</h4>
-                    <ul className="space-y-2 text-white/50 text-sm">
-                        <li className="hover:text-primary cursor-pointer transition">Instagram</li>
-                        <li className="hover:text-primary cursor-pointer transition">LinkedIn</li>
-                        <li className="hover:text-primary cursor-pointer transition">Email</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 text-center text-white/30 text-xs">
-            © 2026 Kabinet Innovara HMPSTI. All rights reserved.
-        </div>
-      </footer>
       
       {/* CSS for custom animations not in tailwind */}
       <style jsx global>{`

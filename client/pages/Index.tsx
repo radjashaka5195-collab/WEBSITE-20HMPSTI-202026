@@ -8,7 +8,6 @@ import {
   Users, 
   Lightbulb, 
   ChevronDown, 
-  Zap,
   Terminal
 } from "lucide-react";
 import { useScroll, useTransform, useMotionTemplate, useMotionValue, motion } from "framer-motion";
@@ -82,7 +81,7 @@ const FadeIn = ({
       initial={{ opacity: 0, ...directions[direction] }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.8, delay, ease: [0.21, 0.47, 0.32, 0.98] }} // Custom spring-like easing
+      transition={{ duration: 0.8, delay, ease: [0.21, 0.47, 0.32, 0.98] }} 
       className={className}
     >
       {children}
@@ -142,13 +141,6 @@ export default function Index() {
   };
 
   // Data
-  const evaluationPoints = [
-    { number: "01", title: "Profesionalitas", desc: "Kurangnya profesionalitas internal. Penilaian terlalu personal, bukan berbasis KPI, memicu ketidakadilan." },
-    { number: "02", title: "Pembinaan", desc: "Minim pembinaan rutin. Mahasiswa butuh soft skill & hard skill yang dampaknya nyata." },
-    { number: "03", title: "Aspirasi", desc: "Aspirasi tidak menyebar. Wadah saat ini hanya formalitas tanpa tindak lanjut transparan." },
-    { number: "04", title: "Salah Kamar", desc: "Penempatan program tidak sesuai fungsi departemen (Contoh: Public Speaking di Perhubungan, harusnya PSDM)." },
-  ];
-
   const missions = [
     { text: "Tata kelola organisasi Profesional berbasis kinerja (KPI)." },
     { text: "Kolaborasi erat dengan organisasi, institusi, dan industri." },
@@ -219,48 +211,19 @@ export default function Index() {
           </FadeIn>
         </motion.div>
 
-        {/* Scroll Indicator */}
+        {/* Scroll Indicator (Updated to scroll to Filosofi) */}
         <motion.div 
           animate={{ y: [0, 10, 0] }} 
           transition={{ repeat: Infinity, duration: 2 }}
           className="absolute bottom-10 text-white/30 cursor-pointer"
-          onClick={() => scrollToSection('evaluasi')}
+          onClick={() => scrollToSection('filosofi')}
         >
           <ChevronDown size={32} />
         </motion.div>
       </section>
 
-      {/* --- EVALUASI --- */}
-      <section id="evaluasi" className="relative z-10 py-32 px-4">
-        <div className="max-w-7xl mx-auto">
-          <SectionHeading title="Poin Evaluasi" subtitle="Refleksi 2025" />
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {evaluationPoints.map((point, idx) => (
-              <FadeIn key={idx} delay={idx * 0.1}>
-                <SpotlightCard className="h-full bg-black p-6 flex flex-col">
-                  <div className="mb-4 flex items-center justify-between">
-                    <span className="text-4xl font-black text-white/10">{point.number}</span>
-                    <div className="h-2 w-2 bg-yellow-500 rounded-full animate-pulse"></div>
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-3 uppercase">{point.title}</h3>
-                  <p className="text-white/60 text-sm leading-relaxed flex-grow">
-                    {point.desc}
-                  </p>
-                  <div className="mt-4 pt-4 border-t border-white/5">
-                    <div className="flex items-center gap-2 text-xs text-red-400 font-mono uppercase">
-                      <Zap size={12} /> Priority Fix
-                    </div>
-                  </div>
-                </SpotlightCard>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* --- FILOSOFI --- */}
-      <section className="relative z-10 py-32 bg-[#080808] border-y border-white/5">
+      {/* --- FILOSOFI (Added ID for navigation) --- */}
+      <section id="filosofi" className="relative z-10 py-32 bg-[#080808] border-y border-white/5">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div>
@@ -374,36 +337,31 @@ export default function Index() {
         </div>
       </section>
 
-      {/* --- PROGRAM UNGGULAN --- */}
+      {/* --- PROGRAM UNGGULAN (Updated) --- */}
       <section className="relative z-10 py-32 px-4">
-        <div className="max-w-5xl mx-auto relative">
+        <div className="max-w-4xl mx-auto relative">
+          {/* Background Glow */}
           <div className="absolute inset-0 bg-yellow-500/20 blur-[100px] rounded-full"></div>
           
-          <SpotlightCard className="bg-[#080808] p-8 md:p-16 border-yellow-500/20">
-            <div className="grid md:grid-cols-2 gap-12 items-center relative z-10">
-              <div>
-                <div className="inline-block bg-yellow-500 text-black font-bold px-3 py-1 text-xs uppercase tracking-widest mb-6 rounded-sm">Flagship Program</div>
-                <h2 className="text-5xl md:text-7xl font-black mb-6 leading-none">
-                  INNO <span className="text-white/30 italic font-serif">CLASS</span>
-                </h2>
-                <p className="text-lg text-white/70 mb-8 leading-relaxed">
-                  Pelatihan rutin <strong className="text-white">Hard Skill & Soft Skill</strong>. Bukan sekadar webinar, tapi kurikulum terstruktur agar seluruh mahasiswa TI punya kesempatan berkembang yang sama.
-                </p>
-                
-                <div className="p-4 bg-white/5 rounded-lg border border-white/10">
-                  <h4 className="text-yellow-500 font-bold text-sm uppercase mb-2">Target Output</h4>
-                  <p className="text-sm text-white/80">Melahirkan SDM berkompeten yang siap bersaing di industri.</p>
-                </div>
+          <SpotlightCard className="bg-[#080808] p-8 md:p-16 border-yellow-500/20 text-center">
+            <div className="relative z-10">
+              <div className="inline-block bg-yellow-500 text-black font-bold px-3 py-1 text-xs uppercase tracking-widest mb-6 rounded-sm">Flagship Program</div>
+              
+              <h2 className="text-5xl md:text-8xl font-black mb-6 leading-none">
+                INNO <span className="text-white/30 italic font-serif">CLASS</span>
+              </h2>
+              
+              <p className="text-lg md:text-xl text-white/70 mb-10 leading-relaxed max-w-2xl mx-auto">
+                Pelatihan rutin <strong className="text-white">Hard Skill & Soft Skill</strong>. Bukan sekadar webinar, tapi kurikulum terstruktur agar seluruh mahasiswa TI punya kesempatan berkembang yang sama.
+              </p>
+              
+              <div className="inline-block p-6 bg-white/5 rounded-xl border border-white/10 max-w-lg mx-auto">
+                <h4 className="text-yellow-500 font-bold text-sm uppercase mb-2 flex items-center justify-center gap-2">
+                  <Target size={16} /> Target Output
+                </h4>
+                <p className="text-white/90">Melahirkan SDM berkompeten yang siap bersaing di industri.</p>
               </div>
 
-              {/* Visual Element */}
-              <div className="relative aspect-square md:aspect-video bg-gradient-to-tr from-gray-900 to-black rounded-xl border border-white/10 flex items-center justify-center overflow-hidden group">
-                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-50"></div>
-                 <div className="text-center group-hover:scale-110 transition-transform duration-500">
-                    <StarIcon className="w-20 h-20 text-yellow-500 mx-auto mb-4 animate-pulse" />
-                    <span className="text-2xl font-bold tracking-widest">JOIN US</span>
-                 </div>
-              </div>
             </div>
           </SpotlightCard>
         </div>

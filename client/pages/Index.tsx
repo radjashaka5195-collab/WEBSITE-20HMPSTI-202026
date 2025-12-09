@@ -23,7 +23,7 @@ function cn(...inputs: ClassValue[]) {
 
 // --- Components Internal ---
 
-// 1. NAVBAR COMPONENT (FIXED & RESPONSIVE)
+// 1. MODERN NAVBAR (Full Screen Mobile Menu)
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -37,6 +37,15 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Lock Body Scroll saat menu mobile terbuka
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isMobileMenuOpen]);
+
   const navLinks = [
     { name: "Beranda", id: "home" },
     { name: "Filosofi", id: "filosofi" },
@@ -45,86 +54,126 @@ const Navbar = () => {
   ];
 
   const handleScrollTo = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsMobileMenuOpen(false); // Tutup menu mobile setelah klik
-    }
+    setIsMobileMenuOpen(false); // Tutup menu dulu
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 300); // Delay sedikit biar animasi tutup selesai
   };
 
   return (
-    <nav
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b",
-        isScrolled 
-          ? "bg-black/80 backdrop-blur-md border-white/10 py-4" 
-          : "bg-transparent border-transparent py-6"
-      )}
-    >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        {/* Logo */}
-        <div 
-          onClick={() => handleScrollTo("home")}
-          className="cursor-pointer font-black text-xl tracking-tighter flex items-center gap-2"
-        >
-          {/* <div className="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center text-black">
-            <Terminal size={18} />
-          </div> */}
-          <span>KABINET INNOVARA</span>
-        </div>
-
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <button
-              key={link.name}
-              onClick={() => handleScrollTo(link.id)}
-              className="text-sm font-medium text-white/70 hover:text-yellow-500 transition-colors uppercase tracking-wider"
-            >
-              {link.name}
-            </button>
-          ))}
-          {/* <button 
-             onClick={() => handleScrollTo("visi")}
-             className="px-5 py-2 bg-white/10 hover:bg-yellow-500 hover:text-black border border-white/10 rounded-full transition-all text-sm font-bold"
+    <>
+      <nav
+        className={cn(
+          "fixed top-0 left-0 right-0 z-[100] transition-all duration-300",
+          isScrolled 
+            ? "bg-black/80 backdrop-blur-md border-b border-white/10 py-4" 
+            : "bg-transparent border-transparent py-6"
+        )}
+      >
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+          {/* Logo */}
+          <div 
+            onClick={() => handleScrollTo("home")}
+            className="relative z-[101] cursor-pointer font-black text-xl tracking-tighter flex items-center gap-2 text-white"
           >
-            Gabung
-          </button> */}
+            <span>KABINET INNOVARA</span>
+          </div>
+
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <button
+                key={link.name}
+                onClick={() => handleScrollTo(link.id)}
+                className="text-sm font-medium text-white/70 hover:text-yellow-500 transition-colors uppercase tracking-wider"
+              >
+                {link.name}
+              </button>
+            ))}
+          </div>
+
+          {/* Mobile Toggle Button */}
+          <button 
+            className="relative z-[101] md:hidden text-white w-10 h-10 flex items-center justify-center rounded-full active:bg-white/10 transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <AnimatePresence mode="wait">
+              {isMobileMenuOpen ? (
+                <motion.div
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <X size={24} />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="menu"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Menu size={24} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </button>
         </div>
+      </nav>
 
-        {/* Mobile Toggle */}
-        <button 
-          className="md:hidden text-white"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <X /> : <Menu />}
-        </button>
-      </div>
-
-      {/* Mobile Menu Dropdown */}
+      {/* FULL SCREEN MOBILE OVERLAY */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="md:hidden overflow-hidden bg-black border-b border-white/10"
+            initial={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
+            animate={{ opacity: 1, clipPath: "circle(150% at 100% 0%)" }}
+            exit={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
+            transition={{ duration: 0.5, ease: [0.32, 0, 0.67, 0] }}
+            className="fixed inset-0 z-[90] bg-[#050505] md:hidden flex flex-col justify-center items-center"
           >
-            <div className="flex flex-col p-6 space-y-6">
-              {navLinks.map((link) => (
-                <button
+            {/* Background Decoration */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute -top-[20%] -right-[20%] w-[80vw] h-[80vw] bg-yellow-600/10 blur-[100px] rounded-full"></div>
+                <div className="absolute -bottom-[20%] -left-[20%] w-[80vw] h-[80vw] bg-indigo-900/10 blur-[100px] rounded-full"></div>
+                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
+            </div>
+
+            {/* Menu Links */}
+            <div className="flex flex-col gap-8 text-center relative z-10">
+              {navLinks.map((link, i) => (
+                <motion.button
                   key={link.name}
+                  initial={{ y: 40, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: 20, opacity: 0 }}
+                  transition={{ delay: i * 0.1, duration: 0.4 }}
                   onClick={() => handleScrollTo(link.id)}
-                  className="text-left text-lg font-bold text-white/80 hover:text-yellow-500"
+                  className="text-4xl font-black text-white/40 hover:text-white uppercase tracking-tighter transition-all hover:scale-110 active:scale-95"
                 >
                   {link.name}
-                </button>
+                </motion.button>
               ))}
             </div>
+
+            {/* Footer Kecil di Menu */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="absolute bottom-10 text-white/20 font-mono text-xs uppercase tracking-widest"
+            >
+              HMPSTI 2026
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </>
   );
 };
 
@@ -238,7 +287,7 @@ export default function Index() {
   const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const rotate = useTransform(scrollYProgress, [0, 1], [0, 20]);
 
-  // Fungsi scroll dipindah ke dalam Navbar Component, tapi kita sediakan helper di sini jika butuh tombol lain
+  // Helper untuk scroll button di Hero (Navbar punya handler sendiri)
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -287,11 +336,6 @@ export default function Index() {
           </motion.div>
 
           <div className="relative w-full">
-            {/* 
-               PERBAIKAN FONT JUMBOTRON:
-               Menggunakan ukuran fluid (text-[13vw]) agar tulisan selalu pas di lebar layar, 
-               tidak kekecilan dan tidak kebesaran.
-            */}
             <h1 className="font-black leading-[0.9] tracking-tighter uppercase select-none w-full">
               <motion.span 
                 initial={{ y: 50, opacity: 0 }} 
@@ -317,7 +361,7 @@ export default function Index() {
             </motion.div>
           </div>
 
-          <FadeIn delay={0.4} className="mt-8 md:mt-12 max-w-xl md:max-w-2xl mx-auto px-4">
+          <FadeIn delay={0.4} className="mt-8 md:mt-12 max-w-xl md:max-w-2xl mx-auto px-9">
             <p className="text-sm md:text-xl text-white/60 leading-relaxed font-light">
               Mewujudkan era baru melalui <span className="text-yellow-400 font-bold">Inovasi</span> yang berdampak dan <span className="text-yellow-400 font-bold">Kolaborasi</span> tanpa batas.
             </p>
@@ -356,7 +400,7 @@ export default function Index() {
                 <FadeIn delay={0.2} direction="right">
                   <div className="relative pl-6 md:pl-8 border-l-2 border-yellow-500/30">
                     <h3 className="text-4xl sm:text-5xl md:text-6xl font-black text-yellow-500 mb-2">INNOVA</h3>
-                    <p className="text-[10px] md:text-sm font-mono text-white/40 mb-3 uppercase tracking-widest">// Root Word: Innovation</p>
+                    <p className="text-[10px] md:text-sm font-mono text-white/40 mb-3 uppercase tracking-widest">// Berasal dari kata: Innovation</p>
                     <p className="text-base md:text-xl text-white/80">
                       Semangat menciptakan hal baru yang <span className="text-white font-bold">beda</span> dari sebelumnya. Bukan sekadar rutinitas.
                     </p>
@@ -366,7 +410,7 @@ export default function Index() {
                 <FadeIn delay={0.4} direction="right">
                   <div className="relative pl-6 md:pl-8 border-l-2 border-white/20">
                     <h3 className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-2">RA</h3>
-                    <p className="text-[10px] md:text-sm font-mono text-white/40 mb-3 uppercase tracking-widest">// Suffix: Era / Zaman</p>
+                    <p className="text-[10px] md:text-sm font-mono text-white/40 mb-3 uppercase tracking-widest">// Berasal dari kata: Era / Zaman</p>
                     <p className="text-base md:text-xl text-white/80">
                       Dimulainya zaman dimana aspirasi didengar & kolaborasi terbuka lebar.
                     </p>

@@ -1,5 +1,8 @@
 import { Header } from "@/components/Header";
 import { Brain, Radio, Zap } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import AutoPlay from "embla-carousel-autoplay";
 
 export default function Index() {
   const Decor = ({ className = "" }) => (

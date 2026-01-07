@@ -1,23 +1,18 @@
-import "dotenv/config";
-import express from "express";
-import cors from "cors";
-import { handleDemo } from "./routes/demo";
+import express, { type Express } from "express";
 
-export function createServer() {
+// Kita hapus 'async' dan pastikan return type-nya 'Express'
+export function createServer(): Express {
   const app = express();
 
-  // Middleware
-  app.use(cors());
+  // Middleware dasar
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  // Example API routes
-  app.get("/api/ping", (_req, res) => {
-    const ping = process.env.PING_MESSAGE ?? "ping";
-    res.json({ message: ping });
+  // --- API ROUTES ---
+  app.get("/api/health", (req, res) => {
+    res.json({ status: "ok", message: "Server is running smoothly" });
   });
 
-  app.get("/api/demo", handleDemo);
-
+  // Return aplikasi Express saja (bukan server http yang sedang jalan)
   return app;
 }

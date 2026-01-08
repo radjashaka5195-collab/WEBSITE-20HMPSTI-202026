@@ -1,9 +1,23 @@
 import { Navbar } from "../components/Navbar";
-import { Footer } from "../components/Footer";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { Link } from "react-router-dom"; // Tambahan Import buat Link
-import { ArrowRight, Sparkles } from "lucide-react"; // Tambahan Icon
+import { Link } from "react-router-dom"; 
+// Ikon tambahan untuk Footer & Halaman
+import { ArrowRight, Sparkles, Terminal, Star as StarIcon, Instagram, Linkedin, ChevronDown } from "lucide-react"; 
+
+// --- IKON CUSTOM (Sama kayak di Home) ---
+const TikTokIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" /></svg>
+);
+const WhatsAppIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" /></svg>
+);
+
+const SocialLink = ({ href, icon: Icon, label }: { href: string; icon: any; label?: string }) => (
+  <a href={href} target="_blank" rel="noopener noreferrer" className="group relative p-3 bg-white/5 rounded-full border border-white/10 hover:border-[#33A5D3]/50 transition-all duration-300 hover:bg-[#33A5D3]/10 hover:-translate-y-1 overflow-hidden cursor-pointer flex items-center justify-center" title={label}>
+    <Icon className="w-5 h-5 text-gray-400 group-hover:text-[#33A5D3] transition-colors relative z-10" />
+  </a>
+);
 
 // --- DATA (TIDAK BERUBAH) ---
 const bphInti = {
@@ -142,6 +156,14 @@ const LineVertical = ({ height = "h-12", variant = "default" }) => {
 
 // --- MAIN PAGE ---
 export default function Struktur() {
+  
+  // Data Navigasi untuk Footer
+  const footerLinks = [
+    { name: "Beranda", path: "/" },
+    { name: "Struktur", path: "/struktur" },
+    { name: "Departemen", path: "/departemen" },
+  ];
+
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-sky-500/30 overflow-hidden relative">
       <Navbar />
@@ -227,11 +249,11 @@ export default function Struktur() {
                     </div>
                 </div>
                 <div className="flex flex-col items-center mt-6 relative z-10">
-                     <CardWrapper>
+                      <CardWrapper>
                         <OrgCard {...dataKompas.ketua} variant="kompas" className="scale-105 border-amber-500/30 shadow-[0_0_60px_-20px_rgba(245,158,11,0.2)]" />
-                     </CardWrapper>
-                     <LineVertical height="h-16" variant="kompas" />
-                     <div className="flex flex-wrap justify-center gap-4 max-w-6xl">
+                      </CardWrapper>
+                      <LineVertical height="h-16" variant="kompas" />
+                      <div className="flex flex-wrap justify-center gap-4 max-w-6xl">
                         {dataKompas.anggota.map((item, idx) => (
                             <CardWrapper key={idx} delay={0.2 + (idx * 0.05)}>
                                 <div className="relative pt-6">
@@ -240,7 +262,7 @@ export default function Struktur() {
                                 </div>
                             </CardWrapper>
                         ))}
-                     </div>
+                      </div>
                 </div>
              </div>
         </section>
@@ -277,9 +299,9 @@ export default function Struktur() {
                                      <div className="absolute top-[calc(100%+24px)] right-[15%] w-[1px] h-4 bg-white/10"></div>
                                  </div>
                                  <div className="flex justify-between w-full px-4 pt-6">
-                                    {dept.wakil.map((w, i) => (
-                                        <WakilCard key={i} nama={w.nama} jabatan={w.jabatan} />
-                                    ))}
+                                     {dept.wakil.map((w, i) => (
+                                         <WakilCard key={i} nama={w.nama} jabatan={w.jabatan} />
+                                     ))}
                                  </div>
                             </div>
                         </div>
@@ -288,7 +310,7 @@ export default function Struktur() {
             </div>
         </section>
 
-        {/* === NEXT PAGE NAVIGATION (TOMBOL KEREN) === */}
+        {/* === NEXT PAGE NAVIGATION === */}
         <motion.div 
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -296,13 +318,10 @@ export default function Struktur() {
             className="flex justify-center mb-24"
         >
             <Link to="/departemen" className="group relative w-full max-w-4xl">
-                {/* Button Container */}
                 <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#0A0A0A] p-10 md:p-14 text-center transition-all duration-500 hover:border-sky-500/50 hover:shadow-[0_0_80px_-20px_rgba(14,165,233,0.3)]">
                     
-                    {/* Animated Background Gradient (Hidden by default, shows on hover) */}
                     <div className="absolute inset-0 bg-gradient-to-r from-sky-600 via-amber-500 to-sky-600 opacity-0 group-hover:opacity-20 transition-opacity duration-700 bg-[length:200%_auto] animate-gradient-x"></div>
                     
-                    {/* Particles Effect */}
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                         <div className="absolute top-10 right-20 w-2 h-2 bg-white rounded-full animate-ping"></div>
                         <div className="absolute bottom-10 left-20 w-1 h-1 bg-white rounded-full animate-ping delay-300"></div>
@@ -323,7 +342,6 @@ export default function Struktur() {
                             Kenali lebih dalam program kerja dan fungsi setiap departemen di kabinet Innovara.
                         </p>
 
-                        {/* Round Button Icon */}
                         <div className="w-16 h-16 rounded-full bg-white/10 border border-white/10 flex items-center justify-center group-hover:bg-sky-500 group-hover:text-black group-hover:rotate-[-45deg] transition-all duration-500 shadow-lg">
                              <ArrowRight className="w-8 h-8" strokeWidth={2.5} />
                         </div>
@@ -333,7 +351,46 @@ export default function Struktur() {
         </motion.div>
 
       </div>
-      <Footer />
+      
+      {/* === FOOTER YANG SUDAH DIPERBARUI (SAMA DENGAN HOME) === */}
+      <section className="relative py-20 bg-[#050505] border-t border-white/10 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col items-center relative z-10">
+            {/* LOGO FOOTER */}
+            <motion.div whileHover={{ scale: 1.05 }} className="mb-10 cursor-default">
+                <span className="text-6xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-br from-[#33A5D3] to-[#F59E0B] tracking-tighter select-none drop-shadow-2xl opacity-90 hover:opacity-100 transition-opacity">
+                    INNOVARA
+                </span>
+            </motion.div>
+
+            {/* SOSMED ICONS */}
+            <div className="flex gap-6 mb-12">
+                <SocialLink href="https://www.instagram.com/hmpsti.vokasiub/" icon={Instagram} label="Instagram" />
+                <SocialLink href="https://www.tiktok.com/@hmpsti.vokasiub" icon={TikTokIcon} label="TikTok" />
+                <SocialLink href="https://www.linkedin.com/company/hmpsti-vokasi-ub/" icon={Linkedin} label="LinkedIn" />
+                <SocialLink href="#" icon={WhatsAppIcon} label="Contact Person" />
+            </div>
+
+            {/* NAVIGASI FOOTER */}
+            <div className="flex flex-wrap justify-center gap-8 mb-10 text-sm font-bold uppercase tracking-widest text-gray-500">
+                {footerLinks.map((link) => (
+                    <Link key={link.name} to={link.path} className="hover:text-[#33A5D3] transition-colors relative group">
+                        {link.name}
+                        <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#F59E0B] transition-all group-hover:w-full"></span>
+                    </Link>
+                ))}
+            </div>
+
+            {/* COPYRIGHT */}
+            <div className="text-center border-t border-white/5 pt-8 w-full max-w-lg">
+                <p className="text-gray-600 font-mono text-[10px] uppercase tracking-widest mb-3">
+                    © 2026 HMPSTI UB • <span className="text-[#33A5D3]">Kabinet Innovara</span>
+                </p>
+                <p className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-[#33A5D3] to-[#F59E0B] tracking-widest uppercase">
+                    Satu Hati, Satu Gerak, TI Jaya!
+                </p>
+            </div>
+        </div>
+      </section>
     </div>
   );
 }

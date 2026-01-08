@@ -1,9 +1,23 @@
 import { Navbar } from "../components/Navbar";
-import { Footer } from "../components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { ArrowUpRight, X, Target, User } from "lucide-react";
+import { Link } from "react-router-dom"; // Import Link untuk Footer
+import { ArrowUpRight, X, Target, User, Instagram, Linkedin } from "lucide-react"; // Tambah Icon Sosmed
+
+// --- IKON CUSTOM (Sama kayak di Home & Struktur) ---
+const TikTokIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" /></svg>
+);
+const WhatsAppIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" /></svg>
+);
+
+const SocialLink = ({ href, icon: Icon, label }: { href: string; icon: any; label?: string }) => (
+  <a href={href} target="_blank" rel="noopener noreferrer" className="group relative p-3 bg-white/5 rounded-full border border-white/10 hover:border-[#33A5D3]/50 transition-all duration-300 hover:bg-[#33A5D3]/10 hover:-translate-y-1 overflow-hidden cursor-pointer flex items-center justify-center" title={label}>
+    <Icon className="w-5 h-5 text-gray-400 group-hover:text-[#33A5D3] transition-colors relative z-10" />
+  </a>
+);
 
 // --- DATA DUMMY STAF (Bisa diupdate nanti) ---
 const dummyStaff = [
@@ -15,8 +29,7 @@ const dummyStaff = [
   { nama: "Rizky Billar", posisi: "Staff Magang" },
 ];
 
-// --- DATA DEPARTEMEN LENGKAP (Dengan Logo Asli) ---
-// Catatan: Pastikan nama file di folder public/assets/logos SAMA PERSIS (Case Sensitive)
+// --- DATA DEPARTEMEN LENGKAP ---
 const departments = [
   {
     id: "psdm",
@@ -24,7 +37,7 @@ const departments = [
     panjang: "Pengembangan Sumber Daya Mahasiswa",
     desc: "Jantung kaderisasi dan pengembangan potensi mahasiswa TI.",
     theme: "sky",
-    logo: "/assets/logos/PSDM.png", // Sesuai nama file di screenshot
+    logo: "/assets/logos/PSDM.png",
     proker: ["Latihan Dasar Kepemimpinan", "Upgrading Pengurus", "Staff Magang"],
     staff: dummyStaff
   },
@@ -42,7 +55,7 @@ const departments = [
     id: "medinfo",
     nama: "MEDINFO",
     panjang: "Media & Informasi",
-    desc: "Corong informasi kreatif dan branding visual himpunan.",
+    desc: "Wadah informasi kreatif dan branding visual himpunan.",
     theme: "sky",
     logo: "/assets/logos/Medinfo.png",
     proker: ["Podcast TI", "Design Class", "Company Profile Video"],
@@ -80,7 +93,7 @@ const departments = [
   },
   {
     id: "mikat",
-    nama: "KORA", // Saya sesuaikan karena nama filenya Kora.png
+    nama: "KORA",
     panjang: "Kreatifitas & Olahraga",
     desc: "Fasilitator penyalur hobi, seni, dan olahraga mahasiswa.",
     theme: "sky",
@@ -139,7 +152,7 @@ const DeptCard = ({ data, index, onClick }: { data: any, index: number, onClick:
       ></div>
 
       <div className="relative z-10">
-        {/* LOGO SECTION (UPDATED) */}
+        {/* LOGO SECTION */}
         <div className={cn("w-20 h-20 rounded-2xl flex items-center justify-center p-3 bg-white/5 border border-white/10 mb-6 transition-all duration-500 group-hover:scale-110 group-hover:bg-black/50 backdrop-blur-sm", mainColor)}>
             <img 
                 src={data.logo} 
@@ -175,6 +188,12 @@ const DeptCard = ({ data, index, onClick }: { data: any, index: number, onClick:
 // --- MAIN PAGE ---
 export default function Departemen() {
   const [selectedDept, setSelectedDept] = useState<any>(null);
+
+  const footerLinks = [
+    { name: "Beranda", path: "/" },
+    { name: "Struktur", path: "/struktur" },
+    { name: "Departemen", path: "/departemen" },
+  ];
 
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-sky-500/30 overflow-x-hidden">
@@ -216,7 +235,45 @@ export default function Departemen() {
         </div>
       </div>
 
-      <Footer />
+      {/* === FOOTER YANG SUDAH DIPERBARUI === */}
+      <section className="relative py-20 bg-[#050505] border-t border-white/10 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col items-center relative z-10">
+            {/* LOGO FOOTER */}
+            <motion.div whileHover={{ scale: 1.05 }} className="mb-10 cursor-default">
+                <span className="text-6xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-br from-[#33A5D3] to-[#F59E0B] tracking-tighter select-none drop-shadow-2xl opacity-90 hover:opacity-100 transition-opacity">
+                    INNOVARA
+                </span>
+            </motion.div>
+
+            {/* SOSMED ICONS */}
+            <div className="flex gap-6 mb-12">
+                <SocialLink href="https://www.instagram.com/hmpsti.vokasiub/" icon={Instagram} label="Instagram" />
+                <SocialLink href="https://www.tiktok.com/@hmpsti.vokasiub" icon={TikTokIcon} label="TikTok" />
+                <SocialLink href="https://www.linkedin.com/company/hmpsti-vokasi-ub/" icon={Linkedin} label="LinkedIn" />
+                <SocialLink href="#" icon={WhatsAppIcon} label="Contact Person" />
+            </div>
+
+            {/* NAVIGASI FOOTER */}
+            <div className="flex flex-wrap justify-center gap-8 mb-10 text-sm font-bold uppercase tracking-widest text-gray-500">
+                {footerLinks.map((link) => (
+                    <Link key={link.name} to={link.path} className="hover:text-[#33A5D3] transition-colors relative group">
+                        {link.name}
+                        <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#F59E0B] transition-all group-hover:w-full"></span>
+                    </Link>
+                ))}
+            </div>
+
+            {/* COPYRIGHT */}
+            <div className="text-center border-t border-white/5 pt-8 w-full max-w-lg">
+                <p className="text-gray-600 font-mono text-[10px] uppercase tracking-widest mb-3">
+                    © 2026 HMPSTI UB • <span className="text-[#33A5D3]">Kabinet Innovara</span>
+                </p>
+                <p className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-[#33A5D3] to-[#F59E0B] tracking-widest uppercase">
+                    Satu Hati, Satu Gerak, TI Jaya!
+                </p>
+            </div>
+        </div>
+      </section>
 
       {/* === MODAL / POPUP DETAIL DEPARTEMEN === */}
       <AnimatePresence>
@@ -247,11 +304,11 @@ export default function Departemen() {
 
                 {/* Left Side: Info & Proker */}
                 <div className={cn("p-8 md:p-12 w-full md:w-1/3 flex flex-col relative overflow-hidden", selectedDept.theme === "amber" ? "bg-amber-950/20" : "bg-sky-950/20")}>
-                     {/* Decorative Blob */}
-                     <div className={cn("absolute top-0 left-0 w-64 h-64 blur-[80px] rounded-full opacity-30 pointer-events-none", selectedDept.theme === "amber" ? "bg-amber-500" : "bg-sky-500")}></div>
-                     
-                     <div className="relative z-10">
-                        {/* MODAL LOGO (UPDATED) */}
+                      {/* Decorative Blob */}
+                      <div className={cn("absolute top-0 left-0 w-64 h-64 blur-[80px] rounded-full opacity-30 pointer-events-none", selectedDept.theme === "amber" ? "bg-amber-500" : "bg-sky-500")}></div>
+                      
+                      <div className="relative z-10">
+                        {/* MODAL LOGO */}
                         <img 
                             src={selectedDept.logo} 
                             alt={selectedDept.nama} 
@@ -267,27 +324,27 @@ export default function Departemen() {
                             <ul className="space-y-3">
                                 {selectedDept.proker.map((pk: string, i: number) => (
                                     <li key={i} className="flex items-start gap-3 text-sm text-gray-300">
-                                        <Target size={16} className={cn("mt-0.5 shrink-0", selectedDept.theme === "amber" ? "text-amber-500" : "text-sky-500")} />
-                                        {pk}
+                                            <Target size={16} className={cn("mt-0.5 shrink-0", selectedDept.theme === "amber" ? "text-amber-500" : "text-sky-500")} />
+                                            {pk}
                                     </li>
                                 ))}
                             </ul>
                         </div>
-                     </div>
+                      </div>
                 </div>
 
                 {/* Right Side: Staff Grid */}
                 <div className="flex-1 bg-black/50 p-8 md:p-12 overflow-y-auto max-h-[60vh] md:max-h-[80vh]">
-                     <div className="flex items-center justify-between mb-8">
+                      <div className="flex items-center justify-between mb-8">
                         <h3 className="text-2xl font-bold text-white">Anggota Staff</h3>
                         <span className="text-xs font-mono text-gray-500 bg-white/5 px-3 py-1 rounded-full">{selectedDept.staff.length} Orang</span>
-                     </div>
-                     
-                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      </div>
+                      
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {selectedDept.staff.map((staf: any, i: number) => (
                             <StaffCard key={i} nama={staf.nama} posisi={staf.posisi} theme={selectedDept.theme} />
                         ))}
-                     </div>
+                      </div>
                 </div>
 
             </motion.div>

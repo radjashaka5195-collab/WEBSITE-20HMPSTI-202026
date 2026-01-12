@@ -2,20 +2,21 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+// Tambahkan 'Navigate' di sini untuk fungsi redirect
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 
 // --- IMPORT HALAMAN ---
-// Pastikan file-file ini sudah ada di folder /pages ya!
 import Home from "./pages/Home";
-import Struktur from "./pages/Struktur";
-import Departemen from "./pages/Departemen";
 import NotFound from "./pages/NotFound";
+
+// Halaman ini kita sembunyikan dulu (Commented Out)
+// import Struktur from "./pages/Struktur";
+// import Departemen from "./pages/Departemen";
 
 const queryClient = new QueryClient();
 
 // --- COMPONENT UTILITY: SCROLL TO TOP ---
-// Fungsinya: Biar setiap ganti halaman, scroll otomatis balik ke paling atas
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -37,14 +38,19 @@ const App = () => (
         <ScrollToTop />
         
         <Routes>
-          {/* Rute Utama */}
+          {/* Rute Utama (Home) - INI YANG AKTIF */}
           <Route path="/" element={<Home />} />
           
-          {/* Rute Halaman Lain */}
-          <Route path="/struktur" element={<Struktur />} />
-          <Route path="/departemen" element={<Departemen />} />
+          {/* --- SECURITY GUARD (ANTI USIL) --- */}
+          {/* Kalau ada yang coba akses /struktur atau /departemen, tendang balik ke Home */}
+          <Route path="/struktur" element={<Navigate to="/" replace />} />
+          <Route path="/departemen" element={<Navigate to="/" replace />} />
           
-          {/* Rute 404 (Kalau link ngawur) */}
+          {/* Rute Asli (Disimpan dulu, nanti kalau sudah siap tinggal buka comment-nya) */}
+          {/* <Route path="/struktur" element={<Struktur />} /> */}
+          {/* <Route path="/departemen" element={<Departemen />} /> */}
+          
+          {/* Rute 404 (Kalau link ngawur banget misal /asdfg) */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

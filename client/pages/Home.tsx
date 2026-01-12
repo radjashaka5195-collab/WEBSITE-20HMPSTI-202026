@@ -1,5 +1,4 @@
 import { ArrowRight, Star as StarIcon, Terminal, Instagram, Linkedin, ChevronDown, Quote } from "lucide-react";
-// Hapus import ikon misi (Target, Users, dll) karena sudah tidak dipakai
 import { useScroll, useTransform, motion } from "framer-motion";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -33,8 +32,7 @@ const SocialLink = ({ href, icon: Icon, label }: { href: string; icon: any; labe
   </a>
 );
 
-// --- COMPONENT MISI CARD (REVISI: TANPA IKON) ---
-// Prop 'icon' sudah dihapus dari sini
+// --- COMPONENT MISI CARD ---
 const MisiCard = ({ number, title, text, color, delay }: any) => {
   const isBlue = color === "blue";
   const bgHover = isBlue ? "hover:bg-[#33A5D3]/5" : "hover:bg-[#F59E0B]/5";
@@ -44,20 +42,15 @@ const MisiCard = ({ number, title, text, color, delay }: any) => {
   return (
     <FadeIn delay={delay} className="h-full">
       <div className={cn("group relative h-full p-8 rounded-3xl bg-[#0A0A0A] border border-white/5 transition-all duration-500 overflow-hidden", bgHover, borderHover)}>
-         {/* Angka Background Besar */}
          <div className={cn("absolute -right-4 -top-8 text-[8rem] font-black opacity-[0.03] select-none transition-transform duration-500 group-hover:scale-110", titleColor)}>
             {number}
          </div>
-
          <div className="relative z-10 flex flex-col h-full justify-start items-start">
-            {/* Bagian Header Angka (Tanpa Ikon) */}
             <div className="mb-6">
-                {/* Angka dibuat lebih besar dan solid warnanya */}
                 <span className={cn("text-5xl font-black tracking-tighter leading-none", titleColor)}>
                     0{number}
                 </span>
             </div>
-            
             <h4 className="text-xl font-bold text-white mb-3 leading-tight">{title}</h4>
             <p className="text-gray-400 text-sm leading-relaxed group-hover:text-gray-300 transition-colors">
                 {text}
@@ -68,17 +61,11 @@ const MisiCard = ({ number, title, text, color, delay }: any) => {
   );
 };
 
-// === HALAMAN HOME ===
+// === HALAMAN HOME UTAMA ===
 export default function Home() {
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
   
-  const footerLinks = [
-    { name: "Beranda", path: "/" },
-    { name: "Struktur", path: "/struktur" },
-    { name: "Departemen", path: "/departemen" },
-  ];
-
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-[#33A5D3] selection:text-white overflow-x-hidden">
       <Navbar />
@@ -113,17 +100,6 @@ export default function Home() {
             <p className="text-lg md:text-2xl text-gray-400 font-light max-w-2xl mx-auto leading-relaxed mb-12">
               Mewujudkan era baru melalui <span className="text-[#33A5D3] font-bold border-b border-[#33A5D3]">Inovasi</span> yang berdampak dan <span className="text-[#F59E0B] font-bold border-b border-[#F59E0B]">Kolaborasi</span> tanpa batas.
             </p>
-          </FadeIn>
-
-          <FadeIn delay={0.6}>
-            <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
-              <Link to="/struktur" className="group relative px-8 py-4 bg-[#33A5D3] text-white font-black uppercase tracking-widest rounded-full overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(51,165,211,0.5)]">
-                <span className="relative z-10 flex items-center gap-2">Explore Us <ArrowRight size={18} /></span>
-              </Link>
-              <Link to="/departemen" className="px-8 py-4 text-[#F59E0B] border border-[#F59E0B]/50 rounded-full font-bold uppercase tracking-widest hover:bg-[#F59E0B] hover:text-black hover:border-[#F59E0B] transition-all">
-                Departemen
-              </Link>
-            </div>
           </FadeIn>
         </motion.div>
 
@@ -179,11 +155,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- 3. VISI & MISI (BENTO GRID STYLE - REVISI) --- */}
+      {/* --- 3. VISI & MISI --- */}
       <section className="relative z-10 py-32 bg-black border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6">
-            
-            {/* Header Visi */}
             <div className="text-center mb-16">
                 <FadeIn>
                     <span className="text-[#F59E0B] font-mono uppercase tracking-[0.4em] text-xs font-bold border-b border-[#F59E0B] pb-2">Visi Utama</span>
@@ -198,100 +172,55 @@ export default function Home() {
                 </FadeIn>
             </div>
 
-            {/* --- PEMISAH / JUDUL MISI --- */}
             <div className="text-center mb-12 mt-20">
                 <FadeIn delay={0.2}>
                      <span className="text-[#33A5D3] font-mono uppercase tracking-[0.4em] text-xs font-bold border-b border-[#33A5D3] pb-2">Misi Kami</span>
                 </FadeIn>
             </div>
 
-            {/* Grid Misi (Bento Box - Tanpa Ikon di Card) */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
-                
-                {/* Misi 1 (Full Width) */}
                 <div className="col-span-1 lg:col-span-12 min-h-[220px]">
-                    <MisiCard 
-                        number="1" 
-                        title="Tata Kelola Profesional" 
-                        text="Tata kelola organisasi Profesional berbasis kinerja (KPI) untuk memastikan setiap langkah strategis terukur dan berdampak."
-                        color="blue"
-                        delay={0.1}
-                    />
+                    <MisiCard number="1" title="Tata Kelola Profesional" text="Tata kelola organisasi Profesional berbasis kinerja (KPI) untuk memastikan setiap langkah strategis terukur dan berdampak." color="blue" delay={0.1} />
                 </div>
-
-                {/* Misi 2 */}
                 <div className="col-span-1 lg:col-span-6 min-h-[250px]">
-                    <MisiCard 
-                        number="2" 
-                        title="Kolaborasi Sinergis" 
-                        text="Menjalin kolaborasi erat dengan organisasi internal, institusi, dan industri luar untuk memperluas jaringan."
-                        color="orange"
-                        delay={0.2}
-                    />
+                    <MisiCard number="2" title="Kolaborasi Sinergis" text="Menjalin kolaborasi erat dengan organisasi internal, institusi, dan industri luar untuk memperluas jaringan." color="orange" delay={0.2} />
                 </div>
-
-                {/* Misi 3 */}
                 <div className="col-span-1 lg:col-span-6 min-h-[250px]">
-                    <MisiCard 
-                        number="3" 
-                        title="Jembatan Aspirasi" 
-                        text="Menjadi garda terdepan dalam memperhatikan hak & kesejahteraan mahasiswa melalui advokasi yang responsif."
-                        color="blue"
-                        delay={0.3}
-                    />
+                    <MisiCard number="3" title="Jembatan Aspirasi" text="Menjadi garda terdepan dalam memperhatikan hak & kesejahteraan mahasiswa melalui advokasi yang responsif." color="blue" delay={0.3} />
                 </div>
-
-                {/* Misi 4 */}
                 <div className="col-span-1 lg:col-span-6 min-h-[250px]">
-                    <MisiCard 
-                        number="4" 
-                        title="Pengembangan Prestasi" 
-                        text="Fokus pada pengembangan Hard Skill & Soft Skill mahasiswa untuk mencetak prestasi di tingkat nasional maupun internasional."
-                        color="orange"
-                        delay={0.4}
-                    />
+                    <MisiCard number="4" title="Pengembangan Prestasi" text="Fokus pada pengembangan Hard Skill & Soft Skill mahasiswa untuk mencetak prestasi di tingkat nasional maupun internasional." color="orange" delay={0.4} />
                 </div>
-
-                {/* Misi 5 */}
                 <div className="col-span-1 lg:col-span-6 min-h-[250px]">
-                    <MisiCard 
-                        number="5" 
-                        title="Inovasi Fungsional" 
-                        text="Menghadirkan inovasi program kerja yang tidak hanya baru, tapi juga tepat sasaran dan fungsional bagi mahasiswa."
-                        color="blue"
-                        delay={0.5}
-                    />
+                    <MisiCard number="5" title="Inovasi Fungsional" text="Menghadirkan inovasi program kerja yang tidak hanya baru, tapi juga tepat sasaran dan fungsional bagi mahasiswa." color="blue" delay={0.5} />
                 </div>
-
             </div>
         </div>
       </section>
 
-      {/* --- FOOTER --- */}
+      {/* --- FOOTER (VERSI MVP: NAVIGASI HILANG + WA AKTIF) --- */}
       <section className="relative py-20 bg-[#050505] border-t border-white/10 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 flex flex-col items-center relative z-10">
+            {/* LOGO BESAR */}
             <motion.div whileHover={{ scale: 1.05 }} className="mb-10 cursor-default">
                 <span className="text-6xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-br from-[#33A5D3] to-[#F59E0B] tracking-tighter select-none drop-shadow-2xl opacity-90 hover:opacity-100 transition-opacity">
                     INNOVARA
                 </span>
             </motion.div>
 
+            {/* SOCIAL MEDIA ICONS (WA LINK SUDAH DIMASUKKAN) */}
             <div className="flex gap-6 mb-12">
                 <SocialLink href="https://www.instagram.com/hmpsti.vokasiub/" icon={Instagram} label="Instagram" />
                 <SocialLink href="https://www.tiktok.com/@hmpsti.vokasiub" icon={TikTokIcon} label="TikTok" />
                 <SocialLink href="https://www.linkedin.com/company/hmpsti-vokasi-ub/" icon={Linkedin} label="LinkedIn" />
-                <SocialLink href="#" icon={WhatsAppIcon} label="Contact Person" />
+                
+                {/* --- UPDATE: WA LINK DISINI --- */}
+                <SocialLink href="https://wa.me/6282218361690" icon={WhatsAppIcon} label="Contact Person" />
             </div>
 
-            <div className="flex flex-wrap justify-center gap-8 mb-10 text-sm font-bold uppercase tracking-widest text-gray-500">
-                {footerLinks.map((link) => (
-                    <Link key={link.name} to={link.path} className="hover:text-[#33A5D3] transition-colors relative group">
-                        {link.name}
-                        <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#F59E0B] transition-all group-hover:w-full"></span>
-                    </Link>
-                ))}
-            </div>
+            {/* --- NAVIGASI SUDAH DIHAPUS TOTAL DI SINI --- */}
 
+            {/* COPYRIGHT */}
             <div className="text-center border-t border-white/5 pt-8 w-full max-w-lg">
                 <p className="text-gray-600 font-mono text-[10px] uppercase tracking-widest mb-3">
                     © 2026 HMPSTI UB • <span className="text-[#33A5D3]">Kabinet Innovara</span>

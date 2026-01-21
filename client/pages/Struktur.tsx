@@ -26,7 +26,7 @@ const bphInti = [
     quote: "Sinergi adalah kunci keberhasilan.",
     instagram: "https://www.instagram.com/ptrisabill/"
   },
-  { role: "staff", nama: "Vivi", jabatan: "Sekretaris I", foto: "/assets/logos/images/vivi.png", instagram: "https://www.instagram.com/vinoo24_/" },
+  { role: "staff", nama: "Vivi", jabatan: "Sekretaris I", foto: "/assets/logos/images/vivi.png", instagram: "https://www.instagram.com/fwairypiyy/" },
   { role: "staff", nama: "Raja Esa", jabatan: "Sekretaris II", foto: "/assets/logos/images/esa.png", instagram: "https://www.instagram.com/rajaesa_/" },
   { role: "staff", nama: "Mutia Aura", jabatan: "Bendahara I", foto: "/assets/logos/images/mutia.png", instagram: "https://www.instagram.com/mutiaauraaaa_/" },
   { role: "staff", nama: "Angel", jabatan: "Bendahara II", foto: "/assets/logos/images/angel.png", instagram: "https://www.instagram.com/angelinvcn_/" },

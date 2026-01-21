@@ -172,7 +172,7 @@ export default function Announcement() {
 
       <div className="pt-32 pb-20 px-6 max-w-7xl mx-auto">
         
-        {/* HEADER (REVISED: RESPONSIVE FONT SIZE & WRAPPING) */}
+        {/* HEADER (STANDARD RESPONSIVE) */}
         <div className="relative text-center mb-20">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-[150px] bg-sky-600/15 blur-[100px] rounded-full pointer-events-none"></div>
 
@@ -182,7 +182,7 @@ export default function Announcement() {
             transition={{ duration: 0.8 }}
             className="relative z-10"
           >
-            {/* JUDUL: Responsive Extreme (3xl di HP, 8xl di Laptop) */}
+            {/* JUDUL: Responsive Aman */}
             <h1 className="text-3xl sm:text-5xl md:text-8xl font-black text-white tracking-tighter leading-[1.1] md:leading-[0.9] mb-8 drop-shadow-2xl">
               SELAMAT DATANG<br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#33A5D3] via-white to-[#F59E0B]">
@@ -190,7 +190,7 @@ export default function Announcement() {
               </span>
             </h1>
             
-            {/* DESKRIPSI: Wrap di HP, Satu Baris di Laptop */}
+            {/* DESKRIPSI: Responsive Aman */}
             <div className="inline-block relative max-w-full px-4">
                <div className="absolute inset-0 bg-white/5 blur-md rounded-2xl md:rounded-full"></div>
                <p className="relative z-10 text-gray-300 text-xs sm:text-sm md:text-lg py-3 px-6 rounded-2xl md:rounded-full border border-white/10 bg-[#0A0A0A]/50 backdrop-blur-sm shadow-xl whitespace-normal md:whitespace-nowrap leading-relaxed">
@@ -245,7 +245,7 @@ export default function Announcement() {
                         transition={{ delay: index * 0.05 }}
                         className="group relative bg-gradient-to-br from-[#0F0F0F] to-[#050505] border border-white/10 rounded-3xl p-6 hover:border-[#33A5D3]/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#33A5D3]/10 overflow-hidden cursor-pointer flex flex-col justify-between min-h-[180px]"
                     >
-                         <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#33A5D3]/5 rounded-full blur-[60px] group-hover:bg-[#33A5D3]/10 transition-all duration-500"></div>
+                         <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#33A5D3]/5 rounded-full blur-[60px] group-hover:bg-[#33A5D3]/10 transition-all duration-500 pointer-events-none"></div>
 
                          {/* Header Card */}
                          <div className="relative z-10 flex items-start justify-between mb-4">
@@ -279,7 +279,7 @@ export default function Announcement() {
         )}
       </div>
 
-      {/* --- MODAL POPUP (PESAN KESAN) --- */}
+      {/* --- MODAL POPUP (STANDARD BERSIH) --- */}
       <AnimatePresence>
         {selectedCandidate && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -302,7 +302,7 @@ export default function Announcement() {
                <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#33A5D3]/10 rounded-full blur-[100px]"></div>
                <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-[#F59E0B]/5 rounded-full blur-[100px]"></div>
 
-               {/* Close Button */}
+               {/* Close Button (STANDARD) */}
                <button 
                  onClick={() => setSelectedCandidate(null)}
                  className="absolute top-4 right-4 p-2 bg-white/5 rounded-full hover:bg-white/10 transition-colors z-20 border border-white/5"

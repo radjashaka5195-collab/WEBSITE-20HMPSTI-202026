@@ -25,9 +25,9 @@ export const Navbar = () => {
 
   // --- SEMUA MENU DISEMBUNYIKAN (MVP MODE) ---
   const navLinks = [
-    // { name: "Beranda", path: "/" },
-    // { name: "Struktur", path: "/struktur" },
-    // { name: "Departemen", path: "/departemen" },
+    { name: "Beranda", path: "/" },
+    { name: "Struktur", path: "/struktur" },
+    { name: "Departemen", path: "/departemen" },
   ];
 
   return (

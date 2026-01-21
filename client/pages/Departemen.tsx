@@ -2,10 +2,10 @@ import { Navbar } from "../components/Navbar";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { Link } from "react-router-dom"; // Import Link untuk Footer
-import { ArrowUpRight, X, Target, User, Instagram, Linkedin } from "lucide-react"; // Tambah Icon Sosmed
+import { Link } from "react-router-dom"; 
+import { ArrowUpRight, X, Instagram, Linkedin, CheckCircle2, Sparkles } from "lucide-react"; 
 
-// --- IKON CUSTOM (Sama kayak di Home & Struktur) ---
+// --- IKON CUSTOM ---
 const TikTokIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" /></svg>
 );
@@ -19,112 +19,79 @@ const SocialLink = ({ href, icon: Icon, label }: { href: string; icon: any; labe
   </a>
 );
 
-// --- DATA DUMMY STAF (Bisa diupdate nanti) ---
-const dummyStaff = [
-  { nama: "Budi Santoso", posisi: "Staff Ahli" },
-  { nama: "Siti Aminah", posisi: "Staff Muda" },
-  { nama: "Kevin Sanjaya", posisi: "Staff Muda" },
-  { nama: "Marcus Gideon", posisi: "Staff Muda" },
-  { nama: "Lesti Kejora", posisi: "Staff Magang" },
-  { nama: "Rizky Billar", posisi: "Staff Magang" },
-];
-
-// --- DATA DEPARTEMEN LENGKAP ---
+// --- DATA DEPARTEMEN (Ganti Images jadi Focus) ---
 const departments = [
   {
     id: "psdm",
     nama: "PSDM",
     panjang: "Pengembangan Sumber Daya Mahasiswa",
-    desc: "Jantung kaderisasi dan pengembangan potensi mahasiswa TI.",
+    desc: "Jantung kaderisasi yang berfokus pada pembentukan karakter, kepemimpinan, dan pengembangan potensi mahasiswa TI agar siap menjadi agen perubahan.",
     theme: "sky",
     logo: "/assets/logos/PSDM.png",
-    proker: ["Latihan Dasar Kepemimpinan", "Upgrading Pengurus", "Staff Magang"],
-    staff: dummyStaff
+    motto: "Membentuk Kader, Membangun Karakter.",
+    focus: ["Kaderisasi Mahasiswa", "Leadership Training", "Monitoring Staff", "Bonding Internal"]
   },
   {
     id: "inotek",
     nama: "INOTEK",
     panjang: "Inovasi & Teknologi",
-    desc: "Wadah eksplorasi teknologi, coding, dan riset ilmiah.",
+    desc: "Wadah eksplorasi teknologi terkini, pengembangan software, IoT, dan riset ilmiah untuk menciptakan solusi digital yang berdampak.",
     theme: "amber",
     logo: "/assets/logos/Inotek.png",
-    proker: ["Software Fair", "Workshop IoT", "Hackathon Internal"],
-    staff: dummyStaff
+    motto: "Innovate Today, Lead Tomorrow.",
+    focus: ["Software Development", "Internet of Things", "Riset Ilmiah", "Tech Workshop"]
   },
   {
     id: "medinfo",
     nama: "MEDINFO",
     panjang: "Media & Informasi",
-    desc: "Wadah informasi kreatif dan branding visual himpunan.",
+    desc: "Gardu kreatif yang mengelola branding visual, sosial media, dan penyebaran informasi himpunan dengan sentuhan desain yang estetis.",
     theme: "sky",
     logo: "/assets/logos/Medinfo.png",
-    proker: ["Podcast TI", "Design Class", "Company Profile Video"],
-    staff: dummyStaff
+    motto: "Creativity Beyond Limit.",
+    focus: ["Social Media Mgt", "Graphic Design", "Videography", "Creative Content"]
   },
   {
     id: "advo",
     nama: "ADVOKESMA",
     panjang: "Advokasi & Kesejahteraan",
-    desc: "Gardu terdepan dalam pelayanan dan advokasi hak mahasiswa.",
+    desc: "Sahabat mahasiswa yang siap mendengar aspirasi, memberikan layanan advokasi akademik, dan memperjuangkan kesejahteraan mahasiswa TI.",
     theme: "amber",
     logo: "/assets/logos/Advokesma.png",
-    proker: ["Forum Aspirasi", "Info Beasiswa", "Crisis Center UKT"],
-    staff: dummyStaff
+    motto: "Melayani dengan Hati.",
+    focus: ["Layanan Advokasi", "Info Beasiswa", "Forum Aspirasi", "Crisis Center"]
   },
   {
     id: "hubeks",
     nama: "HUBEKS",
     panjang: "Hubungan Eksternal",
-    desc: "Membangun relasi strategis dengan pihak luar kampus.",
+    desc: "Jembatan penghubung antara himpunan dengan pihak eksternal, alumni, dan industri untuk membangun kolaborasi yang strategis.",
     theme: "sky",
     logo: "/assets/logos/Hubeks.png",
-    proker: ["Studi Banding", "Alumni Gathering", "Kunjungan Industri"],
-    staff: dummyStaff
+    motto: "Connecting Opportunities.",
+    focus: ["Relasi Eksternal", "Studi Banding", "Alumni Relation", "Company Visit"]
   },
   {
     id: "ekraf",
     nama: "EKRAF",
     panjang: "Ekonomi Kreatif",
-    desc: "Motor penggerak finansial mandiri melalui entrepreneurship.",
+    desc: "Motor penggerak kemandirian finansial organisasi melalui inovasi kewirausahaan dan pengembangan produk kreatif mahasiswa.",
     theme: "amber",
     logo: "/assets/logos/Ekraf.png",
-    proker: ["Merchandise Store", "Business Plan Comp", "Kantin Kejujuran"],
-    staff: dummyStaff
+    motto: "Business with Passion.",
+    focus: ["Merchandise Store", "Business Plan", "Sponsorship", "Creative Preneur"]
   },
   {
     id: "mikat",
     nama: "KORA",
     panjang: "Kreatifitas & Olahraga",
-    desc: "Fasilitator penyalur hobi, seni, dan olahraga mahasiswa.",
+    desc: "Wadah ekspresi bakat non-akademik mahasiswa di bidang seni dan olahraga untuk menyeimbangkan prestasi dan kesehatan.",
     theme: "sky",
     logo: "/assets/logos/Kora.png",
-    proker: ["Porseni TI", "Music Festival", "E-Sport Tournament"],
-    staff: dummyStaff
+    motto: "Sportive Spirit, Creative Mind.",
+    focus: ["E-Sport Tournament", "Olahraga Rutin", "Festival Musik", "Komunitas Seni"]
   },
 ];
-
-// --- COMPONENT: Staff Card (Mini) ---
-const StaffCard = ({ nama, posisi, theme }: any) => {
-    const isAmber = theme === "amber";
-    return (
-        <motion.div 
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-4 p-3 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors"
-        >
-            <div className={cn("w-12 h-12 rounded-full p-[2px] bg-gradient-to-br", isAmber ? "from-amber-500 to-transparent" : "from-sky-500 to-transparent")}>
-                <div className="w-full h-full rounded-full overflow-hidden bg-black">
-                    <img src={`https://ui-avatars.com/api/?name=${nama}&background=050505&color=fff`} alt={nama} className="w-full h-full object-cover" />
-                </div>
-            </div>
-            <div>
-                <h4 className="font-bold text-white text-sm">{nama}</h4>
-                <p className={cn("text-[10px] uppercase tracking-wider font-mono", isAmber ? "text-amber-500" : "text-sky-500")}>{posisi}</p>
-            </div>
-        </motion.div>
-    )
-}
 
 // --- COMPONENT: Dept Card (Trigger) ---
 const DeptCard = ({ data, index, onClick }: { data: any, index: number, onClick: () => void }) => {
@@ -141,7 +108,7 @@ const DeptCard = ({ data, index, onClick }: { data: any, index: number, onClick:
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       className={cn(
-        "group relative h-[400px] w-full rounded-[2.5rem] bg-[#0A0A0A] border border-white/5 p-8 flex flex-col justify-between overflow-hidden transition-all duration-500 hover:-translate-y-2 cursor-pointer",
+        "group relative h-[380px] w-full rounded-[2.5rem] bg-[#0A0A0A] border border-white/5 p-8 flex flex-col justify-between overflow-hidden transition-all duration-500 hover:-translate-y-2 cursor-pointer",
         borderHover
       )}
     >
@@ -153,7 +120,7 @@ const DeptCard = ({ data, index, onClick }: { data: any, index: number, onClick:
 
       <div className="relative z-10">
         {/* LOGO SECTION */}
-        <div className={cn("w-20 h-20 rounded-2xl flex items-center justify-center p-3 bg-white/5 border border-white/10 mb-6 transition-all duration-500 group-hover:scale-110 group-hover:bg-black/50 backdrop-blur-sm", mainColor)}>
+        <div className={cn("w-16 h-16 rounded-2xl flex items-center justify-center p-3 bg-white/5 border border-white/10 mb-6 transition-all duration-500 group-hover:scale-110 group-hover:bg-black/50 backdrop-blur-sm", mainColor)}>
             <img 
                 src={data.logo} 
                 alt={`${data.nama} logo`} 
@@ -162,20 +129,12 @@ const DeptCard = ({ data, index, onClick }: { data: any, index: number, onClick:
         </div>
         
         <h3 className="text-3xl font-black text-white uppercase tracking-tighter mb-2">{data.nama}</h3>
-        <p className={cn("text-xs font-mono font-bold tracking-widest uppercase mb-4 opacity-70 group-hover:opacity-100 transition-opacity", mainColor)}>
+        <p className={cn("text-[10px] font-mono font-bold tracking-widest uppercase mb-4 opacity-70 group-hover:opacity-100 transition-opacity", mainColor)}>
             {data.panjang}
         </p>
-        <p className="text-gray-400 text-sm leading-relaxed max-w-[90%] group-hover:text-gray-200 transition-colors">
+        <p className="text-gray-400 text-sm leading-relaxed max-w-[90%] line-clamp-3 group-hover:text-gray-200 transition-colors">
             {data.desc}
         </p>
-      </div>
-
-      <div className="relative z-10 mt-auto translate-y-4 opacity-80 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-        <div className="h-[1px] w-full bg-white/10 mb-4 group-hover:bg-white/30 transition-colors"></div>
-        <div className="flex items-center gap-2 text-xs text-gray-400">
-             <User size={14} />
-             <span>{data.staff.length} Anggota Staff</span>
-        </div>
       </div>
 
       <div className={cn("absolute bottom-8 right-8 text-white/20 transition-all duration-500 group-hover:text-white group-hover:rotate-[-45deg] group-hover:scale-125")}>
@@ -222,7 +181,7 @@ export default function Departemen() {
                 </h1>
                 
                 <p className="mt-6 text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-                    Klik kartu untuk melihat <span className="text-amber-500 font-bold">Program Kerja</span> & <span className="text-sky-500 font-bold">Anggota Staff</span>.
+                    Kenali lebih dekat bidang gerak dan fokus setiap departemen di HMPSTI UB.
                 </p>
             </motion.div>
         </div>
@@ -235,17 +194,15 @@ export default function Departemen() {
         </div>
       </div>
 
-      {/* === FOOTER YANG SUDAH DIPERBARUI === */}
+      {/* === FOOTER === */}
       <section className="relative py-20 bg-[#050505] border-t border-white/10 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 flex flex-col items-center relative z-10">
-            {/* LOGO FOOTER */}
             <motion.div whileHover={{ scale: 1.05 }} className="mb-10 cursor-default">
                 <span className="text-6xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-br from-[#33A5D3] to-[#F59E0B] tracking-tighter select-none drop-shadow-2xl opacity-90 hover:opacity-100 transition-opacity">
                     INNOVARA
                 </span>
             </motion.div>
 
-            {/* SOSMED ICONS */}
             <div className="flex gap-6 mb-12">
                 <SocialLink href="https://www.instagram.com/hmpsti.vokasiub/" icon={Instagram} label="Instagram" />
                 <SocialLink href="https://www.tiktok.com/@hmpsti.vokasiub" icon={TikTokIcon} label="TikTok" />
@@ -253,7 +210,6 @@ export default function Departemen() {
                 <SocialLink href="#" icon={WhatsAppIcon} label="Contact Person" />
             </div>
 
-            {/* NAVIGASI FOOTER */}
             <div className="flex flex-wrap justify-center gap-8 mb-10 text-sm font-bold uppercase tracking-widest text-gray-500">
                 {footerLinks.map((link) => (
                     <Link key={link.name} to={link.path} className="hover:text-[#33A5D3] transition-colors relative group">
@@ -263,7 +219,6 @@ export default function Departemen() {
                 ))}
             </div>
 
-            {/* COPYRIGHT */}
             <div className="text-center border-t border-white/5 pt-8 w-full max-w-lg">
                 <p className="text-gray-600 font-mono text-[10px] uppercase tracking-widest mb-3">
                     © 2026 HMPSTI UB • <span className="text-[#33A5D3]">Kabinet Innovara</span>
@@ -275,7 +230,7 @@ export default function Departemen() {
         </div>
       </section>
 
-      {/* === MODAL / POPUP DETAIL DEPARTEMEN === */}
+      {/* === MODAL / POPUP (FOCUS & VALUES MODE - NO IMAGES) === */}
       <AnimatePresence>
         {selectedDept && (
           <div className="fixed inset-0 z-[200] flex items-center justify-center px-4 py-8">
@@ -286,7 +241,7 @@ export default function Departemen() {
                 animate={{ opacity: 1 }} 
                 exit={{ opacity: 0 }}
                 onClick={() => setSelectedDept(null)}
-                className="absolute inset-0 bg-black/80 backdrop-blur-xl"
+                className="absolute inset-0 bg-black/90 backdrop-blur-md"
             />
 
             {/* Content Container */}
@@ -295,55 +250,64 @@ export default function Departemen() {
                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                className="relative w-full max-w-5xl max-h-full bg-[#0A0A0A] border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl flex flex-col md:flex-row"
+                className="relative w-full max-w-5xl bg-[#0A0A0A] border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl flex flex-col md:flex-row min-h-[500px]"
             >
                 {/* Close Button */}
-                <button onClick={() => setSelectedDept(null)} className="absolute top-6 right-6 z-50 p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors">
+                <button onClick={() => setSelectedDept(null)} className="absolute top-6 right-6 z-50 p-2 bg-black/50 backdrop-blur-md rounded-full hover:bg-white/20 transition-colors border border-white/10">
                     <X size={20} className="text-white" />
                 </button>
 
-                {/* Left Side: Info & Proker */}
-                <div className={cn("p-8 md:p-12 w-full md:w-1/3 flex flex-col relative overflow-hidden", selectedDept.theme === "amber" ? "bg-amber-950/20" : "bg-sky-950/20")}>
-                      {/* Decorative Blob */}
-                      <div className={cn("absolute top-0 left-0 w-64 h-64 blur-[80px] rounded-full opacity-30 pointer-events-none", selectedDept.theme === "amber" ? "bg-amber-500" : "bg-sky-500")}></div>
+                {/* Left Side: Info Utama */}
+                <div className={cn("p-8 md:p-12 w-full md:w-5/12 flex flex-col justify-center relative overflow-hidden", selectedDept.theme === "amber" ? "bg-gradient-to-br from-amber-950/40 to-black" : "bg-gradient-to-br from-sky-950/40 to-black")}>
+                      {/* Logo Besar */}
+                      <div className="relative z-10 mb-8">
+                        <div className={cn("w-24 h-24 rounded-3xl flex items-center justify-center p-4 bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl")}>
+                            <img 
+                                src={selectedDept.logo} 
+                                alt={selectedDept.nama} 
+                                className="w-full h-full object-contain" 
+                            />
+                        </div>
+                      </div>
                       
                       <div className="relative z-10">
-                        {/* MODAL LOGO */}
-                        <img 
-                            src={selectedDept.logo} 
-                            alt={selectedDept.nama} 
-                            className="w-24 h-24 object-contain mb-6 drop-shadow-2xl" 
-                        />
+                        <h2 className="text-5xl font-black uppercase tracking-tighter leading-none mb-4 text-white">{selectedDept.nama}</h2>
+                        <div className={cn("h-1 w-20 mb-6 rounded-full", selectedDept.theme === "amber" ? "bg-amber-500" : "bg-sky-500")}></div>
                         
-                        <h2 className="text-4xl font-black uppercase tracking-tighter leading-none mb-2">{selectedDept.nama}</h2>
-                        <p className={cn("text-xs font-mono uppercase tracking-widest mb-6 opacity-80 font-bold", selectedDept.theme === "amber" ? "text-amber-400" : "text-sky-400")}>{selectedDept.panjang}</p>
-                        <p className="text-sm text-gray-300 mb-8 leading-relaxed">{selectedDept.desc}</p>
+                        <p className="text-gray-300 text-sm leading-relaxed mb-8">
+                            {selectedDept.desc}
+                        </p>
 
-                        <div className="space-y-4">
-                            <h3 className="text-xs font-bold uppercase tracking-widest text-white border-b border-white/10 pb-2">Program Kerja Unggulan</h3>
-                            <ul className="space-y-3">
-                                {selectedDept.proker.map((pk: string, i: number) => (
-                                    <li key={i} className="flex items-start gap-3 text-sm text-gray-300">
-                                            <Target size={16} className={cn("mt-0.5 shrink-0", selectedDept.theme === "amber" ? "text-amber-500" : "text-sky-500")} />
-                                            {pk}
-                                    </li>
-                                ))}
-                            </ul>
+                        {/* Motto Badge */}
+                        <div className="inline-flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                            <Sparkles size={18} className={selectedDept.theme === "amber" ? "text-amber-400" : "text-sky-400"} />
+                            <span className="text-xs font-bold uppercase tracking-widest text-white">"{selectedDept.motto}"</span>
                         </div>
                       </div>
                 </div>
 
-                {/* Right Side: Staff Grid */}
-                <div className="flex-1 bg-black/50 p-8 md:p-12 overflow-y-auto max-h-[60vh] md:max-h-[80vh]">
-                      <div className="flex items-center justify-between mb-8">
-                        <h3 className="text-2xl font-bold text-white">Anggota Staff</h3>
-                        <span className="text-xs font-mono text-gray-500 bg-white/5 px-3 py-1 rounded-full">{selectedDept.staff.length} Orang</span>
+                {/* Right Side: Focus Grid (Pengganti Images) */}
+                <div className="w-full md:w-7/12 bg-black/50 p-8 md:p-12 flex flex-col justify-center">
+                      <div className="mb-8">
+                          <h3 className="text-lg font-bold text-white uppercase tracking-widest flex items-center gap-3">
+                              <span className={cn("w-2 h-8 rounded-full", selectedDept.theme === "amber" ? "bg-amber-500" : "bg-sky-500")}></span>
+                              Fokus Utama
+                          </h3>
                       </div>
-                      
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {selectedDept.staff.map((staf: any, i: number) => (
-                            <StaffCard key={i} nama={staf.nama} posisi={staf.posisi} theme={selectedDept.theme} />
-                        ))}
+
+                      {/* Grid Kartu Fokus */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          {selectedDept.focus.map((item: string, idx: number) => (
+                              <div 
+                                  key={idx} 
+                                  className="group flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 transition-all duration-300"
+                              >
+                                  <div className={cn("w-10 h-10 rounded-full flex items-center justify-center shrink-0", selectedDept.theme === "amber" ? "bg-amber-500/20 text-amber-500" : "bg-sky-500/20 text-sky-500")}>
+                                      <CheckCircle2 size={20} />
+                                  </div>
+                                  <span className="text-sm font-bold text-gray-200 group-hover:text-white transition-colors">{item}</span>
+                              </div>
+                          ))}
                       </div>
                 </div>
 

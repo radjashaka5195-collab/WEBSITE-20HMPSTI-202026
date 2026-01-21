@@ -9,10 +9,16 @@ import { Navbar } from "../components/Navbar";
 
 function cn(...inputs: ClassValue[]) { return twMerge(clsx(inputs)); }
 
-// --- HELPERS ---
+// --- HELPERS (OPTIMIZED) ---
 const FadeIn = ({ children, className, delay = 0 }: any) => {
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay, ease: "easeOut" }} className={className}>
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }} 
+      whileInView={{ opacity: 1, y: 0 }} 
+      viewport={{ once: true, margin: "-50px" }} // Optimasi: margin biar render lebih efisien
+      transition={{ duration: 0.6, delay, ease: "easeOut" }} // Optimasi: Durasi sedikit dipercepat biar snappy
+      className={cn("will-change-transform", className)} // Optimasi: Memberitahu browser ini akan bergerak
+    >
       {children}
     </motion.div>
   );
@@ -42,7 +48,8 @@ const MisiCard = ({ number, title, text, color, delay }: any) => {
   return (
     <FadeIn delay={delay} className="h-full">
       <div className={cn("group relative h-full p-8 rounded-3xl bg-[#0A0A0A] border border-white/5 transition-all duration-500 overflow-hidden", bgHover, borderHover)}>
-         <div className={cn("absolute -right-4 -top-8 text-[8rem] font-black opacity-[0.03] select-none transition-transform duration-500 group-hover:scale-110", titleColor)}>
+         {/* Optimasi: Opacity dikurangi jadi 0.02 biar browser gak berat render font raksasa */}
+         <div className={cn("absolute -right-4 -top-8 text-[6rem] md:text-[8rem] font-black opacity-[0.02] select-none transition-transform duration-500 group-hover:scale-105", titleColor)}>
             {number}
          </div>
          <div className="relative z-10 flex flex-col h-full justify-start items-start">
@@ -72,9 +79,14 @@ export default function Home() {
 
       {/* --- HERO SECTION --- */}
       <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20 pb-10 overflow-hidden">
-        <div className="absolute top-[-100px] left-1/4 w-[500px] h-[500px] bg-[#33A5D3]/20 blur-[150px] rounded-full pointer-events-none mix-blend-screen"></div>
-        <div className="absolute top-[-100px] right-1/4 w-[500px] h-[500px] bg-[#F59E0B]/15 blur-[150px] rounded-full pointer-events-none mix-blend-screen"></div>
-        <div className="fixed inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.04] pointer-events-none"></div>
+        
+        {/* OPTIMASI BACKGROUND: */}
+        {/* Ukuran blob disesuaikan (kecil di HP, besar di Laptop). Blur dikurangi di HP. */}
+        <div className="absolute top-[-50px] left-0 md:left-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-[#33A5D3]/20 blur-[80px] md:blur-[120px] rounded-full pointer-events-none mix-blend-screen opacity-60"></div>
+        <div className="absolute top-[-50px] right-0 md:right-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-[#F59E0B]/15 blur-[80px] md:blur-[120px] rounded-full pointer-events-none mix-blend-screen opacity-60"></div>
+        
+        {/* OPTIMASI NOISE: Disembunyikan di HP (hidden md:block) biar scroll lancar */}
+        <div className="fixed inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none hidden md:block"></div>
 
         <motion.div style={{ y }} className="relative z-10 text-center max-w-5xl mx-auto flex flex-col items-center">
           <FadeIn delay={0.1}>
@@ -90,7 +102,7 @@ export default function Home() {
           <FadeIn delay={0.2}>
             <h1 className="font-black tracking-tighter leading-[0.9] mb-8 text-center relative">
               <span className="block text-xl md:text-3xl text-gray-500 mb-4 font-bold tracking-[0.5em] uppercase">KABINET</span>
-              <span className="block text-[13vw] sm:text-[9rem] md:text-[11rem] bg-clip-text text-transparent bg-gradient-to-r from-[#33A5D3] via-white to-[#F59E0B] drop-shadow-[0_0_40px_rgba(51,165,211,0.2)]">
+              <span className="block text-[13vw] sm:text-[9rem] md:text-[11rem] bg-clip-text text-transparent bg-gradient-to-r from-[#33A5D3] via-white to-[#F59E0B] drop-shadow-[0_0_20px_rgba(51,165,211,0.2)]">
                 INNOVARA
               </span>
             </h1>
@@ -101,6 +113,27 @@ export default function Home() {
               Mewujudkan era baru melalui <span className="text-[#33A5D3] font-bold border-b border-[#33A5D3]">Inovasi</span> yang berdampak dan <span className="text-[#F59E0B] font-bold border-b border-[#F59E0B]">Kolaborasi</span> tanpa batas.
             </p>
           </FadeIn>
+
+          {/* --- TOMBOL PENGUMUMAN (NEON STYLE - Tetap Dipertahankan) --- */}
+          <FadeIn delay={0.6}>
+            <Link to="/pengumuman" className="group relative inline-flex items-center gap-4 px-10 py-5 bg-[#050505] rounded-full border border-white/20 overflow-hidden hover:border-[#33A5D3] transition-all duration-500 hover:shadow-[0_0_40px_rgba(51,165,211,0.5)] mb-12 hover:-translate-y-2">
+                
+                {/* Background Animation on Hover */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#33A5D3]/20 via-transparent to-[#F59E0B]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                {/* Text */}
+                <span className="relative z-10 text-base md:text-lg font-black tracking-[0.2em] uppercase text-white group-hover:text-[#33A5D3] transition-colors">
+                    Cek Pengumuman
+                </span>
+
+                {/* Arrow Icon with Circle */}
+                <div className="relative z-10 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#33A5D3] group-hover:text-black transition-all duration-300 group-hover:scale-110">
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
+            </Link>
+          </FadeIn>
+          {/* ------------------------------------------- */}
+
         </motion.div>
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5, duration: 1 }} className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[#33A5D3] animate-bounce">
@@ -114,7 +147,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6">
             <div className="grid lg:grid-cols-5 gap-12 items-stretch">
                 <FadeIn className="lg:col-span-2 h-full">
-                    <div className="relative h-full min-h-[400px] w-full rounded-[2rem] bg-gradient-to-br from-[#111] to-[#050505] border border-white/10 p-10 flex flex-col justify-between overflow-hidden group hover:border-[#33A5D3]/30 transition-all duration-500 shadow-2xl">
+                    <div className="relative h-full min-h-[400px] w-full rounded-[2rem] bg-gradient-to-br from-[#111] to-[#050505] border border-white/10 p-10 flex flex-col justify-between overflow-hidden group hover:border-[#33A5D3]/30 transition-all duration-500 shadow-xl">
                         <div className="flex items-center gap-3 mb-8 opacity-50">
                             <div className="w-3 h-3 rounded-full bg-red-500"></div>
                             <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
@@ -130,7 +163,8 @@ export default function Home() {
                             <span className="text-xs font-mono text-gray-500 uppercase tracking-widest">Est. 2026</span>
                             <Terminal size={24} className="text-[#F59E0B] opacity-80" />
                         </div>
-                        <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-[#33A5D3]/10 blur-[80px] rounded-full group-hover:bg-[#33A5D3]/20 transition-all duration-500"></div>
+                        {/* Optimasi Glow: Ukuran dan Blur disesuaikan */}
+                        <div className="absolute -right-20 -bottom-20 w-40 h-40 md:w-64 md:h-64 bg-[#33A5D3]/10 blur-[60px] md:blur-[80px] rounded-full group-hover:bg-[#33A5D3]/20 transition-all duration-500"></div>
                     </div>
                 </FadeIn>
                 <div className="lg:col-span-3 flex flex-col justify-center space-y-12 pl-0 lg:pl-10">
@@ -174,7 +208,7 @@ export default function Home() {
 
             <div className="text-center mb-12 mt-20">
                 <FadeIn delay={0.2}>
-                     <span className="text-[#33A5D3] font-mono uppercase tracking-[0.4em] text-xs font-bold border-b border-[#33A5D3] pb-2">Misi Kami</span>
+                      <span className="text-[#33A5D3] font-mono uppercase tracking-[0.4em] text-xs font-bold border-b border-[#33A5D3] pb-2">Misi Kami</span>
                 </FadeIn>
             </div>
 
@@ -198,7 +232,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- FOOTER (VERSI MVP: NAVIGASI HILANG + WA AKTIF) --- */}
+      {/* --- FOOTER --- */}
       <section className="relative py-20 bg-[#050505] border-t border-white/10 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 flex flex-col items-center relative z-10">
             {/* LOGO BESAR */}
@@ -208,17 +242,13 @@ export default function Home() {
                 </span>
             </motion.div>
 
-            {/* SOCIAL MEDIA ICONS (WA LINK SUDAH DIMASUKKAN) */}
+            {/* SOCIAL MEDIA ICONS */}
             <div className="flex gap-6 mb-12">
                 <SocialLink href="https://www.instagram.com/hmpsti.vokasiub/" icon={Instagram} label="Instagram" />
                 <SocialLink href="https://www.tiktok.com/@hmpsti.vokasiub" icon={TikTokIcon} label="TikTok" />
                 <SocialLink href="https://www.linkedin.com/company/hmpsti-vokasi-ub/" icon={Linkedin} label="LinkedIn" />
-                
-                {/* --- UPDATE: WA LINK DISINI --- */}
                 <SocialLink href="https://wa.me/6282218361690" icon={WhatsAppIcon} label="Contact Person" />
             </div>
-
-            {/* --- NAVIGASI SUDAH DIHAPUS TOTAL DI SINI --- */}
 
             {/* COPYRIGHT */}
             <div className="text-center border-t border-white/5 pt-8 w-full max-w-lg">

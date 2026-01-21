@@ -1,7 +1,26 @@
 import { useState } from "react";
 import { Navbar } from "../components/Navbar";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, BadgeCheck, X, Quote, ArrowRight } from "lucide-react";
+import { Search, BadgeCheck, X, Quote, ArrowRight, MessageCircle } from "lucide-react";
+
+// --- KONFIGURASI ---
+// 1. Link Grup WhatsApp
+const WA_GROUP_LINK = "https://chat.whatsapp.com/EtCtAGe0bcX2Jzf2VFWOpj";
+
+// 2. Nomor HP Admin
+const ADMIN_PHONE = "6282218361690"; 
+
+// --- CUSTOM ICON WHATSAPP ---
+const WhatsAppIcon = ({ className }: { className?: string }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 24 24" 
+    fill="currentColor" 
+    className={className}
+  >
+    <path d="M12.004 2C6.48 2 1.99 6.49 1.99 12.01c0 1.77.46 3.48 1.34 5.01L2 22l5.12-1.34c1.48.81 3.16 1.24 4.88 1.24 5.52 0 10.01-4.49 10.01-10.01s-4.49-10.01-10-10.01zm5.66 14.54c-.24.67-1.39 1.31-1.91 1.35-.48.04-1.07.22-3.66-.82-2.73-1.1-4.52-3.95-4.75-4.26-.22-.3-1.12-1.49-1.12-2.84 0-1.35.7-2.02.95-2.29.25-.27.54-.34.72-.34.19 0 .38.01.54.02.17.01.4.05.61.56.22.51.75 1.83.82 1.96.07.14.11.3.02.48-.09.18-.13.29-.26.44-.14.16-.29.35-.41.47-.14.14-.28.29-.12.57.16.27.7 1.15 1.5 1.87 1.03.92 1.9 1.21 2.18 1.34.27.14.43.12.59-.07.16-.19.68-.79.86-1.06.18-.28.37-.23.63-.13.25.1.75.29 2.05.93 1.29.64 1.73.91 1.96 1.31z"/>
+  </svg>
+);
 
 // --- DATA FINAL (19 ORANG) ---
 const announcementData = [
@@ -166,13 +185,19 @@ export default function Announcement() {
     return matchesSearch && matchesDept;
   });
 
+  // Fungsi generate Link WA Konfirmasi
+  const getAdminLink = (name: string, dept: string) => {
+      const text = `Halo Admin, saya ${name} dari departemen ${dept} izin konfirmasi sudah request join grup WhatsApp HMPSTI. Mohon diapprove ya, terima kasih!`;
+      return `https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent(text)}`;
+  };
+
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-[#33A5D3] selection:text-white relative">
       <Navbar />
 
       <div className="pt-32 pb-20 px-6 max-w-7xl mx-auto">
         
-        {/* HEADER (STANDARD RESPONSIVE) */}
+        {/* HEADER */}
         <div className="relative text-center mb-20">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-[150px] bg-sky-600/15 blur-[100px] rounded-full pointer-events-none"></div>
 
@@ -182,7 +207,7 @@ export default function Announcement() {
             transition={{ duration: 0.8 }}
             className="relative z-10"
           >
-            {/* JUDUL: Responsive Aman */}
+            {/* JUDUL */}
             <h1 className="text-3xl sm:text-5xl md:text-8xl font-black text-white tracking-tighter leading-[1.1] md:leading-[0.9] mb-8 drop-shadow-2xl">
               SELAMAT DATANG<br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#33A5D3] via-white to-[#F59E0B]">
@@ -190,7 +215,7 @@ export default function Announcement() {
               </span>
             </h1>
             
-            {/* DESKRIPSI: Responsive Aman */}
+            {/* DESKRIPSI */}
             <div className="inline-block relative max-w-full px-4">
                <div className="absolute inset-0 bg-white/5 blur-md rounded-2xl md:rounded-full"></div>
                <p className="relative z-10 text-gray-300 text-xs sm:text-sm md:text-lg py-3 px-6 rounded-2xl md:rounded-full border border-white/10 bg-[#0A0A0A]/50 backdrop-blur-sm shadow-xl whitespace-normal md:whitespace-nowrap leading-relaxed">
@@ -279,7 +304,7 @@ export default function Announcement() {
         )}
       </div>
 
-      {/* --- MODAL POPUP (STANDARD BERSIH) --- */}
+      {/* --- MODAL POPUP --- */}
       <AnimatePresence>
         {selectedCandidate && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -293,25 +318,25 @@ export default function Announcement() {
               className="absolute inset-0 bg-black/80 backdrop-blur-md"
             />
 
-            {/* Modal Content */}
+            {/* Modal Content - SCROLLBAR DI-HIDE */}
             <motion.div 
               layoutId={`card-${selectedCandidate.id}`} 
-              className="relative w-full max-w-lg bg-[#0F0F0F] border border-[#33A5D3]/30 rounded-3xl p-8 shadow-2xl overflow-hidden"
+              className="relative w-full max-w-lg bg-[#0F0F0F] border border-[#33A5D3]/30 rounded-3xl p-8 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
             >
-               {/* Background Ornament */}
-               <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#33A5D3]/10 rounded-full blur-[100px]"></div>
-               <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-[#F59E0B]/5 rounded-full blur-[100px]"></div>
+               {/* Background Ornament (POINTER EVENTS NONE) */}
+               <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#33A5D3]/10 rounded-full blur-[100px] pointer-events-none"></div>
+               <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-[#F59E0B]/5 rounded-full blur-[100px] pointer-events-none"></div>
 
-               {/* Close Button (STANDARD) */}
+               {/* Close Button (ANTI MACET) */}
                <button 
                  onClick={() => setSelectedCandidate(null)}
-                 className="absolute top-4 right-4 p-2 bg-white/5 rounded-full hover:bg-white/10 transition-colors z-20 border border-white/5"
+                 className="absolute top-4 right-4 p-3 bg-white/5 rounded-full hover:bg-white/10 transition-colors z-50 border border-white/5 active:scale-90"
                >
-                 <X size={20} className="text-gray-400 hover:text-white" />
+                 <X size={22} className="text-gray-400 hover:text-white" />
                </button>
 
                <div className="relative z-10 flex flex-col items-center text-center pt-2">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#33A5D3] to-[#0A0A0A] p-[1px] mb-6 shadow-xl shadow-[#33A5D3]/20">
+                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#33A5D3] to-[#0A0A0A] p-[1px] mb-6 shadow-xl shadow-[#33A5D3]/20 shrink-0">
                      <div className="w-full h-full rounded-full bg-[#0A0A0A] flex items-center justify-center">
                         <BadgeCheck className="w-10 h-10 text-[#33A5D3]" />
                      </div>
@@ -320,19 +345,49 @@ export default function Announcement() {
                   <h2 className="text-2xl font-black text-white mb-2 leading-tight">{selectedCandidate.name}</h2>
                   
                   {/* ROLE BADGE */}
-                  <div className="mb-8">
+                  <div className="mb-6">
                       <span className="font-sans font-bold text-sm tracking-wide uppercase text-[#F59E0B] border border-[#F59E0B]/20 bg-[#F59E0B]/10 px-4 py-1.5 rounded-full shadow-[0_0_15px_-3px_rgba(245,158,11,0.2)]">
                         {selectedCandidate.role}
                       </span>
                   </div>
 
                   {/* PESAN KESAN BOX */}
-                  <div className="relative bg-white/5 border border-white/10 p-8 rounded-2xl w-full">
+                  <div className="relative bg-white/5 border border-white/10 p-8 rounded-2xl w-full mb-8">
                      <Quote className="absolute -top-4 -left-2 w-8 h-8 text-[#33A5D3] fill-[#33A5D3] opacity-50" />
                      <p className="text-white text-lg leading-relaxed font-medium">
                        "{selectedCandidate.impression}"
                      </p>
                      <Quote className="absolute -bottom-4 -right-2 w-8 h-8 text-[#33A5D3] fill-[#33A5D3] rotate-180 opacity-50" />
+                  </div>
+
+                  {/* --- AREA TOMBOL WA & KONFIRMASI --- */}
+                  <div className="w-full space-y-3">
+                      {/* 1. Tombol Join Grup */}
+                      <a 
+                        href={WA_GROUP_LINK} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="group relative w-full flex items-center justify-center gap-3 px-6 py-4 bg-[#25D366] hover:bg-[#20bd5a] text-[#050505] font-black rounded-2xl transition-all duration-300 transform hover:scale-[1.02] active:scale-95 shadow-[0_0_20px_rgba(37,211,102,0.2)]"
+                      >
+                         <WhatsAppIcon className="w-6 h-6" />
+                         <span className="tracking-widest uppercase text-sm">REQUEST GABUNG GRUP</span>
+                      </a>
+
+                      {/* 2. Tombol Konfirmasi ke Admin (Japri) */}
+                      <a 
+                        href={getAdminLink(selectedCandidate.name, selectedCandidate.dept)} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="w-full flex items-center justify-center gap-2 px-6 py-3 border border-white/10 hover:border-white/30 hover:bg-white/5 text-gray-400 hover:text-white font-bold rounded-2xl transition-all duration-300 text-xs tracking-widest uppercase"
+                      >
+                         <MessageCircle size={16} />
+                         <span>KONFIRMASI KE ADMIN</span>
+                      </a>
+                      
+                      {/* Teks Peringatan (BINTANG MERAH) */}
+                      <p className="text-white text-[10px] uppercase tracking-wider font-bold mt-2">
+                        <span className="text-red-500">*</span>Klik 'Request' dulu, lalu 'Konfirmasi' agar segera diapprove<span className="text-red-500">*</span>
+                      </p>
                   </div>
 
                   {/* FOOTER MODAL */}

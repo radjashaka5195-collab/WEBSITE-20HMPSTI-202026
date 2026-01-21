@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Link } from "react-router-dom"; 
-import { ArrowUpRight, X, Instagram, Linkedin, CheckCircle2, Sparkles } from "lucide-react"; 
+import { ArrowUpRight, X, Instagram, Linkedin, CheckCircle2 } from "lucide-react"; 
 
 // --- IKON CUSTOM ---
 const TikTokIcon = ({ className }: { className?: string }) => (
@@ -19,13 +19,13 @@ const SocialLink = ({ href, icon: Icon, label }: { href: string; icon: any; labe
   </a>
 );
 
-// --- DATA DEPARTEMEN (Ganti Images jadi Focus) ---
+// --- DATA DEPARTEMEN ---
 const departments = [
   {
     id: "psdm",
     nama: "PSDM",
     panjang: "Pengembangan Sumber Daya Mahasiswa",
-    desc: "Jantung kaderisasi yang berfokus pada pembentukan karakter, kepemimpinan, dan pengembangan potensi mahasiswa TI agar siap menjadi agen perubahan.",
+    desc: "Kami hadir untuk menggali dan mengembangkan potensi terbaik setiap mahasiswa TI. Fokus kami adalah membentuk karakter kepemimpinan yang kuat dan menciptakan lingkungan di mana setiap anggota bisa bertumbuh bersama.",
     theme: "sky",
     logo: "/assets/logos/PSDM.png",
     motto: "Membentuk Kader, Membangun Karakter.",
@@ -35,7 +35,7 @@ const departments = [
     id: "inotek",
     nama: "INOTEK",
     panjang: "Inovasi & Teknologi",
-    desc: "Wadah eksplorasi teknologi terkini, pengembangan software, IoT, dan riset ilmiah untuk menciptakan solusi digital yang berdampak.",
+    desc: "Rumah bagi para inovator muda. Di sini, kami mengeksplorasi teknologi terkini, mulai dari pengembangan software hingga IoT, untuk menciptakan solusi nyata yang bermanfaat bagi sekitar.",
     theme: "amber",
     logo: "/assets/logos/Inotek.png",
     motto: "Innovate Today, Lead Tomorrow.",
@@ -45,7 +45,7 @@ const departments = [
     id: "medinfo",
     nama: "MEDINFO",
     panjang: "Media & Informasi",
-    desc: "Gardu kreatif yang mengelola branding visual, sosial media, dan penyebaran informasi himpunan dengan sentuhan desain yang estetis.",
+    desc: "Gardu kreatif himpunan yang mengelola seluruh arus informasi. Kami memadukan desain visual yang estetik dan strategi media sosial untuk memastikan setiap pesan tersampaikan dengan menarik.",
     theme: "sky",
     logo: "/assets/logos/Medinfo.png",
     motto: "Creativity Beyond Limit.",
@@ -55,7 +55,7 @@ const departments = [
     id: "advo",
     nama: "ADVOKESMA",
     panjang: "Advokasi & Kesejahteraan",
-    desc: "Sahabat mahasiswa yang siap mendengar aspirasi, memberikan layanan advokasi akademik, dan memperjuangkan kesejahteraan mahasiswa TI.",
+    desc: "Kami adalah garda terdepan dalam memperjuangkan hak dan kesejahteraan mahasiswa. Mulai dari bantuan akademik hingga penyaluran aspirasi, kami siap mendengar dan bertindak.",
     theme: "amber",
     logo: "/assets/logos/Advokesma.png",
     motto: "Melayani dengan Hati.",
@@ -65,7 +65,7 @@ const departments = [
     id: "hubeks",
     nama: "HUBEKS",
     panjang: "Hubungan Eksternal",
-    desc: "Jembatan penghubung antara himpunan dengan pihak eksternal, alumni, dan industri untuk membangun kolaborasi yang strategis.",
+    desc: "Jembatan penghubung HMPSTI dengan dunia luar. Kami aktif membangun relasi strategis dengan alumni, instansi, dan organisasi lain untuk membuka peluang kolaborasi yang lebih luas.",
     theme: "sky",
     logo: "/assets/logos/Hubeks.png",
     motto: "Connecting Opportunities.",
@@ -75,7 +75,7 @@ const departments = [
     id: "ekraf",
     nama: "EKRAF",
     panjang: "Ekonomi Kreatif",
-    desc: "Motor penggerak kemandirian finansial organisasi melalui inovasi kewirausahaan dan pengembangan produk kreatif mahasiswa.",
+    desc: "Motor penggerak kemandirian finansial organisasi. Lewat semangat wirausaha, kami menciptakan produk-produk kreatif dan merchandise keren yang tidak hanya bernilai jual tapi juga membanggakan.",
     theme: "amber",
     logo: "/assets/logos/Ekraf.png",
     motto: "Business with Passion.",
@@ -85,7 +85,7 @@ const departments = [
     id: "mikat",
     nama: "KORA",
     panjang: "Kreatifitas & Olahraga",
-    desc: "Wadah ekspresi bakat non-akademik mahasiswa di bidang seni dan olahraga untuk menyeimbangkan prestasi dan kesehatan.",
+    desc: "Wadah ekspresi bagi bakat seni dan olahraga mahasiswa. Kami percaya keseimbangan itu penting, jadi kami hadirkan berbagai kegiatan seru untuk menyalurkan hobi dan menjaga semangat tetap menyala.",
     theme: "sky",
     logo: "/assets/logos/Kora.png",
     motto: "Sportive Spirit, Creative Mind.",
@@ -93,7 +93,7 @@ const departments = [
   },
 ];
 
-// --- COMPONENT: Dept Card (Trigger) ---
+// --- COMPONENT: Dept Card ---
 const DeptCard = ({ data, index, onClick }: { data: any, index: number, onClick: () => void }) => {
   const isAmber = data.theme === "amber";
   const mainColor = isAmber ? "text-amber-500" : "text-sky-500";
@@ -180,8 +180,8 @@ export default function Departemen() {
                     Depar<span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 via-white to-amber-500">temen</span>
                 </h1>
                 
-                <p className="mt-6 text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-                    Kenali lebih dekat bidang gerak dan fokus setiap departemen di HMPSTI UB.
+                <p className="mt-6 text-gray-400 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+                    Kenali lebih dekat bidang gerak dan fokus setiap Departemen <span className="text-white font-bold inline-block">HMPSTI UB</span>.
                 </p>
             </motion.div>
         </div>
@@ -230,7 +230,7 @@ export default function Departemen() {
         </div>
       </section>
 
-      {/* === MODAL / POPUP (FOCUS & VALUES MODE - NO IMAGES) === */}
+      {/* === MODAL / POPUP === */}
       <AnimatePresence>
         {selectedDept && (
           <div className="fixed inset-0 z-[200] flex items-center justify-center px-4 py-8">
@@ -278,15 +278,14 @@ export default function Departemen() {
                             {selectedDept.desc}
                         </p>
 
-                        {/* Motto Badge */}
+                        {/* Motto Badge (ICON BINTANG SUDAH DIHAPUS) */}
                         <div className="inline-flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                            <Sparkles size={18} className={selectedDept.theme === "amber" ? "text-amber-400" : "text-sky-400"} />
                             <span className="text-xs font-bold uppercase tracking-widest text-white">"{selectedDept.motto}"</span>
                         </div>
                       </div>
                 </div>
 
-                {/* Right Side: Focus Grid (Pengganti Images) */}
+                {/* Right Side: Focus Grid */}
                 <div className="w-full md:w-7/12 bg-black/50 p-8 md:p-12 flex flex-col justify-center">
                       <div className="mb-8">
                           <h3 className="text-lg font-bold text-white uppercase tracking-widest flex items-center gap-3">

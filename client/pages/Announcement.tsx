@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Navbar } from "../components/Navbar";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, BadgeCheck, X, Quote, ArrowRight, Sparkles } from "lucide-react";
+import { Search, BadgeCheck, X, Quote, ArrowRight } from "lucide-react";
 
 // --- DATA FINAL (19 ORANG) ---
 const announcementData = [
@@ -172,7 +172,7 @@ export default function Announcement() {
 
       <div className="pt-32 pb-20 px-6 max-w-7xl mx-auto">
         
-        {/* HEADER (REVISED: JUDUL 2 BARIS, DESKRIPSI 1 BARIS) */}
+        {/* HEADER (REVISED: RESPONSIVE FONT SIZE & WRAPPING) */}
         <div className="relative text-center mb-20">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-[150px] bg-sky-600/15 blur-[100px] rounded-full pointer-events-none"></div>
 
@@ -182,19 +182,18 @@ export default function Announcement() {
             transition={{ duration: 0.8 }}
             className="relative z-10"
           >
-            {/* JUDUL: 2 BARIS (BERTUMPUK) */}
-            <h1 className="text-5xl md:text-8xl font-black text-white tracking-tighter leading-[0.9] mb-8 drop-shadow-2xl">
+            {/* JUDUL: Responsive Extreme (3xl di HP, 8xl di Laptop) */}
+            <h1 className="text-3xl sm:text-5xl md:text-8xl font-black text-white tracking-tighter leading-[1.1] md:leading-[0.9] mb-8 drop-shadow-2xl">
               SELAMAT DATANG<br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#33A5D3] via-white to-[#F59E0B]">
                 PENGURUS BARU
               </span>
             </h1>
             
-            {/* DESKRIPSI: 1 BARIS (MEMANJANG) */}
-            <div className="inline-block relative">
-               <div className="absolute inset-0 bg-white/5 blur-md rounded-full"></div>
-               {/* whitespace-nowrap bikin teks nggak turun ke bawah (tetap 1 baris) */}
-               <p className="relative z-10 text-gray-300 text-sm md:text-lg whitespace-nowrap py-3 px-10 rounded-full border border-white/10 bg-[#0A0A0A]/50 backdrop-blur-sm shadow-xl">
+            {/* DESKRIPSI: Wrap di HP, Satu Baris di Laptop */}
+            <div className="inline-block relative max-w-full px-4">
+               <div className="absolute inset-0 bg-white/5 blur-md rounded-2xl md:rounded-full"></div>
+               <p className="relative z-10 text-gray-300 text-xs sm:text-sm md:text-lg py-3 px-6 rounded-2xl md:rounded-full border border-white/10 bg-[#0A0A0A]/50 backdrop-blur-sm shadow-xl whitespace-normal md:whitespace-nowrap leading-relaxed">
                   Selamat mengemban amanah. Klik namamu untuk melihat pesan khusus dari kami!
                </p>
             </div>

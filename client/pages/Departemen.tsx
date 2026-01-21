@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Link } from "react-router-dom"; 
-import { ArrowUpRight, X, Instagram, Linkedin, CheckCircle2 } from "lucide-react"; 
+import { ArrowUpRight, X, Instagram, Linkedin, CheckCircle2, Sparkles } from "lucide-react"; 
 
 // --- IKON CUSTOM ---
 const TikTokIcon = ({ className }: { className?: string }) => (
@@ -167,20 +167,21 @@ export default function Departemen() {
 
       <div className="relative z-10 pt-32 pb-20 px-6 max-w-7xl mx-auto">
         
-        {/* HERO TITLE */}
+        {/* HERO TITLE - REVISI RESPONSIVE */}
         <div className="text-center mb-20 md:mb-32">
             <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }}>
                 <div className="flex items-center justify-center gap-4 mb-6">
-                    <div className="h-[1px] w-12 bg-sky-500/50"></div>
-                    <span className="font-mono text-xs uppercase tracking-[0.4em] text-sky-400 font-bold">Our Divisions</span>
-                    <div className="h-[1px] w-12 bg-amber-500/50"></div>
+                    <div className="h-[1px] w-8 md:w-12 bg-sky-500/50"></div>
+                    <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] text-sky-400 font-bold">Our Divisions</span>
+                    <div className="h-[1px] w-8 md:w-12 bg-amber-500/50"></div>
                 </div>
 
-                <h1 className="text-6xl md:text-9xl font-black uppercase tracking-tighter leading-none text-white drop-shadow-2xl">
+                {/* FONT SIZE DISESUAIKAN DI SINI */}
+                <h1 className="text-5xl sm:text-7xl md:text-9xl font-black uppercase tracking-tighter leading-none text-white drop-shadow-2xl">
                     Depar<span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 via-white to-amber-500">temen</span>
                 </h1>
                 
-                <p className="mt-6 text-gray-400 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+                <p className="mt-6 text-gray-400 text-sm md:text-xl max-w-3xl mx-auto leading-relaxed px-4">
                     Kenali lebih dekat bidang gerak dan fokus setiap Departemen <span className="text-white font-bold inline-block">HMPSTI UB</span>.
                 </p>
             </motion.div>
@@ -278,7 +279,7 @@ export default function Departemen() {
                             {selectedDept.desc}
                         </p>
 
-                        {/* Motto Badge (ICON BINTANG SUDAH DIHAPUS) */}
+                        {/* Motto Badge */}
                         <div className="inline-flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
                             <span className="text-xs font-bold uppercase tracking-widest text-white">"{selectedDept.motto}"</span>
                         </div>

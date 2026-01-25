@@ -2,15 +2,16 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+
+// --- IMPORT COMPONENT ---
+import { AspirasiFab } from "./components/AspirasiFab"; // <-- INI IMPORT BARUNYA
 
 // --- IMPORT HALAMAN ---
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
-import Announcement from "./pages/Announcement"; // Import Halaman Pengumuman
-
-// Halaman ini sudah aktif import-nya
+import Announcement from "./pages/Announcement";
 import Struktur from "./pages/Struktur";
 import Departemen from "./pages/Departemen";
 
@@ -43,18 +44,20 @@ const App = () => (
           {/* Rute Pengumuman */}
           <Route path="/pengumuman" element={<Announcement />} />
           
-          {/* --- SECURITY GUARD (SUDAH DIMATIKAN) --- */}
-          {/* Baris di bawah ini sengaja di-comment biar tidak menendang user ke Home lagi */}
-          {/* <Route path="/struktur" element={<Navigate to="/" replace />} /> */}
-          {/* <Route path="/departemen" element={<Navigate to="/" replace />} /> */}
-          
-          {/* --- RUTE ASLI (SUDAH DIAKTIFKAN KEMBALI) --- */}
+          {/* Rute Struktur */}
           <Route path="/struktur" element={<Struktur />} />
+          
+          {/* Rute Departemen */}
           <Route path="/departemen" element={<Departemen />} />
           
           {/* Rute 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+
+        {/* --- TOMBOL ASPIRASI (FAB) --- */}
+        {/* Ditaruh di sini supaya muncul 'mengambang' di semua halaman */}
+        <AspirasiFab />
+
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

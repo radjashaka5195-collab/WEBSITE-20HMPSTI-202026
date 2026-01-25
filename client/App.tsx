@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 // --- IMPORT COMPONENT ---
-import { AspirasiFab } from "./components/AspirasiFab"; // <-- INI IMPORT BARUNYA
+import { AspirasiFab } from "./components/AspirasiFab"; 
 
 // --- IMPORT HALAMAN ---
 import Home from "./pages/Home";
@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import Announcement from "./pages/Announcement";
 import Struktur from "./pages/Struktur";
 import Departemen from "./pages/Departemen";
+import KalenderPage from "./pages/KalenderPage"; // <-- NAMA BARU
 
 const queryClient = new QueryClient();
 
@@ -49,13 +50,15 @@ const App = () => (
           
           {/* Rute Departemen */}
           <Route path="/departemen" element={<Departemen />} />
+
+          {/* Rute Kalender (IFRAME) */}
+          <Route path="/kalender" element={<KalenderPage />} /> 
           
           {/* Rute 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
 
         {/* --- TOMBOL ASPIRASI (FAB) --- */}
-        {/* Ditaruh di sini supaya muncul 'mengambang' di semua halaman */}
         <AspirasiFab />
 
       </BrowserRouter>

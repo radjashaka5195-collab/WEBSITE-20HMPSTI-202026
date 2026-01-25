@@ -8,7 +8,7 @@ import { Instagram, Linkedin } from "lucide-react";
 const PLACEHOLDER_MAN = "https://ouch-cdn2.icons8.com/3Ro3XNdxB8qJ2XJjZ_zYgZtWv51k5G7oJ7uW_JzZ_Jz/rs:fit:368:368/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9wbmcvOC82/YWU4NzQ2MS0wZGM4/LTRjODMtYjNjOC02/YjQ0OGIyOWFhZGYu/cG5n.png";
 const PLACEHOLDER_WOMAN = "https://ouch-cdn2.icons8.com/6XkY1qJzZ_zYgZtWv51k5G7oJ7uW_JzZ_Jz/rs:fit:368:368/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9wbmcvMjIv/YjY4YjY4YjMtYjY4/Yy00YjY4LTliYjYt/YjY4YjY4YjY4YjY4/LnBuZw.png";
 
-// --- STATIC DATA (Dipindah ke luar component agar hemat memori) ---
+// --- STATIC DATA (REVISI: Vivi <-> Mutia Swap, Esa & Angel Tetap) ---
 const bphInti = [
   { 
     role: "leader", 
@@ -26,9 +26,13 @@ const bphInti = [
     quote: "Sinergi adalah kunci keberhasilan.",
     instagram: "https://www.instagram.com/ptrisabill/"
   },
-  { role: "staff", nama: "Vivi", jabatan: "Sekretaris I", foto: "/assets/logos/images/vivi.png", instagram: "https://www.instagram.com/fwairypiyy/" },
+  // Sekretaris I (Mutia - Tukar dari Bendahara I)
+  { role: "staff", nama: "Mutia Aura", jabatan: "Sekretaris I", foto: "/assets/logos/images/mutia.png", instagram: "https://www.instagram.com/mutiaauraaaa_/" },
+  // Sekretaris II (Esa - Tetap)
   { role: "staff", nama: "Raja Esa", jabatan: "Sekretaris II", foto: "/assets/logos/images/esa.png", instagram: "https://www.instagram.com/rajaesa_/" },
-  { role: "staff", nama: "Mutia Aura", jabatan: "Bendahara I", foto: "/assets/logos/images/mutia.png", instagram: "https://www.instagram.com/mutiaauraaaa_/" },
+  // Bendahara I (Vivi - Tukar dari Sekretaris I)
+  { role: "staff", nama: "Vivi", jabatan: "Bendahara I", foto: "/assets/logos/images/vivi.png", instagram: "https://www.instagram.com/fwairypiyy/" },
+  // Bendahara II (Angel - Tetap)
   { role: "staff", nama: "Angel", jabatan: "Bendahara II", foto: "/assets/logos/images/angel.png", instagram: "https://www.instagram.com/angelinvcn_/" },
 ];
 
@@ -241,7 +245,7 @@ export default function Struktur() {
                 
                 {/* KIRI: KETUA KOMPAS */}
                 <div className="lg:col-span-3 flex flex-col gap-8">
-                     <div>
+                      <div>
                         <h2 className="text-4xl font-black text-white mb-2">KOMPAS</h2>
                         <p className="text-gray-500 text-sm">Komisi Pengawas Kinerja Organisasi</p>
                     </div>

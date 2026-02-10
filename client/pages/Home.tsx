@@ -1,42 +1,59 @@
-import { ArrowRight, Star as StarIcon, Terminal, Instagram, Linkedin, ChevronDown, Quote } from "lucide-react";
+import { ArrowRight, Terminal, ChevronDown, Quote, LayoutGrid, Users, Calendar, ShoppingBag } from "lucide-react";
 import { useScroll, useTransform, motion } from "framer-motion";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Link } from "react-router-dom";
 
-// Import Navbar Asli
-import { Navbar } from "../components/Navbar"; 
-
+// --- UTILS ---
 function cn(...inputs: ClassValue[]) { return twMerge(clsx(inputs)); }
 
-// --- HELPERS (OPTIMIZED) ---
+// --- ANIMATION HELPER ---
 const FadeIn = ({ children, className, delay = 0 }: any) => {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }} 
       whileInView={{ opacity: 1, y: 0 }} 
-      viewport={{ once: true, margin: "-50px" }} // Optimasi: margin biar render lebih efisien
-      transition={{ duration: 0.6, delay, ease: "easeOut" }} // Optimasi: Durasi sedikit dipercepat biar snappy
-      className={cn("will-change-transform", className)} // Optimasi: Memberitahu browser ini akan bergerak
+      viewport={{ once: true, margin: "-50px" }} 
+      transition={{ duration: 0.6, delay, ease: "easeOut" }} 
+      className={cn("will-change-transform", className)} 
     >
       {children}
     </motion.div>
   );
 };
 
-// Ikon Custom
-const TikTokIcon = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" /></svg>
-);
-const WhatsAppIcon = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" /></svg>
-);
+// --- COMPONENT: QUICK MENU (MOBILE ONLY) ---
+const QuickMenu = () => {
+  const menus = [
+    { name: "Struktur", icon: Users, path: "/struktur", color: "text-sky-400 border-sky-500/20 bg-sky-500/5" },
+    { name: "Divisi", icon: LayoutGrid, path: "/departemen", color: "text-amber-400 border-amber-500/20 bg-amber-500/5" },
+    { name: "Kalender", icon: Calendar, path: "/kalender", color: "text-purple-400 border-purple-500/20 bg-purple-500/5" },
+    { name: "Store", icon: ShoppingBag, path: "/merch", color: "text-rose-400 border-rose-500/20 bg-rose-500/5" },
+  ];
 
-const SocialLink = ({ href, icon: Icon, label }: { href: string; icon: any; label?: string }) => (
-  <a href={href} target="_blank" rel="noopener noreferrer" className="group relative p-3 bg-white/5 rounded-full border border-white/10 hover:border-[#33A5D3]/50 transition-all duration-300 hover:bg-[#33A5D3]/10 hover:-translate-y-1 overflow-hidden cursor-pointer flex items-center justify-center" title={label}>
-    <Icon className="w-5 h-5 text-gray-400 group-hover:text-[#33A5D3] transition-colors relative z-10" />
-  </a>
-);
+  return (
+    <div className="md:hidden w-full px-6 -mt-10 relative z-20 mb-24">
+      <div className="text-center mb-4">
+        <span className="text-[10px] font-mono uppercase tracking-widest text-gray-500">Quick Access</span>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        {menus.map((item, idx) => (
+          <Link 
+            key={idx} 
+            to={item.path}
+            className={cn(
+              "flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border backdrop-blur-md transition-transform active:scale-95",
+              item.color
+            )}
+          >
+            <item.icon size={24} />
+            <span className="text-xs font-bold uppercase tracking-wider text-gray-200">{item.name}</span>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 // --- COMPONENT MISI CARD ---
 const MisiCard = ({ number, title, text, color, delay }: any) => {
@@ -48,7 +65,6 @@ const MisiCard = ({ number, title, text, color, delay }: any) => {
   return (
     <FadeIn delay={delay} className="h-full">
       <div className={cn("group relative h-full p-8 rounded-3xl bg-[#0A0A0A] border border-white/5 transition-all duration-500 overflow-hidden", bgHover, borderHover)}>
-         {/* Optimasi: Opacity dikurangi jadi 0.02 biar browser gak berat render font raksasa */}
          <div className={cn("absolute -right-4 -top-8 text-[6rem] md:text-[8rem] font-black opacity-[0.02] select-none transition-transform duration-500 group-hover:scale-105", titleColor)}>
             {number}
          </div>
@@ -68,24 +84,20 @@ const MisiCard = ({ number, title, text, color, delay }: any) => {
   );
 };
 
-// === HALAMAN HOME UTAMA ===
+// === MAIN COMPONENT ===
 export default function Home() {
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
   
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-[#33A5D3] selection:text-white overflow-x-hidden">
-      <Navbar />
-
-      {/* --- HERO SECTION --- */}
+      
+      {/* --- HERO SECTION (SESUAI REQUEST AWAL) --- */}
       <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20 pb-10 overflow-hidden">
         
-        {/* OPTIMASI BACKGROUND: */}
-        {/* Ukuran blob disesuaikan (kecil di HP, besar di Laptop). Blur dikurangi di HP. */}
+        {/* Background Effects */}
         <div className="absolute top-[-50px] left-0 md:left-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-[#33A5D3]/20 blur-[80px] md:blur-[120px] rounded-full pointer-events-none mix-blend-screen opacity-60"></div>
         <div className="absolute top-[-50px] right-0 md:right-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-[#F59E0B]/15 blur-[80px] md:blur-[120px] rounded-full pointer-events-none mix-blend-screen opacity-60"></div>
-        
-        {/* OPTIMASI NOISE: Disembunyikan di HP (hidden md:block) biar scroll lancar */}
         <div className="fixed inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none hidden md:block"></div>
 
         <motion.div style={{ y }} className="relative z-10 text-center max-w-5xl mx-auto flex flex-col items-center">
@@ -114,26 +126,6 @@ export default function Home() {
             </p>
           </FadeIn>
 
-          {/* --- TOMBOL PENGUMUMAN (NEON STYLE - Tetap Dipertahankan) --- */}
-          <FadeIn delay={0.6}>
-            <Link to="/pengumuman" className="group relative inline-flex items-center gap-4 px-10 py-5 bg-[#050505] rounded-full border border-white/20 overflow-hidden hover:border-[#33A5D3] transition-all duration-500 hover:shadow-[0_0_40px_rgba(51,165,211,0.5)] mb-12 hover:-translate-y-2">
-                
-                {/* Background Animation on Hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#33A5D3]/20 via-transparent to-[#F59E0B]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                {/* Text */}
-                <span className="relative z-10 text-base md:text-lg font-black tracking-[0.2em] uppercase text-white group-hover:text-[#33A5D3] transition-colors">
-                    Cek Pengumuman
-                </span>
-
-                {/* Arrow Icon with Circle */}
-                <div className="relative z-10 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#33A5D3] group-hover:text-black transition-all duration-300 group-hover:scale-110">
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </div>
-            </Link>
-          </FadeIn>
-          {/* ------------------------------------------- */}
-
         </motion.div>
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5, duration: 1 }} className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[#33A5D3] animate-bounce">
@@ -141,7 +133,10 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* --- 2. FILOSOFI --- */}
+      {/* --- QUICK MENU (MOBILE ONLY) --- */}
+      <QuickMenu />
+
+      {/* --- FILOSOFI SECTION --- */}
       <section className="relative z-10 py-32 bg-[#080808] border-t border-white/5 overflow-hidden">
         <div className="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-[#33A5D3]/5 to-transparent pointer-events-none"></div>
         <div className="max-w-6xl mx-auto px-6">
@@ -163,7 +158,6 @@ export default function Home() {
                             <span className="text-xs font-mono text-gray-500 uppercase tracking-widest">Est. 2026</span>
                             <Terminal size={24} className="text-[#F59E0B] opacity-80" />
                         </div>
-                        {/* Optimasi Glow: Ukuran dan Blur disesuaikan */}
                         <div className="absolute -right-20 -bottom-20 w-40 h-40 md:w-64 md:h-64 bg-[#33A5D3]/10 blur-[60px] md:blur-[80px] rounded-full group-hover:bg-[#33A5D3]/20 transition-all duration-500"></div>
                     </div>
                 </FadeIn>
@@ -189,7 +183,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- 3. VISI & MISI --- */}
+      {/* --- VISI MISI SECTION --- */}
       <section className="relative z-10 py-32 bg-black border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-16">
@@ -232,35 +226,39 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- FOOTER --- */}
-      <section className="relative py-20 bg-[#050505] border-t border-white/10 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col items-center relative z-10">
-            {/* LOGO BESAR */}
-            <motion.div whileHover={{ scale: 1.05 }} className="mb-10 cursor-default">
-                <span className="text-6xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-br from-[#33A5D3] to-[#F59E0B] tracking-tighter select-none drop-shadow-2xl opacity-90 hover:opacity-100 transition-opacity">
-                    INNOVARA
-                </span>
-            </motion.div>
+      {/* --- JOURNEY CTA (YANG DIRUBAH JADI MENARIK) --- */}
+      <section className="relative z-10 py-32 px-6 text-center border-t border-white/5 bg-[#050505] overflow-hidden">
+          {/* Background Glow Halus */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-sky-900/10 blur-[120px] rounded-full pointer-events-none"></div>
 
-            {/* SOCIAL MEDIA ICONS */}
-            <div className="flex gap-6 mb-12">
-                <SocialLink href="https://www.instagram.com/hmpsti.vokasiub/" icon={Instagram} label="Instagram" />
-                <SocialLink href="https://www.tiktok.com/@hmpsti.vokasiub" icon={TikTokIcon} label="TikTok" />
-                <SocialLink href="https://www.linkedin.com/company/hmpsti-vokasi-ub/" icon={Linkedin} label="LinkedIn" />
-                <SocialLink href="https://wa.me/6282218361690" icon={WhatsAppIcon} label="Contact Person" />
-            </div>
+          <FadeIn delay={0.2}>
+            <div className="relative z-10 flex flex-col items-center">
+                <p className="text-gray-400 mb-8 font-light tracking-wide text-sm md:text-base">
+                    Siap berkenalan dengan wajah-wajah di balik <span className="text-white font-bold">Innovara</span>?
+                </p>
+                
+                {/* Tombol dengan Efek Shimmer & Glow */}
+                <Link 
+                    to="/struktur" 
+                    className="group relative inline-flex items-center gap-4 px-10 py-5 bg-[#0A0A0A] rounded-full overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_30px_rgba(14,165,233,0.3)] border border-white/10"
+                >
+                    {/* Animated Gradient Border (Inset) */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-sky-500 via-amber-500 to-sky-500 opacity-20 group-hover:opacity-40 blur-md transition-opacity"></div>
+                    
+                    {/* Shimmer Effect */}
+                    <div className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out"></div>
 
-            {/* COPYRIGHT */}
-            <div className="text-center border-t border-white/5 pt-8 w-full max-w-lg">
-                <p className="text-gray-600 font-mono text-[10px] uppercase tracking-widest mb-3">
-                    © 2026 HMPSTI UB • <span className="text-[#33A5D3]">Kabinet Innovara</span>
-                </p>
-                <p className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-[#33A5D3] to-[#F59E0B] tracking-widest uppercase">
-                    Satu Hati, Satu Gerak, TI Jaya!
-                </p>
+                    <span className="relative z-10 font-bold text-white uppercase tracking-[0.2em] text-xs md:text-sm">
+                        Explore Struktur
+                    </span>
+                    <div className="relative z-10 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-white/10 group-hover:translate-x-1 transition-all">
+                        <ArrowRight size={16} className="text-sky-400 group-hover:text-amber-400 transition-colors" />
+                    </div>
+                </Link>
             </div>
-        </div>
+          </FadeIn>
       </section>
+
     </div>
   );
 }

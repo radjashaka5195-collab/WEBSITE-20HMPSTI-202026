@@ -1,23 +1,7 @@
-import { Navbar } from "../components/Navbar";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { Link } from "react-router-dom"; 
-import { ArrowUpRight, X, Instagram, Linkedin, CheckCircle2, Sparkles } from "lucide-react"; 
-
-// --- IKON CUSTOM ---
-const TikTokIcon = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" /></svg>
-);
-const WhatsAppIcon = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" /></svg>
-);
-
-const SocialLink = ({ href, icon: Icon, label }: { href: string; icon: any; label?: string }) => (
-  <a href={href} target="_blank" rel="noopener noreferrer" className="group relative p-3 bg-white/5 rounded-full border border-white/10 hover:border-[#33A5D3]/50 transition-all duration-300 hover:bg-[#33A5D3]/10 hover:-translate-y-1 overflow-hidden cursor-pointer flex items-center justify-center" title={label}>
-    <Icon className="w-5 h-5 text-gray-400 group-hover:text-[#33A5D3] transition-colors relative z-10" />
-  </a>
-);
+import { ArrowUpRight, X, CheckCircle2 } from "lucide-react"; 
 
 // --- DATA DEPARTEMEN ---
 const departments = [
@@ -148,16 +132,9 @@ const DeptCard = ({ data, index, onClick }: { data: any, index: number, onClick:
 export default function Departemen() {
   const [selectedDept, setSelectedDept] = useState<any>(null);
 
-  const footerLinks = [
-    { name: "Beranda", path: "/" },
-    { name: "Struktur", path: "/struktur" },
-    { name: "Departemen", path: "/departemen" },
-  ];
-
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-sky-500/30 overflow-x-hidden">
-      <Navbar />
-
+      
       {/* BACKGROUND FX */}
       <div className="fixed inset-0 z-0 pointer-events-none">
          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.04] brightness-100 contrast-150 mix-blend-overlay"></div>
@@ -167,7 +144,7 @@ export default function Departemen() {
 
       <div className="relative z-10 pt-32 pb-20 px-6 max-w-7xl mx-auto">
         
-        {/* HERO TITLE - REVISI RESPONSIVE */}
+        {/* HERO TITLE */}
         <div className="text-center mb-20 md:mb-32">
             <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }}>
                 <div className="flex items-center justify-center gap-4 mb-6">
@@ -176,7 +153,6 @@ export default function Departemen() {
                     <div className="h-[1px] w-8 md:w-12 bg-amber-500/50"></div>
                 </div>
 
-                {/* FONT SIZE DISESUAIKAN DI SINI */}
                 <h1 className="text-5xl sm:text-7xl md:text-9xl font-black uppercase tracking-tighter leading-none text-white drop-shadow-2xl">
                     Depar<span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 via-white to-amber-500">temen</span>
                 </h1>
@@ -194,42 +170,6 @@ export default function Departemen() {
             ))}
         </div>
       </div>
-
-      {/* === FOOTER === */}
-      <section className="relative py-20 bg-[#050505] border-t border-white/10 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col items-center relative z-10">
-            <motion.div whileHover={{ scale: 1.05 }} className="mb-10 cursor-default">
-                <span className="text-6xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-br from-[#33A5D3] to-[#F59E0B] tracking-tighter select-none drop-shadow-2xl opacity-90 hover:opacity-100 transition-opacity">
-                    INNOVARA
-                </span>
-            </motion.div>
-
-            <div className="flex gap-6 mb-12">
-                <SocialLink href="https://www.instagram.com/hmpsti.vokasiub/" icon={Instagram} label="Instagram" />
-                <SocialLink href="https://www.tiktok.com/@hmpsti.vokasiub" icon={TikTokIcon} label="TikTok" />
-                <SocialLink href="https://www.linkedin.com/company/hmpsti-vokasi-ub/" icon={Linkedin} label="LinkedIn" />
-                <SocialLink href="#" icon={WhatsAppIcon} label="Contact Person" />
-            </div>
-
-            <div className="flex flex-wrap justify-center gap-8 mb-10 text-sm font-bold uppercase tracking-widest text-gray-500">
-                {footerLinks.map((link) => (
-                    <Link key={link.name} to={link.path} className="hover:text-[#33A5D3] transition-colors relative group">
-                        {link.name}
-                        <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#F59E0B] transition-all group-hover:w-full"></span>
-                    </Link>
-                ))}
-            </div>
-
-            <div className="text-center border-t border-white/5 pt-8 w-full max-w-lg">
-                <p className="text-gray-600 font-mono text-[10px] uppercase tracking-widest mb-3">
-                    © 2026 HMPSTI UB • <span className="text-[#33A5D3]">Kabinet Innovara</span>
-                </p>
-                <p className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-[#33A5D3] to-[#F59E0B] tracking-widest uppercase">
-                    Satu Hati, Satu Gerak, TI Jaya!
-                </p>
-            </div>
-        </div>
-      </section>
 
       {/* === MODAL / POPUP === */}
       <AnimatePresence>

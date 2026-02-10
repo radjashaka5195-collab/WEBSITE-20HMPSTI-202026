@@ -1,14 +1,12 @@
-import { Navbar } from "../components/Navbar";
 import { motion, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom"; 
-import { Instagram, Linkedin } from "lucide-react"; 
+import { Instagram, ArrowRight } from "lucide-react"; 
 
 // --- ASSETS PLACEHOLDER ---
 const PLACEHOLDER_MAN = "https://ouch-cdn2.icons8.com/3Ro3XNdxB8qJ2XJjZ_zYgZtWv51k5G7oJ7uW_JzZ_Jz/rs:fit:368:368/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9wbmcvOC82/YWU4NzQ2MS0wZGM4/LTRjODMtYjNjOC02/YjQ0OGIyOWFhZGYu/cG5n.png";
-const PLACEHOLDER_WOMAN = "https://ouch-cdn2.icons8.com/6XkY1qJzZ_zYgZtWv51k5G7oJ7uW_JzZ_Jz/rs:fit:368:368/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9wbmcvMjIv/YjY4YjY4YjMtYjY4/Yy00YjY4LTliYjYt/YjY4YjY4YjY4YjY4/LnBuZw.png";
 
-// --- STATIC DATA (REVISI: Vivi <-> Mutia Swap, Esa & Angel Tetap) ---
+// --- STATIC DATA ---
 const bphInti = [
   { 
     role: "leader", 
@@ -26,13 +24,9 @@ const bphInti = [
     quote: "Sinergi adalah kunci keberhasilan.",
     instagram: "https://www.instagram.com/ptrisabill/"
   },
-  // Sekretaris I (Mutia - Tukar dari Bendahara I)
   { role: "staff", nama: "Mutia Aura", jabatan: "Sekretaris I", foto: "/assets/logos/images/mutia.png", instagram: "https://www.instagram.com/mutiaauraaaa_/" },
-  // Sekretaris II (Esa - Tetap)
   { role: "staff", nama: "Raja Esa", jabatan: "Sekretaris II", foto: "/assets/logos/images/esa.png", instagram: "https://www.instagram.com/rajaesa_/" },
-  // Bendahara I (Vivi - Tukar dari Sekretaris I)
   { role: "staff", nama: "Vivi", jabatan: "Bendahara I", foto: "/assets/logos/images/vivi.png", instagram: "https://www.instagram.com/fwairypiyy/" },
-  // Bendahara II (Angel - Tetap)
   { role: "staff", nama: "Angel", jabatan: "Bendahara II", foto: "/assets/logos/images/angel.png", instagram: "https://www.instagram.com/angelinvcn_/" },
 ];
 
@@ -54,20 +48,7 @@ const dataKompas = {
   ]
 };
 
-const footerLinks = [
-  { name: "Beranda", path: "/" },
-  { name: "Struktur", path: "/struktur" },
-  { name: "Departemen", path: "/departemen" },
-];
-
-// --- ICONS & ANIMATIONS ---
-const TikTokIcon = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" /></svg>
-);
-const WhatsAppIcon = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" /></svg>
-);
-
+// --- ANIMATION VARIANTS ---
 const containerVar: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
@@ -78,15 +59,8 @@ const itemVar: Variants = {
   visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } }
 };
 
-const SocialLink = ({ href, icon: Icon, label }: { href: string; icon: any; label?: string }) => (
-  <a href={href} target="_blank" rel="noopener noreferrer" className="group relative p-3 bg-white/5 rounded-full border border-white/10 hover:border-[#33A5D3]/50 transition-all duration-300 hover:bg-[#33A5D3]/10 hover:-translate-y-1 overflow-hidden cursor-pointer flex items-center justify-center" title={label}>
-    <Icon className="w-5 h-5 text-gray-400 group-hover:text-[#33A5D3] transition-colors relative z-10" />
-  </a>
-);
-
 // --- COMPONENTS ---
 
-// BPH Card (Eager Loading for images above fold)
 const BPHCard = ({ item, className }: any) => {
   const isLeader = item.role === "leader" || item.role === "vice";
   return (
@@ -106,7 +80,6 @@ const BPHCard = ({ item, className }: any) => {
           <img 
             src={item.foto} 
             alt={item.nama} 
-            // Priority loading for leaders
             decoding="async"
             className="h-full w-full object-contain filter contrast-110 brightness-110" 
           />
@@ -123,7 +96,6 @@ const BPHCard = ({ item, className }: any) => {
   );
 };
 
-// Kompas Leader (Lazy load enabled)
 const KompasLeaderCard = ({ item }: any) => (
   <motion.a 
     href={item.instagram}
@@ -159,7 +131,6 @@ const KompasLeaderCard = ({ item }: any) => (
   </motion.a>
 );
 
-// Kompas Member (Lazy load enabled)
 const KompasMemberCard = ({ nama, jabatan, instagram, foto }: any) => (
   <motion.a 
     href={instagram}
@@ -196,9 +167,8 @@ const KompasMemberCard = ({ nama, jabatan, instagram, foto }: any) => (
 export default function Struktur() {
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-sky-500/30 overflow-x-hidden relative flex flex-col">
-      <Navbar />
-
-      {/* BACKGROUND GLOBAL - Optimized using CSS directly where possible */}
+      
+      {/* BACKGROUND GLOBAL */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
           <div className="absolute inset-0 bg-[#050505]"></div>
           <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-sky-900/15 blur-[120px] rounded-full opacity-60"></div>
@@ -206,7 +176,7 @@ export default function Struktur() {
           <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-overlay hidden md:block"></div>
       </div>
 
-      <div className="relative z-10 pt-32 pb-20 px-6 max-w-7xl mx-auto w-full">
+      <div className="relative z-10 pt-32 pb-10 px-6 max-w-7xl mx-auto w-full">
         {/* HEADER */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20 border-b border-white/10 pb-10">
             <div>
@@ -239,11 +209,9 @@ export default function Struktur() {
             </div>
         </motion.div>
 
-        {/* --- BAGIAN KOMPAS (SPLIT LAYOUT - FOTO BESAR - GRID 4x2) --- */}
+        {/* --- BAGIAN KOMPAS --- */}
         <div className="relative pt-24 border-t border-white/10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
-                
-                {/* KIRI: KETUA KOMPAS */}
                 <div className="lg:col-span-3 flex flex-col gap-8">
                       <div>
                         <h2 className="text-4xl font-black text-white mb-2">KOMPAS</h2>
@@ -252,7 +220,6 @@ export default function Struktur() {
                     <KompasLeaderCard item={dataKompas.ketua} />
                 </div>
 
-                {/* KANAN: ANGGOTA (GRID 4 KOLOM) */}
                 <motion.div 
                     variants={containerVar}
                     initial="hidden"
@@ -264,37 +231,45 @@ export default function Struktur() {
                         <KompasMemberCard key={idx} {...item} />
                     ))}
                 </motion.div>
-
             </div>
         </div>
 
       </div>
-      
-      {/* --- FOOTER --- */}
-      <section className="relative py-20 bg-[#050505] border-t border-white/10 overflow-hidden mt-auto z-20">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col items-center relative z-10">
-            <motion.div whileHover={{ scale: 1.05 }} className="mb-10 cursor-default">
-                <span className="text-6xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-br from-[#33A5D3] to-[#F59E0B] tracking-tighter select-none drop-shadow-2xl opacity-90 hover:opacity-100 transition-opacity">INNOVARA</span>
-            </motion.div>
-            <div className="flex gap-6 mb-12">
-                <SocialLink href="https://www.instagram.com/hmpsti.vokasiub/" icon={Instagram} label="Instagram" />
-                <SocialLink href="https://www.tiktok.com/@hmpsti.vokasiub" icon={TikTokIcon} label="TikTok" />
-                <SocialLink href="https://www.linkedin.com/company/hmpsti-vokasi-ub/" icon={Linkedin} label="LinkedIn" />
-                <SocialLink href="https://wa.me/6282218361690" icon={WhatsAppIcon} label="Contact Person" />
-            </div>
-            <div className="flex flex-wrap justify-center gap-8 mb-10 text-sm font-bold uppercase tracking-widest text-gray-500">
-                {footerLinks.map((link) => (
-                    <Link key={link.name} to={link.path} className="hover:text-[#33A5D3] transition-colors relative group">
-                        {link.name} <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#F59E0B] transition-all group-hover:w-full"></span>
-                    </Link>
-                ))}
-            </div>
-            <div className="text-center border-t border-white/5 pt-8 w-full max-w-lg">
-                <p className="text-gray-600 font-mono text-[10px] uppercase tracking-widest mb-3">© 2026 HMPSTI UB • <span className="text-[#33A5D3]">Kabinet Innovara</span></p>
-                <p className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-[#33A5D3] to-[#F59E0B] tracking-widest uppercase">Satu Hati, Satu Gerak, TI Jaya!</p>
-            </div>
-        </div>
+
+      {/* --- JOURNEY CTA (NEXT: DEPARTEMEN) --- */}
+      <section className="relative z-10 py-24 px-6 text-center border-t border-white/5 bg-[#050505] overflow-hidden mt-12">
+          {/* Background Glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[200px] bg-amber-900/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative z-10 flex flex-col items-center"
+          >
+            <p className="text-gray-400 mb-8 font-light tracking-wide text-sm md:text-base">
+                Penasaran dengan bidang gerak kami? <span className="text-white font-bold">Cek Divisi HMPSTI.</span>
+            </p>
+            
+            <Link 
+                to="/departemen" 
+                className="group relative inline-flex items-center gap-4 px-10 py-5 bg-[#0A0A0A] rounded-full overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_30px_rgba(245,158,11,0.3)] border border-white/10"
+            >
+                {/* Gradient Border & Shimmer */}
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-500 via-sky-500 to-amber-500 opacity-20 group-hover:opacity-40 blur-md transition-opacity"></div>
+                <div className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out"></div>
+
+                <span className="relative z-10 font-bold text-white uppercase tracking-[0.2em] text-xs md:text-sm">
+                    Explore Departemen
+                </span>
+                <div className="relative z-10 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-white/10 group-hover:translate-x-1 transition-all">
+                    <ArrowRight size={16} className="text-amber-400 group-hover:text-sky-400 transition-colors" />
+                </div>
+            </Link>
+          </motion.div>
       </section>
+      
     </div>
   );
 }

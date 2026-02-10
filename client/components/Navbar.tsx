@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom"; // Pastikan ini bener dari react-router-dom
 import { Menu, X } from "lucide-react"; 
 import { motion, AnimatePresence } from "framer-motion";
 import { clsx, type ClassValue } from "clsx";
@@ -23,12 +23,13 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // --- DAFTAR MENU (Tanpa Pengumuman) ---
+  // --- DAFTAR MENU (UPDATED) ---
   const navLinks = [
     { name: "Beranda", path: "/" },
     { name: "Struktur", path: "/struktur" },
     { name: "Departemen", path: "/departemen" },
-    { name: "Kalender", path: "/kalender" }, // Menu Kalender Tetap Ada
+    { name: "Kalender", path: "/kalender" },
+    { name: "Merch", path: "/merch" }, // <--- TAMBAHAN MENU DISINI
   ];
 
   return (
@@ -60,15 +61,28 @@ export const Navbar = () => {
           {/* MENU DESKTOP */}
           <div className="hidden md:flex items-center gap-8 ml-auto">
             {navLinks.map((link) => (
-              <Link key={link.name} to={link.path} className={cn("text-sm font-bold uppercase transition-colors tracking-wider relative group", location.pathname === link.path ? "text-[#33A5D3]" : "text-white/70 hover:text-[#33A5D3]")}>
+              <Link 
+                key={link.name} 
+                to={link.path} 
+                className={cn(
+                  "text-sm font-bold uppercase transition-colors tracking-wider relative group", 
+                  location.pathname === link.path ? "text-[#33A5D3]" : "text-white/70 hover:text-[#33A5D3]"
+                )}
+              >
                 {link.name}
-                <span className={cn("absolute -bottom-1 left-0 h-[2px] bg-[#33A5D3] transition-all duration-300", location.pathname === link.path ? "w-full" : "w-0 group-hover:w-full")}></span>
+                <span className={cn(
+                  "absolute -bottom-1 left-0 h-[2px] bg-[#33A5D3] transition-all duration-300", 
+                  location.pathname === link.path ? "w-full" : "w-0 group-hover:w-full"
+                )}></span>
               </Link>
             ))}
           </div>
 
           {/* TOMBOL MENU MOBILE */}
-          <button className="relative z-[101] md:hidden text-white hover:text-[#33A5D3] transition-colors" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          <button 
+            className="relative z-[101] md:hidden text-white hover:text-[#33A5D3] transition-colors" 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
             {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
@@ -77,9 +91,19 @@ export const Navbar = () => {
       {/* MOBILE MENU OVERLAY */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[90] bg-[#050505]/95 backdrop-blur-xl flex flex-col justify-center items-center gap-8">
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }} 
+            className="fixed inset-0 z-[90] bg-[#050505]/95 backdrop-blur-xl flex flex-col justify-center items-center gap-8"
+          >
              {navLinks.map((link) => (
-                <Link key={link.name} to={link.path} onClick={() => setIsMobileMenuOpen(false)} className="text-4xl font-black text-white hover:text-[#33A5D3] uppercase tracking-tight transition-transform hover:scale-110">
+                <Link 
+                  key={link.name} 
+                  to={link.path} 
+                  onClick={() => setIsMobileMenuOpen(false)} 
+                  className="text-4xl font-black text-white hover:text-[#33A5D3] uppercase tracking-tight transition-transform hover:scale-110"
+                >
                   {link.name}
                 </Link>
              ))}

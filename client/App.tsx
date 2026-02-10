@@ -1,3 +1,4 @@
+// src/App.tsx
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -5,31 +6,28 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
-// --- IMPORT COMPONENT ---
+// Import Components
+import { Navbar } from "./components/Navbar";
+import Footer from "./components/Footer";
 import { AspirasiFab } from "./components/AspirasiFab"; 
 
-// --- IMPORT HALAMAN ---
-import Home from "./pages/Home";
+// Import Pages
+import Home from "./pages/Home"; // Home di-import, tapi dipake DI DALAM ROUTES aja
 import NotFound from "./pages/NotFound";
 import Announcement from "./pages/Announcement";
 import Struktur from "./pages/Struktur";
 import Departemen from "./pages/Departemen";
-import KalenderPage from "./pages/KalenderPage"; // <-- NAMA BARU
+import KalenderPage from "./pages/KalenderPage";
+import Merch from "./pages/Merch"; 
 
 const queryClient = new QueryClient();
 
-// --- COMPONENT UTILITY: SCROLL TO TOP ---
 const ScrollToTop = () => {
   const { pathname } = useLocation();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return null;
 };
 
-// --- MAIN APP ---
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -38,29 +36,24 @@ const App = () => (
       <BrowserRouter>
         <ScrollToTop />
         
+        {/* Navbar Global */}
+        <Navbar /> 
+        
+        {/* Area Gonta-Ganti Halaman */}
         <Routes>
-          {/* Rute Utama (Home) */}
-          <Route path="/" element={<Home />} />
-          
-          {/* Rute Pengumuman */}
+          <Route path="/" element={<Home />} /> {/* Home cuma boleh ada DISINI */}
           <Route path="/pengumuman" element={<Announcement />} />
-          
-          {/* Rute Struktur */}
           <Route path="/struktur" element={<Struktur />} />
-          
-          {/* Rute Departemen */}
           <Route path="/departemen" element={<Departemen />} />
-
-          {/* Rute Kalender (IFRAME) */}
           <Route path="/kalender" element={<KalenderPage />} /> 
-          
-          {/* Rute 404 */}
+          <Route path="/merch" element={<Merch />} /> 
           <Route path="*" element={<NotFound />} />
         </Routes>
 
-        {/* --- TOMBOL ASPIRASI (FAB) --- */}
-        <AspirasiFab />
+        {/* Footer Global */}
+        <Footer /> 
 
+        <AspirasiFab />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

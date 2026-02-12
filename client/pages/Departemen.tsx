@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { ArrowUpRight, X, CheckCircle2 } from "lucide-react"; 
+import { ArrowUpRight, X, CheckCircle2, User } from "lucide-react"; 
 
 // --- DATA DEPARTEMEN ---
 const departments = [
@@ -9,71 +9,104 @@ const departments = [
     id: "psdm",
     nama: "PSDM",
     panjang: "Pengembangan Sumber Daya Mahasiswa",
-    desc: "Kami hadir untuk menggali dan mengembangkan potensi terbaik setiap mahasiswa TI. Fokus kami adalah membentuk karakter kepemimpinan yang kuat dan menciptakan lingkungan di mana setiap anggota bisa bertumbuh bersama.",
+    desc: "Mewujudkan sumber daya mahasiswa Teknologi Informasi yang aktif, kompeten, berintegritas, adaptif, dan berjiwa kepemimpinan melalui proses kaderisasi dan pengembangan organisasi yang berkelanjutan.",
     theme: "sky",
     logo: "/assets/logos/PSDM.png",
     motto: "Membentuk Kader, Membangun Karakter.",
-    focus: ["Kaderisasi Mahasiswa", "Leadership Training", "Monitoring Staff", "Bonding Internal"]
+    focus: ["Leadership Development Camp", "TI Career Simulation", "Rangkaian Samba TI", "Maba to Maba (M2M)"],
+    leaders: [
+      { nama: "Adam Ahmad Bimantoro", jabatan: "Ketua Departemen" },
+      { nama: "Muhammad Hafizh Fajariyanto", jabatan: "Wakil Ketua 1" },
+      { nama: "Vallerina Gracela Purba", jabatan: "Wakil Ketua 2" },
+    ]
   },
   {
     id: "inotek",
     nama: "INOTEK",
     panjang: "Inovasi & Teknologi",
-    desc: "Rumah bagi para inovator muda. Di sini, kami mengeksplorasi teknologi terkini, mulai dari pengembangan software hingga IoT, untuk menciptakan solusi nyata yang bermanfaat bagi sekitar.",
+    desc: "Pusat pengembangan kompetensi teknis yang praktis dan berdampak nyata. Kami berperan sebagai 'Tech-Hub' yang menjembatani mahasiswa dengan tren industri IT terkini melalui riset, kompetisi, dan portofolio karya.",
     theme: "amber",
     logo: "/assets/logos/Inotek.png",
-    motto: "Innovate Today, Lead Tomorrow.",
-    focus: ["Software Development", "Internet of Things", "Riset Ilmiah", "Tech Workshop"]
+    motto: "Explore, Compete, Create.",
+    focus: ["The Blueprint: IT Career", "Tech Bridge Academy", "TI Creative Competition", "Tech Fair Exhibition"],
+    leaders: [
+      { nama: "Muhammad Rohan Rifqi", jabatan: "Ketua Departemen" },
+      { nama: "Muhammad Mu'taz Syafiq", jabatan: "Wakil Ketua 1" },
+      { nama: "Seila Salsabiela", jabatan: "Wakil Ketua 2" },
+    ]
   },
   {
     id: "medinfo",
     nama: "MEDINFO",
     panjang: "Media & Informasi",
-    desc: "Gardu kreatif himpunan yang mengelola seluruh arus informasi. Kami memadukan desain visual yang estetik dan strategi media sosial untuk memastikan setiap pesan tersampaikan dengan menarik.",
+    desc: "Gardu kreatif yang mengoptimalkan sistem komunikasi dan informasi berbasis teknologi. Kami fokus memperkuat identitas visual, menjembatani arus informasi, dan meningkatkan citra digital HMPSTI secara profesional.",
     theme: "sky",
     logo: "/assets/logos/Medinfo.png",
     motto: "Creativity Beyond Limit.",
-    focus: ["Social Media Mgt", "Graphic Design", "Videography", "Creative Content"]
+    focus: ["Company Profile & Branding", "Workshop Design & Video", "Medinfo Class", "Pengelolaan Media Terintegrasi"],
+    leaders: [
+      { nama: "Muhammad Raihan Hidayah", jabatan: "Ketua Departemen" },
+      { nama: "Tiara Nurfadilah", jabatan: "Wakil Ketua 1" },
+      { nama: "Latisha Syifa Pratiwi", jabatan: "Wakil Ketua 2" },
+    ]
   },
   {
     id: "advo",
     nama: "ADVOKESMA",
     panjang: "Advokasi & Kesejahteraan",
-    desc: "Kami adalah garda terdepan dalam memperjuangkan hak dan kesejahteraan mahasiswa. Mulai dari bantuan akademik hingga penyaluran aspirasi, kami siap mendengar dan bertindak.",
+    desc: "Pusat advokasi dan pengabdian yang progresif. Kami hadir sebagai jembatan strategis untuk memperjuangkan hak mahasiswa, menyalurkan aspirasi, serta memberikan solusi nyata bagi kesejahteraan mahasiswa dan masyarakat.",
     theme: "amber",
     logo: "/assets/logos/Advokesma.png",
     motto: "Melayani dengan Hati.",
-    focus: ["Layanan Advokasi", "Info Beasiswa", "Forum Aspirasi", "Crisis Center"]
+    focus: ["TI Speaks (Layanan Advokasi)", "HaloADVO (Pusat Aspirasi)", "IT Charity (Pengabdian)", "SEAVO (Social Event)"],
+    leaders: [
+      { nama: "Kayla Alodia Calista", jabatan: "Ketua Departemen" },
+      { nama: "Dean Adiba Anugrah", jabatan: "Wakil Ketua 1" },
+      { nama: "Nadia Salwa Oktavia", jabatan: "Wakil Ketua 2" },
+    ]
   },
   {
     id: "hubeks",
     nama: "HUBEKS",
     panjang: "Hubungan Eksternal",
-    desc: "Jembatan penghubung HMPSTI dengan dunia luar. Kami aktif membangun relasi strategis dengan alumni, instansi, dan organisasi lain untuk membuka peluang kolaborasi yang lebih luas.",
+    desc: "Inisiator kolaborasi yang adaptif dan profesional. Kami menjadi garda terdepan dalam membangun sinergi strategis dengan mitra eksternal, alumni, dan industri untuk membuka peluang karier dan networking bagi mahasiswa.",
     theme: "sky",
     logo: "/assets/logos/Hubeks.png",
-    motto: "Connecting Opportunities.",
-    focus: ["Relasi Eksternal", "Studi Banding", "Alumni Relation", "Company Visit"]
+    motto: "The Synergy Hub.",
+    focus: ["Vistech 2.0 (Visit Technology)", "Speak Up Workshop", "I-Relation Hub (Database)", "Ramadhan Charity Connect"],
+    leaders: [
+      { nama: "Nathanael Eleazar Handata", jabatan: "Ketua Departemen" },
+      { nama: "Evan Swardana Adinata", jabatan: "Wakil Ketua" },
+    ]
   },
   {
     id: "ekraf",
     nama: "EKRAF",
     panjang: "Ekonomi Kreatif",
-    desc: "Motor penggerak kemandirian finansial organisasi. Lewat semangat wirausaha, kami menciptakan produk-produk kreatif dan merchandise keren yang tidak hanya bernilai jual tapi juga membanggakan.",
+    desc: "Inkubator wirausaha bagi mahasiswa TI. Kami membekali mahasiswa dengan kemampuan mengemas skill IT menjadi produk bernilai ekonomi, sekaligus menjadi motor penggerak kemandirian finansial organisasi.",
     theme: "amber",
     logo: "/assets/logos/Ekraf.png",
     motto: "Business with Passion.",
-    focus: ["Merchandise Store", "Business Plan", "Sponsorship", "Creative Preneur"]
+    focus: ["CreativePreneur Workshop", "IT Business Plan Contest", "Ekraf Berduit (Merchandise)", "Bazar & Sponsorship"],
+    leaders: [
+      { nama: "Muktabar Zaki Pramana Wlbisono", jabatan: "Ketua Departemen" },
+      { nama: "Dinda Eka Cantika", jabatan: "Wakil Ketua" },
+    ]
   },
   {
     id: "mikat",
     nama: "KORA",
     panjang: "Kreatifitas & Olahraga",
-    desc: "Wadah ekspresi bagi bakat seni dan olahraga mahasiswa. Kami percaya keseimbangan itu penting, jadi kami hadirkan berbagai kegiatan seru untuk menyalurkan hobi dan menjaga semangat tetap menyala.",
+    desc: "Wadah pengembangan potensi non-akademik yang berbasis kolaborasi dan inovasi. Kami memfasilitasi penyaluran minat bakat di bidang seni dan olahraga untuk mendorong prestasi dan keseimbangan hidup mahasiswa.",
     theme: "sky",
     logo: "/assets/logos/Kora.png",
     motto: "Sportive Spirit, Creative Mind.",
-    focus: ["E-Sport Tournament", "Olahraga Rutin", "Festival Musik", "Komunitas Seni"]
+    focus: ["Techno Competition", "Techno Cup (E-Sport)", "IT Fun Game", "Hall Of Fame & Akustik"],
+    leaders: [
+      { nama: "Wiratama Satrio Herlambang", jabatan: "Ketua Departemen" },
+      { nama: "Raihan Ammar Ahsani", jabatan: "Wakil Ketua 1" },
+      { nama: "Damar Putra Hartono", jabatan: "Wakil Ketua 2" },
+    ]
   },
 ];
 
@@ -96,14 +129,12 @@ const DeptCard = ({ data, index, onClick }: { data: any, index: number, onClick:
         borderHover
       )}
     >
-      {/* Background Glow */}
       <div 
         className="absolute -right-20 -top-20 w-64 h-64 blur-[100px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
         style={{ background: glowColor }}
       ></div>
 
       <div className="relative z-10">
-        {/* LOGO SECTION */}
         <div className={cn("w-16 h-16 rounded-2xl flex items-center justify-center p-3 bg-white/5 border border-white/10 mb-6 transition-all duration-500 group-hover:scale-110 group-hover:bg-black/50 backdrop-blur-sm", mainColor)}>
             <img 
                 src={data.logo} 
@@ -127,6 +158,30 @@ const DeptCard = ({ data, index, onClick }: { data: any, index: number, onClick:
     </motion.div>
   );
 };
+
+// --- COMPONENT: Leader Card (No Photo Version) ---
+const LeaderCard = ({ leader, theme }: { leader: any, theme: string }) => {
+    const isAmber = theme === "amber";
+    const accentColor = isAmber ? "bg-amber-500" : "bg-sky-500";
+    const textColor = isAmber ? "group-hover:text-amber-400" : "group-hover:text-sky-400";
+    
+    return (
+        <div className="group relative flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 transition-all duration-300">
+            {/* Icon Avatar sebagai pengganti foto */}
+            <div className={cn("flex items-center justify-center w-12 h-12 rounded-full bg-black/50 border border-white/10 shrink-0", accentColor.replace("bg-", "text-").replace("500", "500/80"))}>
+                <User size={20} />
+            </div>
+            
+            <div>
+                <p className={cn("text-white font-bold text-sm md:text-base leading-tight transition-colors", textColor)}>{leader.nama}</p>
+                <div className="flex items-center gap-2 mt-1">
+                    <span className={cn("w-1.5 h-1.5 rounded-full", accentColor)}></span>
+                    <p className="text-[10px] md:text-xs font-mono uppercase tracking-wide text-gray-400">{leader.jabatan}</p>
+                </div>
+            </div>
+        </div>
+    )
+}
 
 // --- MAIN PAGE ---
 export default function Departemen() {
@@ -174,7 +229,7 @@ export default function Departemen() {
       {/* === MODAL / POPUP === */}
       <AnimatePresence>
         {selectedDept && (
-          <div className="fixed inset-0 z-[200] flex items-center justify-center px-4 py-8">
+          <div className="fixed inset-0 z-[200] flex items-center justify-center px-4 py-8 overflow-y-auto">
             
             {/* Backdrop Blur */}
             <motion.div 
@@ -182,7 +237,7 @@ export default function Departemen() {
                 animate={{ opacity: 1 }} 
                 exit={{ opacity: 0 }}
                 onClick={() => setSelectedDept(null)}
-                className="absolute inset-0 bg-black/90 backdrop-blur-md"
+                className="fixed inset-0 bg-black/90 backdrop-blur-md"
             />
 
             {/* Content Container */}
@@ -191,18 +246,19 @@ export default function Departemen() {
                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                className="relative w-full max-w-5xl bg-[#0A0A0A] border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl flex flex-col md:flex-row min-h-[500px]"
+                className="relative w-full max-w-6xl bg-[#0A0A0A] border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl flex flex-col md:flex-row min-h-[600px] max-h-[90vh]"
             >
                 {/* Close Button */}
-                <button onClick={() => setSelectedDept(null)} className="absolute top-6 right-6 z-50 p-2 bg-black/50 backdrop-blur-md rounded-full hover:bg-white/20 transition-colors border border-white/10">
-                    <X size={20} className="text-white" />
+                <button onClick={() => setSelectedDept(null)} className="absolute top-6 right-6 z-50 p-2 bg-black/50 backdrop-blur-md rounded-full hover:bg-white/20 transition-colors border border-white/10 group">
+                    <X size={20} className="text-white group-hover:rotate-90 transition-transform" />
                 </button>
 
-                {/* Left Side: Info Utama */}
-                <div className={cn("p-8 md:p-12 w-full md:w-5/12 flex flex-col justify-center relative overflow-hidden", selectedDept.theme === "amber" ? "bg-gradient-to-br from-amber-950/40 to-black" : "bg-gradient-to-br from-sky-950/40 to-black")}>
+                {/* Left Side: Info Utama & Leaders */}
+                <div className={cn("p-8 md:p-12 w-full md:w-5/12 flex flex-col justify-start relative overflow-hidden overflow-y-auto scrollbar-hide", selectedDept.theme === "amber" ? "bg-gradient-to-br from-amber-950/40 to-black" : "bg-gradient-to-br from-sky-950/40 to-black")}>
+                      
                       {/* Logo Besar */}
                       <div className="relative z-10 mb-8">
-                        <div className={cn("w-24 h-24 rounded-3xl flex items-center justify-center p-4 bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl")}>
+                        <div className={cn("w-20 h-20 rounded-3xl flex items-center justify-center p-3 bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl")}>
                             <img 
                                 src={selectedDept.logo} 
                                 alt={selectedDept.nama} 
@@ -212,40 +268,54 @@ export default function Departemen() {
                       </div>
                       
                       <div className="relative z-10">
-                        <h2 className="text-5xl font-black uppercase tracking-tighter leading-none mb-4 text-white">{selectedDept.nama}</h2>
-                        <div className={cn("h-1 w-20 mb-6 rounded-full", selectedDept.theme === "amber" ? "bg-amber-500" : "bg-sky-500")}></div>
+                        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none mb-4 text-white">{selectedDept.nama}</h2>
                         
-                        <p className="text-gray-300 text-sm leading-relaxed mb-8">
+                        <p className="text-gray-300 text-sm leading-relaxed mb-8 border-l-2 border-white/10 pl-4">
                             {selectedDept.desc}
                         </p>
 
-                        {/* Motto Badge */}
-                        <div className="inline-flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                        <div className="inline-flex items-center gap-3 px-4 py-2 rounded-lg bg-white/5 border border-white/10 backdrop-blur-sm mb-10">
                             <span className="text-xs font-bold uppercase tracking-widest text-white">"{selectedDept.motto}"</span>
                         </div>
+                        
+                        {/* LEADERS SECTION (No Photo) */}
+                        <div className="mt-2">
+                            <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 mb-5 flex items-center gap-2">
+                                <span className="w-4 h-[1px] bg-white/20"></span>
+                                Board of Leaders
+                            </h3>
+                            <div className="flex flex-col gap-3">
+                                {selectedDept.leaders?.map((leader: any, idx: number) => (
+                                    <LeaderCard key={idx} leader={leader} theme={selectedDept.theme} />
+                                ))}
+                            </div>
+                        </div>
+
                       </div>
                 </div>
 
                 {/* Right Side: Focus Grid */}
-                <div className="w-full md:w-7/12 bg-black/50 p-8 md:p-12 flex flex-col justify-center">
-                      <div className="mb-8">
-                          <h3 className="text-lg font-bold text-white uppercase tracking-widest flex items-center gap-3">
-                              <span className={cn("w-2 h-8 rounded-full", selectedDept.theme === "amber" ? "bg-amber-500" : "bg-sky-500")}></span>
-                              Fokus Utama
+                <div className="w-full md:w-7/12 bg-black/40 p-8 md:p-12 flex flex-col justify-center overflow-y-auto relative">
+                      {/* Grid Background */}
+                      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.02]"></div>
+
+                      <div className="relative z-10 mb-8">
+                          <h3 className="text-xl font-bold text-white uppercase tracking-widest flex items-center gap-3">
+                              <span className={cn("w-1.5 h-8 rounded-full", selectedDept.theme === "amber" ? "bg-amber-500" : "bg-sky-500")}></span>
+                              Focus & Program
                           </h3>
                       </div>
 
-                      {/* Grid Kartu Fokus */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
                           {selectedDept.focus.map((item: string, idx: number) => (
                               <div 
                                   key={idx} 
-                                  className="group flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 transition-all duration-300"
+                                  className="group flex items-center gap-4 p-5 rounded-2xl bg-[#0F0F0F] border border-white/5 hover:border-white/20 hover:bg-white/5 transition-all duration-300 hover:-translate-y-1"
                               >
-                                  <div className={cn("w-10 h-10 rounded-full flex items-center justify-center shrink-0", selectedDept.theme === "amber" ? "bg-amber-500/20 text-amber-500" : "bg-sky-500/20 text-sky-500")}>
-                                      <CheckCircle2 size={20} />
+                                  <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors", selectedDept.theme === "amber" ? "bg-amber-500/10 text-amber-500 group-hover:bg-amber-500 group-hover:text-black" : "bg-sky-500/10 text-sky-500 group-hover:bg-sky-500 group-hover:text-black")}>
+                                      <CheckCircle2 size={18} />
                                   </div>
-                                  <span className="text-sm font-bold text-gray-200 group-hover:text-white transition-colors">{item}</span>
+                                  <span className="text-sm font-bold text-gray-300 group-hover:text-white transition-colors leading-snug">{item}</span>
                               </div>
                           ))}
                       </div>

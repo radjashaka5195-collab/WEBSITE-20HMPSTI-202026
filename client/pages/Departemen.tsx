@@ -15,9 +15,9 @@ const departments = [
     motto: "Membentuk Kader, Membangun Karakter.",
     focus: ["Leadership Development Camp", "TI Career Simulation", "Rangkaian Samba TI", "Maba to Maba (M2M)"],
     leaders: [
-      { nama: "Adam Ahmad Bimantoro", jabatan: "Ketua Departemen" },
-      { nama: "Muhammad Hafizh Fajariyanto", jabatan: "Wakil Ketua 1" },
-      { nama: "Vallerina Gracela Purba", jabatan: "Wakil Ketua 2" },
+      { nama: "Adam Ahmad Bimantoro", jabatan: "Ketua Departemen", foto: "", ig: "" },
+      { nama: "Muhammad Hafizh Fajariyanto", jabatan: "Wakil Ketua 1", foto: "/assets/leaders/Hafizh_Wakil Ketua Departemen 1_PSDM .jpg", ig: "hapiz24_" },
+      { nama: "Vallerina Gracela Purba", jabatan: "Wakil Ketua 2", foto: "/assets/leaders/Vallerina_Wakil Ketua Departemen 2_PSDM.jpg", ig: "vallerinacelaa" },
     ]
   },
   {
@@ -30,9 +30,9 @@ const departments = [
     motto: "Explore, Compete, Create.",
     focus: ["The Blueprint: IT Career", "Tech Bridge Academy", "TI Creative Competition", "Tech Fair Exhibition"],
     leaders: [
-      { nama: "Muhammad Rohan Rifqi", jabatan: "Ketua Departemen" },
-      { nama: "Muhammad Mu'taz Syafiq", jabatan: "Wakil Ketua 1" },
-      { nama: "Seila Salsabiela", jabatan: "Wakil Ketua 2" },
+      { nama: "Muhammad Rohan Rifqi", jabatan: "Ketua Departemen", foto: "/assets/leaders/Muhammad Rohan Rifqi_Ketua Departemen_INOTEK.jpeg", ig: "rclhan" },
+      { nama: "Muhammad Mu'taz Syafiq", jabatan: "Wakil Ketua 1", foto: "/assets/leaders/Muhammad Mu_taz Syafiq_Wakil Ketua Departemen 1_INOTEK.jpg", ig: "mutazsyafiq_" },
+      { nama: "Seila Salsabiela", jabatan: "Wakil Ketua 2", foto: "/assets/leaders/Seila Salsabiela_Wakil Departemen_Inotek.jpg", ig: "selai_____x" },
     ]
   },
   {
@@ -45,9 +45,9 @@ const departments = [
     motto: "Creativity Beyond Limit.",
     focus: ["Company Profile & Branding", "Workshop Design & Video", "Medinfo Class", "Pengelolaan Media Terintegrasi"],
     leaders: [
-      { nama: "Muhammad Raihan Hidayah", jabatan: "Ketua Departemen" },
-      { nama: "Tiara Nurfadilah", jabatan: "Wakil Ketua 1" },
-      { nama: "Latisha Syifa Pratiwi", jabatan: "Wakil Ketua 2" },
+      { nama: "Muhammad Raihan Hidayah", jabatan: "Ketua Departemen", foto: "/assets/leaders/Han_Kepala Departemen Medinfo.JPG", ig: "raihanhidayah06" },
+      { nama: "Tiara Nurfadilah", jabatan: "Wakil Ketua 1", foto: "/assets/leaders/Tiara_Wakil Departemen 1_MEDINFO.png", ig: "tiaraa_nfh" },
+      { nama: "Latisha Syifa Pratiwi", jabatan: "Wakil Ketua 2", foto: "/assets/leaders/Latisha_Wakil Departemen 2_MEDINFO.png", ig: "latisha.prtiwi" },
     ]
   },
   {
@@ -60,9 +60,9 @@ const departments = [
     motto: "Melayani dengan Hati.",
     focus: ["TI Speaks (Layanan Advokasi)", "HaloADVO (Pusat Aspirasi)", "IT Charity (Pengabdian)", "SEAVO (Social Event)"],
     leaders: [
-      { nama: "Kayla Alodia Calista", jabatan: "Ketua Departemen" },
-      { nama: "Dean Adiba Anugrah", jabatan: "Wakil Ketua 1" },
-      { nama: "Nadia Salwa Oktavia", jabatan: "Wakil Ketua 2" },
+      { nama: "Kayla Alodia Calista", jabatan: "Ketua Departemen", foto: "/assets/leaders/Kayla Alodia Calista_Kepala DepartmentAdvokesma.jpg", ig: "kaylalodia" },
+      { nama: "Dean Adiba Anugrah", jabatan: "Wakil Ketua 1", foto: "/assets/leaders/Dean Adiba Anugrah_Wakil Kepala Departemen Bidang Kesma_ADVOKESMA.jpg", ig: "deanadiba._" },
+      { nama: "Nadia Salwa Oktavia", jabatan: "Wakil Ketua 2", foto: "/assets/leaders/Nadia Salwa Oktavia_Wakil Kepala Departemen Bidang Advokasi_ADVOKESMA.jpg", ig: "naadiiiaaa.a" },
     ]
   },
   {
@@ -75,8 +75,8 @@ const departments = [
     motto: "The Synergy Hub.",
     focus: ["Vistech 2.0 (Visit Technology)", "Speak Up Workshop", "I-Relation Hub (Database)", "Ramadhan Charity Connect"],
     leaders: [
-      { nama: "Nathanael Eleazar Handata", jabatan: "Ketua Departemen" },
-      { nama: "Evan Swardana Adinata", jabatan: "Wakil Ketua" },
+      { nama: "Nathanael Eleazar Handata", jabatan: "Ketua Departemen", foto: "/assets/leaders/nathanael_ketua departemen_hubeks.png", ig: "nthanaellll" },
+      { nama: "Evan Swardana Adinata", jabatan: "Wakil Ketua", foto: "/assets/leaders/Evan_Wakil Kepala Departemen_HUBEKS.jpg", ig: "epanlagi_" },
     ]
   },
   {
@@ -89,8 +89,8 @@ const departments = [
     motto: "Business with Passion.",
     focus: ["CreativePreneur Workshop", "IT Business Plan Contest", "Ekraf Berduit (Merchandise)", "Bazar & Sponsorship"],
     leaders: [
-      { nama: "Muktabar Zaki Pramana Wlbisono", jabatan: "Ketua Departemen" },
-      { nama: "Dinda Eka Cantika", jabatan: "Wakil Ketua" },
+      { nama: "Muktabar Zaki Pramana Wlbisono", jabatan: "Ketua Departemen", foto: "/assets/leaders/Muktabar Zaki_KadepEkraf_HMPSTI.jpg", ig: "muktabarzaki" },
+      { nama: "Dinda Eka Cantika", jabatan: "Wakil Ketua", foto: "/assets/leaders/Dinda_WakilDepartemen_EKRAF.png", ig: "dindaecaa" },
     ]
   },
   {
@@ -103,9 +103,9 @@ const departments = [
     motto: "Sportive Spirit, Creative Mind.",
     focus: ["Techno Competition", "Techno Cup (E-Sport)", "IT Fun Game", "Hall Of Fame & Akustik"],
     leaders: [
-      { nama: "Wiratama Satrio Herlambang", jabatan: "Ketua Departemen" },
-      { nama: "Raihan Ammar Ahsani", jabatan: "Wakil Ketua 1" },
-      { nama: "Damar Putra Hartono", jabatan: "Wakil Ketua 2" },
+      { nama: "Wiratama Satrio Herlambang", jabatan: "Ketua Departemen", foto: "/assets/leaders/Wiratama Satrio H_Ketua Departemen_Kora", ig: "wirattamaa_" },
+      { nama: "Raihan Ammar Ahsani", jabatan: "Wakil Ketua 1", foto: "/assets/leaders/Raihan Ammar Ahsani_Wakil Departemen_KORA.jpg", ig: "amar.rhn" },
+      { nama: "Damar Putra Hartono", jabatan: "Wakil Ketua 2", foto: "", ig: "" },
     ]
   },
 ];
@@ -159,24 +159,68 @@ const DeptCard = ({ data, index, onClick }: { data: any, index: number, onClick:
   );
 };
 
-// --- COMPONENT: Leader Card (No Photo Version) ---
+// --- COMPONENT: Leader Card (With Photo & Clickable IG) ---
 const LeaderCard = ({ leader, theme }: { leader: any, theme: string }) => {
     const isAmber = theme === "amber";
     const accentColor = isAmber ? "bg-amber-500" : "bg-sky-500";
     const textColor = isAmber ? "group-hover:text-amber-400" : "group-hover:text-sky-400";
     
+    // buat nampung isian fotonya aja biar rapi
+    const ImageContent = () => (
+        <div className={cn(
+            "w-14 h-14 rounded-xl overflow-hidden border-2 border-white/10 transition-all duration-500",
+            leader.ig ? "hover:border-white/50 cursor-pointer" : "",
+            isAmber ? "group-hover:shadow-[0_0_15px_rgba(245,158,11,0.3)]" : "group-hover:shadow-[0_0_15px_rgba(14,165,233,0.3)]"
+        )}>
+            {leader.foto ? (
+                <img 
+                    src={leader.foto} 
+                    alt={leader.nama} 
+                    className="w-full h-full object-cover object-top transition-all duration-500 hover:scale-110"
+                    onError={(e) => {
+                        // kalo file ga nemu, balikin ke icon user
+                        (e.target as HTMLImageElement).style.display = 'none';
+                        (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
+                    }}
+                />
+            ) : null}
+            <div className={cn("w-full h-full bg-black/50 flex items-center justify-center text-white/20", leader.foto ? "hidden" : "")}>
+                <User size={24} />
+            </div>
+        </div>
+    );
+
     return (
-        <div className="group relative flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 transition-all duration-300">
-            {/* Icon Avatar sebagai pengganti foto */}
-            <div className={cn("flex items-center justify-center w-12 h-12 rounded-full bg-black/50 border border-white/10 shrink-0", accentColor.replace("bg-", "text-").replace("500", "500/80"))}>
-                <User size={20} />
+        <div className="group relative flex items-center gap-4 p-3 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 transition-all duration-300">
+            {/* bagian foto yang bisa di-klik */}
+            <div className="relative shrink-0 z-10">
+                {leader.ig ? (
+                    <a href={`https://instagram.com/${leader.ig.replace('@', '')}`} target="_blank" rel="noreferrer" title={`Instagram @${leader.ig.replace('@', '')}`}>
+                        <ImageContent />
+                    </a>
+                ) : (
+                    <ImageContent />
+                )}
+                
+                {/* titik/badge warna sesuai tema departemen */}
+                <div className={cn("absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-[#0A0A0A] pointer-events-none", accentColor)}></div>
             </div>
             
-            <div>
-                <p className={cn("text-white font-bold text-sm md:text-base leading-tight transition-colors", textColor)}>{leader.nama}</p>
-                <div className="flex items-center gap-2 mt-1">
-                    <span className={cn("w-1.5 h-1.5 rounded-full", accentColor)}></span>
-                    <p className="text-[10px] md:text-xs font-mono uppercase tracking-wide text-gray-400">{leader.jabatan}</p>
+            <div className="flex-1">
+                <p className={cn("text-white font-bold text-sm md:text-base leading-tight transition-colors", textColor)}>
+                    {leader.nama}
+                </p>
+                <div className="flex flex-col gap-0.5 mt-1">
+                    <p className="text-[10px] md:text-xs font-mono uppercase tracking-widest text-gray-400">
+                        {leader.jabatan}
+                    </p>
+                    {leader.ig && (
+                        <span className="text-[10px] text-gray-500 hover:text-white transition-colors">
+                            <a href={`https://instagram.com/${leader.ig.replace('@', '')}`} target="_blank" rel="noreferrer">
+                                @{leader.ig.replace('@', '')}
+                            </a>
+                        </span>
+                    )}
                 </div>
             </div>
         </div>
@@ -278,7 +322,7 @@ export default function Departemen() {
                             <span className="text-xs font-bold uppercase tracking-widest text-white">"{selectedDept.motto}"</span>
                         </div>
                         
-                        {/* LEADERS SECTION (No Photo) */}
+                        {/* LEADERS SECTION (With Photo) */}
                         <div className="mt-2">
                             <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 mb-5 flex items-center gap-2">
                                 <span className="w-4 h-[1px] bg-white/20"></span>

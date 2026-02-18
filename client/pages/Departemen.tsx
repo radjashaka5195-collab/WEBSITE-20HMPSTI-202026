@@ -58,7 +58,7 @@ const departments = [
     theme: "amber",
     logo: "/assets/logos/Advokesma.png",
     motto: "Melayani dengan Hati.",
-    focus: ["TI Speaks (Layanan Advokasi)", "HaloADVO (Pusat Aspirasi)", "IT Charity (Pengabdian)", "SEAVO (Social Event)"],
+    focus: ["TI Speaks (Layanan Advokasi)", "HaloADVO (Pusat Aspirasi)", "IT Charity (Pengabdian)", "SEAVO (Social Event)", "SE-TI"],
     leaders: [
       { nama: "Kayla Alodia Calista", jabatan: "Ketua Departemen", foto: "/assets/leaders/Kayla Alodia Calista_Kepala DepartmentAdvokesma.jpg", ig: "kaylalodia" },
       { nama: "Dean Adiba Anugrah", jabatan: "Wakil Ketua 1", foto: "/assets/leaders/Dean Adiba Anugrah_Wakil Kepala Departemen Bidang Kesma_ADVOKESMA.jpg", ig: "deanadiba._" },

@@ -28,7 +28,7 @@ const departments = [
     theme: "amber",
     logo: "/assets/logos/Inotek.png",
     motto: "Explore, Compete, Create.",
-    focus: ["The Blueprint: IT Career", "Tech Bridge Academy", "TI Creative Competition", "Tech Fair Exhibition"],
+    focus: ["Ignite Academy", "InKnowledge", "Roots X InnoFair"],
     leaders: [
       { nama: "Muhammad Rohan Rifqi", jabatan: "Ketua Departemen", foto: "/assets/leaders/Muhammad Rohan Rifqi_Ketua Departemen_INOTEK.jpeg", ig: "rclhan" },
       { nama: "Muhammad Mu'taz Syafiq", jabatan: "Wakil Ketua 1", foto: "/assets/leaders/Muhammad Mu_taz Syafiq_Wakil Ketua Departemen 1_INOTEK.jpg", ig: "mutazsyafiq_" },

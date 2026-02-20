@@ -43,7 +43,7 @@ const departments = [
     theme: "sky",
     logo: "/assets/logos/Medinfo.png",
     motto: "Creativity Beyond Limit.",
-    focus: ["Company Profile & Branding", "Workshop Design & Video", "Medinfo Class", "Pengelolaan Media Terintegrasi"],
+    focus: ["Company Profile & Branding", "Workshop Design & Video", "Medinfo Class"],
     leaders: [
       { nama: "Muhammad Raihan Hidayah", jabatan: "Ketua Departemen", foto: "/assets/leaders/Han_Kepala Departemen Medinfo.JPG", ig: "raihanhidayah06" },
       { nama: "Tiara Nurfadilah", jabatan: "Wakil Ketua 1", foto: "/assets/leaders/Tiara_Wakil Departemen 1_MEDINFO.png", ig: "tiaraa_nfh" },

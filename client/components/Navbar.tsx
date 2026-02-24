@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import path from "path";
 
 // Fungsi Utility
 export function cn(...inputs: ClassValue[]) {
@@ -26,6 +27,7 @@ export const Navbar = () => {
   // --- DAFTAR MENU (UPDATED) ---
   const navLinks = [
     { name: "Beranda", path: "/" },
+    { name: "Pengumuman", path: "/pengumuman"},
     { name: "Struktur", path: "/struktur" },
     { name: "Departemen", path: "/departemen" },
     { name: "Kalender", path: "/kalender" },

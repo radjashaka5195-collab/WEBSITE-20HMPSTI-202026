@@ -1,4 +1,4 @@
-import { ArrowRight, Terminal, ChevronDown, Quote, LayoutGrid, Users, Calendar, ShoppingBag } from "lucide-react";
+import { ArrowRight, Terminal, ChevronDown, Quote, LayoutGrid, Users, Calendar, ShoppingBag, Megaphone } from "lucide-react";
 import { useScroll, useTransform, motion } from "framer-motion";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -92,7 +92,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-[#33A5D3] selection:text-white overflow-x-hidden">
       
-      {/* --- HERO SECTION (SESUAI REQUEST AWAL) --- */}
+      {/* --- HERO SECTION --- */}
       <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20 pb-10 overflow-hidden">
         
         {/* Background Effects */}
@@ -121,9 +121,28 @@ export default function Home() {
           </FadeIn>
 
           <FadeIn delay={0.4}>
-            <p className="text-lg md:text-2xl text-gray-400 font-light max-w-2xl mx-auto leading-relaxed mb-12">
+            <p className="text-lg md:text-2xl text-gray-400 font-light max-w-2xl mx-auto leading-relaxed mb-10">
               Mewujudkan era baru melalui <span className="text-[#33A5D3] font-bold border-b border-[#33A5D3]">Inovasi</span> yang berdampak dan <span className="text-[#F59E0B] font-bold border-b border-[#F59E0B]">Kolaborasi</span> tanpa batas.
             </p>
+          </FadeIn>
+
+          {/* === NEW: TOMBOL MENUJU PENGUMUMAN === */}
+          <FadeIn delay={0.5}>
+             <Link 
+                to="/pengumuman" 
+                className="group relative inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-[#F05822] to-[#d94a1a] rounded-full overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_30px_rgba(240,88,34,0.4)] mb-12"
+              >
+                {/* Efek kilap (Shimmer) saat di hover */}
+                <div className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out"></div>
+
+                <Megaphone size={20} className="text-white relative z-10 animate-pulse" />
+                <span className="relative z-10 font-black text-white uppercase tracking-[0.15em] text-sm md:text-base">
+                   Cek Pengumuman Staff Ahli
+                </span>
+                <div className="relative z-10 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white transition-all">
+                    <ArrowRight size={16} className="text-white group-hover:text-[#F05822] transition-colors" />
+                </div>
+             </Link>
           </FadeIn>
 
         </motion.div>
@@ -226,9 +245,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- JOURNEY CTA (YANG DIRUBAH JADI MENARIK) --- */}
+      {/* --- JOURNEY CTA --- */}
       <section className="relative z-10 py-32 px-6 text-center border-t border-white/5 bg-[#050505] overflow-hidden">
-          {/* Background Glow Halus */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-sky-900/10 blur-[120px] rounded-full pointer-events-none"></div>
 
           <FadeIn delay={0.2}>
@@ -237,15 +255,11 @@ export default function Home() {
                     Siap berkenalan dengan wajah-wajah di balik <span className="text-white font-bold">Innovara</span>?
                 </p>
                 
-                {/* Tombol dengan Efek Shimmer & Glow */}
                 <Link 
                     to="/struktur" 
                     className="group relative inline-flex items-center gap-4 px-10 py-5 bg-[#0A0A0A] rounded-full overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_30px_rgba(14,165,233,0.3)] border border-white/10"
                 >
-                    {/* Animated Gradient Border (Inset) */}
                     <div className="absolute inset-0 bg-gradient-to-r from-sky-500 via-amber-500 to-sky-500 opacity-20 group-hover:opacity-40 blur-md transition-opacity"></div>
-                    
-                    {/* Shimmer Effect */}
                     <div className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out"></div>
 
                     <span className="relative z-10 font-bold text-white uppercase tracking-[0.2em] text-xs md:text-sm">

@@ -83,7 +83,8 @@ const failedData = [
   // Mifta dihapus dari daftar ini
   "Serli Maharani Putri Yustina",
   "TOPAN SYAHPUTRA",
-  "Ridhwan Purwahdani"
+  "Ridhwan Purwahdani",
+  "Dwiki Ilman Nafian"
 ];
 
 // Definisi Warna

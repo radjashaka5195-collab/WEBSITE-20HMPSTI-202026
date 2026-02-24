@@ -30,7 +30,7 @@ const departments = [
     motto: "Explore, Compete, Create.",
     focus: ["Ignite Academy", "InKnowledge", "Roots X InnoFair"],
     leaders: [
-      { nama: "Justin Bieber", jabatan: "Ketua Departemen", foto: "/assets/leaders/Muhammad Rohan Rifqi_Ketua Departemen_INOTEK.jpeg", ig: "rclhan" },
+      { nama: "Muhammad Rohan Rifqi", jabatan: "Ketua Departemen", foto: "/assets/leaders/Muhammad Rohan Rifqi_Ketua Departemen_INOTEK.jpeg", ig: "rclhan" },
       { nama: "Muhammad Mu'taz Syafiq", jabatan: "Wakil Ketua 1", foto: "/assets/leaders/Muhammad Mu_taz Syafiq_Wakil Ketua Departemen 1_INOTEK.jpg", ig: "mutazsyafiq_" },
       { nama: "Seila Salsabiela", jabatan: "Wakil Ketua 2", foto: "/assets/leaders/Seila Salsabiela_Wakil Departemen_Inotek.jpg", ig: "selai_____x" },
     ]

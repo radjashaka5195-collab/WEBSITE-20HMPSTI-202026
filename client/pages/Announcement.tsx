@@ -59,6 +59,7 @@ const announcementData = [
   { name: "Kayla rihadatul", divisi: "Medinfo" },
   { name: "Keisya Lanika", divisi: "Medinfo" },
   { name: "Jessica Ester Nolia", divisi: "Medinfo" },
+  { name: "Mifta Annisa Rabbani", divisi: "Medinfo" }, // Mifta sudah kembali Lolos
   // ADVOKESMA
   { name: "Anne Sada Dewi", divisi: "Advokesma" },
   { name: "Firyal zalfaa aulia", divisi: "Advokesma" },
@@ -79,7 +80,7 @@ const announcementData = [
    DATA TIDAK LOLOS
 ============================ */
 const failedData = [
-  "Mifta Annisa Rabbani",
+  // Mifta dihapus dari daftar ini
   "Serli Maharani Putri Yustina",
   "TOPAN SYAHPUTRA",
   "Ridhwan Purwahdani"
@@ -89,7 +90,6 @@ const failedData = [
 const GULF_BLUE = "#9FD1ED";
 const GULF_ORANGE = "#F05822";
 const GULF_DARK_BG = "#0F0F0F";
-// Menambahkan warna merah untuk status gagal/tidak ditemukan
 const RED_ERROR = "#EF4444";
 
 export default function Announcement() {
@@ -105,7 +105,6 @@ export default function Announcement() {
     setTimeout(() => {
       const formattedSearch = searchTerm.toLowerCase().trim();
       
-      // 1. Cek di daftar LOLOS
       const foundLolos = announcementData.find(
         (item) => item.name.toLowerCase().trim() === formattedSearch
       );
@@ -114,7 +113,6 @@ export default function Announcement() {
         setMatchedUser(foundLolos);
         setResultStatus("LOLOS");
       } else {
-        // 2. Cek di daftar TIDAK LOLOS
         const foundGagal = failedData.find(
           (name) => name.toLowerCase().trim() === formattedSearch
         );
@@ -123,7 +121,6 @@ export default function Announcement() {
           setMatchedUser({ name: foundGagal });
           setResultStatus("TIDAK_LOLOS");
         } else {
-          // 3. Tidak ditemukan di keduanya
           setMatchedUser(null);
           setResultStatus("NOT_FOUND");
         }
@@ -141,7 +138,6 @@ export default function Announcement() {
     <div className="min-h-screen bg-[#050505] text-white font-sans relative overflow-hidden">
       <Navbar />
 
-      {/* ================= HEADER & INPUT SECTION ================= */}
       <div className="pt-32 sm:pt-40 pb-20 px-6 max-w-4xl mx-auto text-center relative z-10">
         <motion.h1
           initial={{ y: 20, opacity: 0 }}
@@ -185,9 +181,7 @@ export default function Announcement() {
         </div>
       </div>
 
-      {/* ================= POPUP SECTION ================= */}
       <AnimatePresence>
-        {/* === POPUP 1: LOLOS (Tetap Biru/Oranye) === */}
         {resultStatus === "LOLOS" && matchedUser && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -224,13 +218,11 @@ export default function Announcement() {
                   ⚠️ INSTRUKSI WAJIB:
                 </p>
                 <p className="text-gray-200 text-xs sm:text-sm leading-relaxed">
-                  Grup WhatsApp saat ini bersifat privat.
-                   <br className="mb-1" /> Anda <b>WAJIB</b> menghubungi admin terlebih dahulu dan mengirimkan screenshot bukti <b>LOLOS</b> untuk konfirmasi.
+                  Grup WhatsApp saat ini bersifat privat. Hubungi admin terlebih dahulu untuk verifikasi identitas sebelum bergabung ke grup resmi.
                 </p>
               </div>
 
               <div className="flex flex-col gap-3 sm:gap-4 font-bold relative z-10">
-                {/* Posisi 1: Join Grup (Biru Muda) */}
                 <motion.a
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.97 }}
@@ -242,7 +234,6 @@ export default function Announcement() {
                 >
                   JOIN GRUP
                 </motion.a>
-                {/* Posisi 2: Chat Admin (Oranye) */}
                 <motion.a
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.97 }}
@@ -266,7 +257,6 @@ export default function Announcement() {
           </motion.div>
         )}
 
-        {/* === POPUP 2: TIDAK LOLOS (Sekarang MERAH) === */}
         {resultStatus === "TIDAK_LOLOS" && matchedUser && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -280,41 +270,20 @@ export default function Announcement() {
               exit={{ scale: 0.9, y: 30, opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
-              // Menggunakan RED_ERROR untuk border dan background glow
               style={{ backgroundColor: GULF_DARK_BG, borderColor: RED_ERROR }}
               className="p-6 sm:p-8 md:p-12 rounded-[30px] sm:rounded-[40px] border-[3px] text-center max-w-[500px] w-full max-h-[95vh] overflow-y-auto overflow-x-hidden shadow-2xl shadow-red-900/20 relative"
             >
                <div style={{ backgroundColor: RED_ERROR }} className="absolute -top-24 -right-24 w-64 h-64 rounded-full blur-[120px] opacity-15 pointer-events-none"></div>
-
-              <h2 style={{ color: RED_ERROR }} className="text-3xl sm:text-4xl md:text-5xl font-black italic mb-4 sm:mb-6 relative z-10">
-                TETAP SEMANGAT!
-              </h2>
-
-              <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-6 relative z-10">
-                Halo, <span className="font-bold text-white">{matchedUser.name}</span>.<br/> Terima kasih banyak atas partisipasimu.
-              </p>
-
+              <h2 style={{ color: RED_ERROR }} className="text-3xl sm:text-4xl md:text-5xl font-black italic mb-4 sm:mb-6 relative z-10">TETAP SEMANGAT!</h2>
+              <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-6 relative z-10">Halo, <span className="font-bold text-white">{matchedUser.name}</span>. Terima kasih atas partisipasimu.</p>
               <div className="bg-white/5 border border-white/10 rounded-2xl p-5 mb-8 text-left relative z-10">
-                <p className="text-gray-200 text-sm sm:text-base leading-relaxed text-center">
-                  Mohon maaf, untuk saat ini kamu <b>belum berhasil lolos</b> sebagai Staff Ahli HMPSTI 2026. Jangan patah semangat, jadikan ini sebagai pengalaman, karena masih banyak kesempatan luar biasa di luar sana untukmu terus berkembang!
-                </p>
+                <p className="text-gray-200 text-sm sm:text-base leading-relaxed text-center">Mohon maaf, saat ini kamu <b>belum berhasil lolos</b> sebagai Staff Ahli HMPSTI 2026. Jadikan ini pengalaman untuk terus berkembang!</p>
               </div>
-
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={closePopup}
-                // Tombol tutup menggunakan warna merah
-                style={{ backgroundColor: RED_ERROR }}
-                className="px-8 sm:px-10 py-3 rounded-full font-bold text-white text-sm sm:text-lg transition-all uppercase tracking-wider relative z-10 shadow-lg"
-              >
-                Tutup Papan
-              </motion.button>
+              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={closePopup} style={{ backgroundColor: RED_ERROR }} className="px-8 sm:px-10 py-3 rounded-full font-bold text-white text-sm sm:text-lg transition-all uppercase tracking-wider relative z-10 shadow-lg">Tutup Papan</motion.button>
             </motion.div>
           </motion.div>
         )}
 
-        {/* === POPUP 3: TIDAK TERDAFTAR (Sekarang MERAH) === */}
         {resultStatus === "NOT_FOUND" && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -328,34 +297,14 @@ export default function Announcement() {
               exit={{ scale: 0.9, y: 30, opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
-              // Menggunakan RED_ERROR untuk border dan background glow
               style={{ backgroundColor: GULF_DARK_BG, borderColor: RED_ERROR }}
               className="p-6 sm:p-8 md:p-12 rounded-[30px] sm:rounded-[40px] border-[3px] text-center max-w-[500px] w-full max-h-[95vh] overflow-y-auto overflow-x-hidden shadow-2xl shadow-red-900/20 relative"
             >
                <div style={{ backgroundColor: RED_ERROR }} className="absolute -top-24 -right-24 w-64 h-64 rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
-
-              <h2 style={{ color: RED_ERROR }} className="text-3xl sm:text-4xl md:text-5xl font-black italic mb-4 sm:mb-6 relative z-10">
-                MOHON MAAF.
-              </h2>
-
-              <p className="text-white text-lg sm:text-xl md:text-2xl font-bold leading-relaxed mb-6 sm:mb-8 relative z-10">
-                "Maaf, nama kamu tidak terdaftar."
-              </p>
-
-              <p className="text-gray-400 text-sm sm:text-base mb-8 sm:mb-10 leading-relaxed relative z-10">
-                Pastikan penulisan nama sudah benar sesuai dengan data saat pendaftaran. Jika kamu yakin sudah mendaftar namun tidak muncul, silakan hubungi panitia.
-              </p>
-
-              <motion.button
-                whileHover={{ scale: 1.05, backgroundColor: `${RED_ERROR}20` }}
-                whileTap={{ scale: 0.95 }}
-                onClick={closePopup}
-                // Tombol outline menggunakan warna merah
-                style={{ borderColor: RED_ERROR, color: RED_ERROR }}
-                className="px-8 sm:px-10 py-3 rounded-full border-2 font-bold text-sm sm:text-lg transition-all uppercase tracking-wider relative z-10"
-              >
-                Coba Cari Lagi
-              </motion.button>
+              <h2 style={{ color: RED_ERROR }} className="text-3xl sm:text-4xl md:text-5xl font-black italic mb-4 sm:mb-6 relative z-10">MOHON MAAF.</h2>
+              <p className="text-white text-lg sm:text-xl md:text-2xl font-bold leading-relaxed mb-6 sm:mb-8 relative z-10">"Maaf, nama kamu tidak terdaftar."</p>
+              <p className="text-gray-400 text-sm sm:text-base mb-8 sm:mb-10 leading-relaxed relative z-10">Pastikan penulisan nama sudah benar sesuai data pendaftaran.</p>
+              <motion.button whileHover={{ scale: 1.05, backgroundColor: `${RED_ERROR}20` }} whileTap={{ scale: 0.95 }} onClick={closePopup} style={{ borderColor: RED_ERROR, color: RED_ERROR }} className="px-8 sm:px-10 py-3 rounded-full border-2 font-bold text-sm sm:text-lg transition-all uppercase tracking-wider relative z-10">Coba Cari Lagi</motion.button>
             </motion.div>
           </motion.div>
         )}

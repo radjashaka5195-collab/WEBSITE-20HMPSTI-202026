@@ -137,7 +137,7 @@ export default function Home() {
 
                 <Megaphone size={20} className="text-white relative z-10 animate-pulse" />
                 <span className="relative z-10 font-black text-white uppercase tracking-[0.15em] text-sm md:text-base">
-                   Cek Pengumuman Staff Ahli
+                   Cek Pengumuman Staff Ahli!
                 </span>
                 <div className="relative z-10 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white transition-all">
                     <ArrowRight size={16} className="text-white group-hover:text-[#F05822] transition-colors" />

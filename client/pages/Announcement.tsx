@@ -17,7 +17,7 @@ const announcementData = [
   // PSDM
   { name: "Iksan Arlatin", divisi: "PSDM" },
   { name: "Cantika Rizky R P", divisi: "PSDM" },
-  { name: "Imtina darin huwaida", divisi: "PSDM" },
+  { name: "Imtian darin huwaida", divisi: "PSDM" },
   { name: "Yulinafaesa Sinaga", divisi: "PSDM" },
   { name: "Shafa Kamalia", divisi: "PSDM" },
   { name: "Ahmad Amril Zul Hafizza", divisi: "PSDM" },

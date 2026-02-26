@@ -73,7 +73,7 @@ const departments = [
     theme: "sky",
     logo: "/assets/logos/Hubeks.png",
     motto: "The Synergy Hub.",
-    focus: ["Vistech 2.0 (Visit Technology)", "Speak Up Workshop", "I-Relation Hub (Database)", "Ramadhan Charity Connect"],
+    focus: ["Vistech 2.0 (Visit Technology)", "Tech Career Radar", "Ramadhan Charity Connect"],
     leaders: [
       { nama: "Nathanael Eleazar Handata", jabatan: "Ketua Departemen", foto: "/assets/leaders/nathanael_ketua departemen_hubeks.png", ig: "nthanaellll" },
       { nama: "Evan Swardana Adinata", jabatan: "Wakil Ketua", foto: "/assets/leaders/Evan_Wakil Kepala Departemen_HUBEKS.jpg", ig: "epanlagi_" },
@@ -87,7 +87,7 @@ const departments = [
     theme: "amber",
     logo: "/assets/logos/Ekraf.png",
     motto: "Business with Passion.",
-    focus: ["CreativePreneur Workshop", "IT Business Plan Contest", "Ekraf Berduit (Merchandise)", "Bazar & Sponsorship"],
+    focus: ["Jelajah Teknologi", "TI Merch", "Inspired Talk", "Creatrip"],
     leaders: [
       { nama: "Muktabar Zaki Pramana Wlbisono", jabatan: "Ketua Departemen", foto: "/assets/leaders/Muktabar Zaki_KadepEkraf_HMPSTI.jpg", ig: "muktabarzaki" },
       { nama: "Dinda Eka Cantika", jabatan: "Wakil Ketua", foto: "/assets/leaders/Dinda_WakilDepartemen_EKRAF.png", ig: "dindaecaa" },

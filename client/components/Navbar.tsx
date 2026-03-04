@@ -27,7 +27,6 @@ export const Navbar = () => {
   // --- DAFTAR MENU (UPDATED) ---
   const navLinks = [
     { name: "Beranda", path: "/" },
-    { name: "Pengumuman", path: "/pengumuman"},
     { name: "Struktur", path: "/struktur" },
     { name: "Departemen", path: "/departemen" },
     { name: "Kalender", path: "/kalender" },

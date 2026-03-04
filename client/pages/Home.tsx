@@ -126,24 +126,7 @@ export default function Home() {
             </p>
           </FadeIn>
 
-          {/* === NEW: TOMBOL MENUJU PENGUMUMAN === */}
-          <FadeIn delay={0.5}>
-             <Link 
-                to="/pengumuman" 
-                className="group relative inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-[#F05822] to-[#d94a1a] rounded-full overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_30px_rgba(240,88,34,0.4)] mb-12"
-              >
-                {/* Efek kilap (Shimmer) saat di hover */}
-                <div className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out"></div>
-
-                <Megaphone size={20} className="text-white relative z-10 animate-pulse" />
-                <span className="relative z-10 font-black text-white uppercase tracking-[0.15em] text-sm md:text-base">
-                   Cek Pengumuman Staff Ahli!
-                </span>
-                <div className="relative z-10 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white transition-all">
-                    <ArrowRight size={16} className="text-white group-hover:text-[#F05822] transition-colors" />
-                </div>
-             </Link>
-          </FadeIn>
+         
 
         </motion.div>
 

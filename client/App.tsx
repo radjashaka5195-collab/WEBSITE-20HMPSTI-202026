@@ -42,7 +42,6 @@ const App = () => (
         {/* Area Gonta-Ganti Halaman */}
         <Routes>
           <Route path="/" element={<Home />} /> {/* Home cuma boleh ada DISINI */}
-          <Route path="/pengumuman" element={<Announcement />} />
           <Route path="/struktur" element={<Struktur />} />
           <Route path="/departemen" element={<Departemen />} />
           <Route path="/kalender" element={<KalenderPage />} /> 

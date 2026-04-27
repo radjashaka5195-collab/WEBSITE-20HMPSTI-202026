@@ -4,7 +4,7 @@ import { MessageSquareText, X, Send, User, Hash, Tag, ChevronDown, Check } from 
 
 // --- KONFIGURASI NOMOR BARU ---
 // Format: 628xxxxx (Ganti 0857... jadi 62857...)
-const ADVOKESMA_PHONE = "6285743549234"; 
+const ADVOKESMA_PHONE = "6285111220570"; 
 
 // DATA TOPIK
 // label: Tampilan di Web (Pakai Emoji biar bagus)

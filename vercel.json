@@ -1,6 +1,5 @@
 {
   "outputDirectory": "dist/spa",
-  "framework": "vite",
   "headers": [
     {
       "source": "/assets/(.*)",

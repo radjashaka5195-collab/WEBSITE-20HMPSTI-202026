@@ -40,13 +40,8 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
-            <h1 className="font-black tracking-tighter leading-[0.85] mb-6 text-center">
-              <span className="block text-[15vw] sm:text-[10rem] md:text-[12rem] text-white">
-                INNO
-              </span>
-              <span className="block text-[15vw] sm:text-[10rem] md:text-[12rem] text-[#33A5D3]" style={{ marginTop: '-0.08em' }}>
-                VARA
-              </span>
+            <h1 className="font-black tracking-tighter leading-none mb-6 text-center text-[12vw] sm:text-[7rem] md:text-[9rem] lg:text-[11rem]">
+              <span className="text-white">INNO</span><span className="text-[#33A5D3]">VARA</span>
             </h1>
           </motion.div>
 

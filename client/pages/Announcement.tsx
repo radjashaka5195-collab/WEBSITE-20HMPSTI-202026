@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Navbar } from "../components/Navbar";
+
 import { motion, AnimatePresence } from "framer-motion";
 
 /* ============================
@@ -137,7 +137,6 @@ export default function Announcement() {
 
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans relative overflow-hidden">
-      <Navbar />
 
       <div className="pt-32 sm:pt-40 pb-20 px-6 max-w-4xl mx-auto text-center relative z-10">
         <motion.h1

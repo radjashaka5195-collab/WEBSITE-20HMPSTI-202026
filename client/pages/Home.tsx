@@ -1,261 +1,328 @@
-import { ArrowRight, Terminal, ChevronDown, Quote, LayoutGrid, Users, Calendar, ShoppingBag, Megaphone } from "lucide-react";
-import { useScroll, useTransform, motion } from "framer-motion";
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { ArrowRight, ChevronDown, Users, LayoutGrid, Calendar, ShoppingBag } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useRef } from "react";
 
-// --- UTILS ---
-function cn(...inputs: ClassValue[]) { return twMerge(clsx(inputs)); }
-
-// --- ANIMATION HELPER ---
-const FadeIn = ({ children, className, delay = 0 }: any) => {
+// === MAIN COMPONENT ===
+export default function Home() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.8], [1, 0.96]);
+  
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }} 
-      whileInView={{ opacity: 1, y: 0 }} 
-      viewport={{ once: true, margin: "-50px" }} 
-      transition={{ duration: 0.6, delay, ease: "easeOut" }} 
-      className={cn("will-change-transform", className)} 
-    >
-      {children}
-    </motion.div>
-  );
-};
+    <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-[#33A5D3]/40 selection:text-white overflow-x-hidden">
+      
+      {/* ════════════════════════════════════════════
+          HERO SECTION — Poster/Editorial Style
+      ════════════════════════════════════════════ */}
+      <section ref={heroRef} className="relative min-h-[100svh] flex flex-col items-center justify-center px-6 overflow-hidden">
+        
+        {/* Ambient light — subtle, not the typical symmetric blobs */}
+        <div className="absolute top-[-20%] left-[-10%] w-[60vw] h-[40vw] bg-[#33A5D3]/8 blur-[100px] rounded-full pointer-events-none"></div>
+        <div className="absolute bottom-[-15%] right-[-5%] w-[40vw] h-[40vw] bg-[#F59E0B]/6 blur-[100px] rounded-full pointer-events-none"></div>
 
-// --- COMPONENT: QUICK MENU (MOBILE ONLY) ---
+        <motion.div style={{ opacity: heroOpacity, scale: heroScale }} className="relative z-10 text-center max-w-5xl mx-auto flex flex-col items-center">
+          
+          {/* Eyebrow — simple, no ping animation */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-[11px] sm:text-xs uppercase tracking-[0.35em] text-gray-500 mb-8 font-medium"
+          >
+            Himpunan Mahasiswa Program Studi Teknologi Informasi — Universitas Brawijaya
+          </motion.p>
+
+          {/* Main Title — editorial, not gradient */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <h1 className="font-black tracking-tighter leading-[0.85] mb-6 text-center">
+              <span className="block text-[15vw] sm:text-[10rem] md:text-[12rem] text-white">
+                INNO
+              </span>
+              <span className="block text-[15vw] sm:text-[10rem] md:text-[12rem] text-[#33A5D3]" style={{ marginTop: '-0.08em' }}>
+                VARA
+              </span>
+            </h1>
+          </motion.div>
+
+          {/* Tagline — conversational, not corporate */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="text-base sm:text-lg md:text-xl text-gray-400 max-w-lg mx-auto leading-relaxed mb-10"
+          >
+            Kabinet yang percaya bahwa inovasi lahir dari keberanian berkolaborasi.
+          </motion.p>
+
+          {/* Subtle year marker */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="flex items-center gap-4 text-gray-600 text-xs"
+          >
+            <div className="w-8 h-px bg-gray-700"></div>
+            <span className="font-medium tracking-widest">PERIODE 2026 / 2027</span>
+            <div className="w-8 h-px bg-gray-700"></div>
+          </motion.div>
+
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div 
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          transition={{ delay: 1.5, duration: 1 }} 
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        >
+          <span className="text-[9px] uppercase tracking-[0.3em] text-gray-600 font-medium">Scroll</span>
+          <ChevronDown size={18} className="text-gray-600 animate-bounce" />
+        </motion.div>
+      </section>
+
+      {/* Quick Menu — Mobile Only */}
+      <QuickMenu />
+
+      {/* ════════════════════════════════════════════
+          TENTANG KABINET — Asymmetric Editorial
+      ════════════════════════════════════════════ */}
+      <section className="relative z-10 py-24 md:py-36 border-t border-white/[0.04]">
+        <div className="max-w-6xl mx-auto px-6">
+          
+          {/* Section intro */}
+          <div className="max-w-2xl mb-20">
+            <motion.p
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-xs uppercase tracking-[0.3em] text-[#33A5D3] font-medium mb-6"
+            >
+              Filosofi Kabinet
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-4xl sm:text-5xl md:text-6xl font-black text-white leading-[0.95] tracking-tight mb-6"
+            >
+              Satu Hati,<br/>
+              Satu Gerak,<br/>
+              <span className="text-[#33A5D3]">TI Jaya.</span>
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-gray-400 text-base md:text-lg leading-relaxed"
+            >
+              INNOVARA bukan sekadar nama. Ini adalah komitmen — gabungan dari kata <em className="text-white not-italic font-semibold">Innova</em> (inovasi) dan <em className="text-white not-italic font-semibold">Ra</em> (era baru). Sebuah era dimana setiap mahasiswa TI punya ruang untuk bersuara, berkarya, dan berprestasi.
+            </motion.p>
+          </div>
+
+          {/* Kata kunci — Staggered, not symmetric */}
+          <div className="grid md:grid-cols-12 gap-6 md:gap-4">
+            
+            {/* INNOVA block */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="md:col-span-7 group"
+            >
+              <div className="relative p-8 md:p-10 rounded-2xl bg-[#0A0A0A] border border-white/[0.04] hover:border-[#33A5D3]/20 transition-colors duration-500 overflow-hidden">
+                <div className="absolute top-6 right-8 text-[5rem] md:text-[7rem] font-black text-white/[0.015] leading-none select-none pointer-events-none">01</div>
+                <span className="text-[#33A5D3] text-xs font-bold uppercase tracking-[0.2em] mb-4 block">Innova — Inovasi</span>
+                <h3 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-4 leading-tight">
+                  Menciptakan yang belum pernah ada.
+                </h3>
+                <p className="text-gray-400 leading-relaxed max-w-md">
+                  Bukan sekadar mengikuti tren — tapi punya keberanian untuk memulai sesuatu yang baru, yang beda, yang berani keluar dari rutinitas lama.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* RA block — offset */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="md:col-span-5 md:mt-12 group"
+            >
+              <div className="relative p-8 md:p-10 rounded-2xl bg-[#0A0A0A] border border-white/[0.04] hover:border-[#F59E0B]/20 transition-colors duration-500 overflow-hidden">
+                <div className="absolute top-6 right-8 text-[5rem] md:text-[7rem] font-black text-white/[0.015] leading-none select-none pointer-events-none">02</div>
+                <span className="text-[#F59E0B] text-xs font-bold uppercase tracking-[0.2em] mb-4 block">Ra — Era Baru</span>
+                <h3 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-4 leading-tight">
+                  Zaman baru dimulai dari sini.
+                </h3>
+                <p className="text-gray-400 leading-relaxed">
+                  Era dimana aspirasi didengar, kolaborasi terbuka lebar, dan setiap mahasiswa punya peran yang berarti.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════
+          VISI MISI — Clean & Direct
+      ════════════════════════════════════════════ */}
+      <section className="relative z-10 py-24 md:py-36 border-t border-white/[0.04] bg-[#030303]">
+        <div className="max-w-6xl mx-auto px-6">
+          
+          {/* VISI */}
+          <div className="mb-24 md:mb-32">
+            <div className="grid md:grid-cols-12 gap-8 items-start">
+              <div className="md:col-span-4">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <span className="text-xs uppercase tracking-[0.3em] text-[#F59E0B] font-medium mb-4 block">Visi Kami</span>
+                  <h2 className="text-5xl md:text-7xl font-black text-white leading-[0.9] tracking-tighter">
+                    Rumah<br/>Kolabo<span className="text-[#33A5D3]">rasi.</span>
+                  </h2>
+                </motion.div>
+              </div>
+              <div className="md:col-span-8 md:pt-2">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                >
+                  <blockquote className="relative pl-6 border-l-2 border-white/10">
+                    <p className="text-xl md:text-2xl text-gray-300 font-light leading-relaxed italic">
+                      "Mewujudkan HMPSTI sebagai Rumah Kolaborasi yang menciptakan Inovasi untuk mewujudkan Prestasi."
+                    </p>
+                  </blockquote>
+                  <p className="mt-6 text-gray-500 text-sm leading-relaxed max-w-xl pl-6">
+                    Bukan hanya organisasi — HMPSTI adalah ruang bagi setiap mahasiswa TI untuk tumbuh, berproses, dan meraih pencapaian bersama.
+                  </p>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+
+          {/* MISI */}
+          <div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="mb-12"
+            >
+              <span className="text-xs uppercase tracking-[0.3em] text-[#33A5D3] font-medium block">5 Misi Utama</span>
+            </motion.div>
+
+            <div className="space-y-1">
+              {[
+                { n: "01", title: "Tata Kelola Profesional", desc: "Organisasi berbasis kinerja (KPI) — setiap langkah strategis terukur dan berdampak nyata." },
+                { n: "02", title: "Kolaborasi Sinergis", desc: "Membangun jaringan erat dengan organisasi internal, institusi, dan industri di luar kampus." },
+                { n: "03", title: "Jembatan Aspirasi", desc: "Garda terdepan advokasi — memperjuangkan hak dan kesejahteraan mahasiswa secara responsif." },
+                { n: "04", title: "Pengembangan Prestasi", desc: "Mengasah hard skill dan soft skill untuk mencetak prestasi di tingkat nasional hingga internasional." },
+                { n: "05", title: "Inovasi Fungsional", desc: "Program kerja yang bukan hanya baru, tapi tepat sasaran dan benar-benar dibutuhkan mahasiswa." },
+              ].map((misi, idx) => (
+                <motion.div
+                  key={misi.n}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: idx * 0.06 }}
+                  className="group grid grid-cols-12 gap-4 items-baseline py-6 border-b border-white/[0.04] hover:bg-white/[0.01] transition-colors px-2 -mx-2 rounded-lg cursor-default"
+                >
+                  <div className="col-span-2 sm:col-span-1">
+                    <span className={`text-sm font-bold ${idx % 2 === 0 ? 'text-[#33A5D3]' : 'text-[#F59E0B]'}`}>
+                      {misi.n}
+                    </span>
+                  </div>
+                  <div className="col-span-10 sm:col-span-4 md:col-span-3">
+                    <h4 className="text-white font-bold text-base md:text-lg leading-snug group-hover:text-[#33A5D3] transition-colors duration-300">
+                      {misi.title}
+                    </h4>
+                  </div>
+                  <div className="col-span-12 sm:col-span-7 md:col-span-8 sm:pl-4">
+                    <p className="text-gray-500 text-sm leading-relaxed group-hover:text-gray-400 transition-colors duration-300">
+                      {misi.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════
+          CTA — Minimal, Intentional
+      ════════════════════════════════════════════ */}
+      <section className="relative z-10 py-24 md:py-32 px-6 border-t border-white/[0.04]">
+        <div className="max-w-4xl mx-auto text-center">
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col items-center"
+          >
+            <p className="text-gray-500 text-sm md:text-base mb-3">
+              Penasaran siapa saja yang ada di balik Innovara?
+            </p>
+            <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight mb-10 leading-tight">
+              Kenalan dulu, yuk.
+            </h3>
+            
+            <Link 
+              to="/struktur" 
+              className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-[#050505] rounded-full font-bold text-sm uppercase tracking-wider hover:bg-[#33A5D3] hover:text-white transition-all duration-300"
+            >
+              Lihat Struktur Kabinet
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+    </div>
+  );
+}
+
+// ── Quick Menu (Mobile Only) ──
 const QuickMenu = () => {
   const menus = [
-    { name: "Struktur", icon: Users, path: "/struktur", color: "text-sky-400 border-sky-500/20 bg-sky-500/5" },
-    { name: "Divisi", icon: LayoutGrid, path: "/departemen", color: "text-amber-400 border-amber-500/20 bg-amber-500/5" },
-    { name: "Kalender", icon: Calendar, path: "/kalender", color: "text-purple-400 border-purple-500/20 bg-purple-500/5" },
-    { name: "Store", icon: ShoppingBag, path: "/merch", color: "text-rose-400 border-rose-500/20 bg-rose-500/5" },
+    { name: "Struktur", icon: Users, path: "/struktur" },
+    { name: "Divisi", icon: LayoutGrid, path: "/departemen" },
+    { name: "Kalender", icon: Calendar, path: "/kalender" },
+    { name: "Store", icon: ShoppingBag, path: "/merch" },
   ];
 
   return (
-    <div className="md:hidden w-full px-6 -mt-10 relative z-20 mb-24">
-      <div className="text-center mb-4">
-        <span className="text-[10px] font-mono uppercase tracking-widest text-gray-500">Quick Access</span>
-      </div>
-      <div className="grid grid-cols-2 gap-3">
+    <div className="md:hidden w-full px-6 -mt-6 relative z-20 mb-16">
+      <div className="grid grid-cols-4 gap-2">
         {menus.map((item, idx) => (
           <Link 
             key={idx} 
             to={item.path}
-            className={cn(
-              "flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border backdrop-blur-md transition-transform active:scale-95",
-              item.color
-            )}
+            className="flex flex-col items-center gap-2 py-4 rounded-xl bg-white/[0.03] border border-white/[0.04] active:scale-95 transition-transform"
           >
-            <item.icon size={24} />
-            <span className="text-xs font-bold uppercase tracking-wider text-gray-200">{item.name}</span>
+            <item.icon size={20} className="text-gray-400" />
+            <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500">{item.name}</span>
           </Link>
         ))}
       </div>
     </div>
   );
 };
-
-// --- COMPONENT MISI CARD ---
-const MisiCard = ({ number, title, text, color, delay }: any) => {
-  const isBlue = color === "blue";
-  const bgHover = isBlue ? "hover:bg-[#33A5D3]/5" : "hover:bg-[#F59E0B]/5";
-  const borderHover = isBlue ? "hover:border-[#33A5D3]/30" : "hover:border-[#F59E0B]/30";
-  const titleColor = isBlue ? "text-[#33A5D3]" : "text-[#F59E0B]";
-
-  return (
-    <FadeIn delay={delay} className="h-full">
-      <div className={cn("group relative h-full p-8 rounded-3xl bg-[#0A0A0A] border border-white/5 transition-all duration-500 overflow-hidden", bgHover, borderHover)}>
-         <div className={cn("absolute -right-4 -top-8 text-[6rem] md:text-[8rem] font-black opacity-[0.02] select-none transition-transform duration-500 group-hover:scale-105", titleColor)}>
-            {number}
-         </div>
-         <div className="relative z-10 flex flex-col h-full justify-start items-start">
-            <div className="mb-6">
-                <span className={cn("text-5xl font-black tracking-tighter leading-none", titleColor)}>
-                    0{number}
-                </span>
-            </div>
-            <h4 className="text-xl font-bold text-white mb-3 leading-tight">{title}</h4>
-            <p className="text-gray-400 text-sm leading-relaxed group-hover:text-gray-300 transition-colors">
-                {text}
-            </p>
-         </div>
-      </div>
-    </FadeIn>
-  );
-};
-
-// === MAIN COMPONENT ===
-export default function Home() {
-  const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  
-  return (
-    <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-[#33A5D3] selection:text-white overflow-x-hidden">
-      
-      {/* --- HERO SECTION --- */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20 pb-10 overflow-hidden">
-        
-        {/* Background Effects */}
-        <div className="absolute top-[-50px] left-0 md:left-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-[#33A5D3]/20 blur-[80px] md:blur-[120px] rounded-full pointer-events-none mix-blend-screen opacity-60"></div>
-        <div className="absolute top-[-50px] right-0 md:right-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-[#F59E0B]/15 blur-[80px] md:blur-[120px] rounded-full pointer-events-none mix-blend-screen opacity-60"></div>
-        <div className="fixed inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none hidden md:block"></div>
-
-        <motion.div style={{ y }} className="relative z-10 text-center max-w-5xl mx-auto flex flex-col items-center">
-          <FadeIn delay={0.1}>
-            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-[#33A5D3]/30 bg-[#33A5D3]/5 backdrop-blur-md mb-8 shadow-[0_0_15px_rgba(51,165,211,0.2)]">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#33A5D3] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#33A5D3]"></span>
-              </span>
-              <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#33A5D3] font-bold">HMPSTI UB 2026</span>
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.2}>
-            <h1 className="font-black tracking-tighter leading-[0.9] mb-8 text-center relative">
-              <span className="block text-xl md:text-3xl text-gray-500 mb-4 font-bold tracking-[0.5em] uppercase">KABINET</span>
-              <span className="block text-[13vw] sm:text-[9rem] md:text-[11rem] bg-clip-text text-transparent bg-gradient-to-r from-[#33A5D3] via-white to-[#F59E0B] drop-shadow-[0_0_20px_rgba(51,165,211,0.2)]">
-                INNOVARA
-              </span>
-            </h1>
-          </FadeIn>
-
-          <FadeIn delay={0.4}>
-            <p className="text-lg md:text-2xl text-gray-400 font-light max-w-2xl mx-auto leading-relaxed mb-10">
-              Mewujudkan era baru melalui <span className="text-[#33A5D3] font-bold border-b border-[#33A5D3]">Inovasi</span> yang berdampak dan <span className="text-[#F59E0B] font-bold border-b border-[#F59E0B]">Kolaborasi</span> tanpa batas.
-            </p>
-          </FadeIn>
-
-         
-
-        </motion.div>
-
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5, duration: 1 }} className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[#33A5D3] animate-bounce">
-          <ChevronDown size={28} />
-        </motion.div>
-      </section>
-
-      {/* --- QUICK MENU (MOBILE ONLY) --- */}
-      <QuickMenu />
-
-      {/* --- FILOSOFI SECTION --- */}
-      <section className="relative z-10 py-32 bg-[#080808] border-t border-white/5 overflow-hidden">
-        <div className="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-[#33A5D3]/5 to-transparent pointer-events-none"></div>
-        <div className="max-w-6xl mx-auto px-6">
-            <div className="grid lg:grid-cols-5 gap-12 items-stretch">
-                <FadeIn className="lg:col-span-2 h-full">
-                    <div className="relative h-full min-h-[400px] w-full rounded-[2rem] bg-gradient-to-br from-[#111] to-[#050505] border border-white/10 p-10 flex flex-col justify-between overflow-hidden group hover:border-[#33A5D3]/30 transition-all duration-500 shadow-xl">
-                        <div className="flex items-center gap-3 mb-8 opacity-50">
-                            <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                            <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                        </div>
-                        <div className="relative z-10">
-                            <Quote size={40} className="text-[#33A5D3] mb-6 opacity-50 rotate-180" />
-                            <h3 className="text-5xl lg:text-6xl font-black text-white leading-[0.9] tracking-tight">
-                                Satu Hati,<br/>Satu Gerak,<br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#33A5D3] to-[#F59E0B]">TI JAYA!</span>
-                            </h3>
-                        </div>
-                        <div className="mt-8 pt-8 border-t border-white/5 flex items-center justify-between">
-                            <span className="text-xs font-mono text-gray-500 uppercase tracking-widest">Est. 2026</span>
-                            <Terminal size={24} className="text-[#F59E0B] opacity-80" />
-                        </div>
-                        <div className="absolute -right-20 -bottom-20 w-40 h-40 md:w-64 md:h-64 bg-[#33A5D3]/10 blur-[60px] md:blur-[80px] rounded-full group-hover:bg-[#33A5D3]/20 transition-all duration-500"></div>
-                    </div>
-                </FadeIn>
-                <div className="lg:col-span-3 flex flex-col justify-center space-y-12 pl-0 lg:pl-10">
-                    <FadeIn delay={0.2} className="relative group">
-                        <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#33A5D3] to-transparent opacity-30 group-hover:opacity-100 transition-opacity"></div>
-                        <div className="pl-10 relative">
-                            <h4 className="text-6xl md:text-7xl font-black text-white mb-3 tracking-tighter">INNOVA</h4>
-                            <div className="inline-block px-3 py-1 bg-[#33A5D3]/10 rounded border border-[#33A5D3]/20 text-[#33A5D3] font-mono text-xs font-bold tracking-widest uppercase mb-4">Innovation</div>
-                            <p className="text-xl text-gray-400 font-light leading-relaxed max-w-lg">Semangat menciptakan hal baru yang <span className="text-white font-semibold">beda</span> dari rutinitas sebelumnya.</p>
-                        </div>
-                    </FadeIn>
-                    <FadeIn delay={0.4} className="relative group">
-                        <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#F59E0B] to-transparent opacity-30 group-hover:opacity-100 transition-opacity"></div>
-                        <div className="pl-10 relative">
-                            <h4 className="text-6xl md:text-7xl font-black text-white mb-3 tracking-tighter">RA</h4>
-                            <div className="inline-block px-3 py-1 bg-[#F59E0B]/10 rounded border border-[#F59E0B]/20 text-[#F59E0B] font-mono text-xs font-bold tracking-widest uppercase mb-4">Era / Zaman</div>
-                            <p className="text-xl text-gray-400 font-light leading-relaxed max-w-lg">Dimulainya zaman dimana aspirasi didengar & kolaborasi <span className="text-white font-semibold">terbuka lebar</span>.</p>
-                        </div>
-                    </FadeIn>
-                </div>
-            </div>
-        </div>
-      </section>
-
-      {/* --- VISI MISI SECTION --- */}
-      <section className="relative z-10 py-32 bg-black border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-16">
-                <FadeIn>
-                    <span className="text-[#F59E0B] font-mono uppercase tracking-[0.4em] text-xs font-bold border-b border-[#F59E0B] pb-2">Visi Utama</span>
-                    <h2 className="mt-8 text-5xl md:text-7xl font-black text-white leading-tight">
-                        RUMAH <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#33A5D3] to-[#F59E0B]">KOLABORASI</span>
-                    </h2>
-                    <div className="mt-8 max-w-3xl mx-auto">
-                        <p className="text-2xl text-gray-300 font-light italic leading-relaxed">
-                        "Mewujudkan HMPSTI sebagai Rumah Kolaborasi yang menciptakan Inovasi untuk mewujudkan Prestasi."
-                        </p>
-                    </div>
-                </FadeIn>
-            </div>
-
-            <div className="text-center mb-12 mt-20">
-                <FadeIn delay={0.2}>
-                      <span className="text-[#33A5D3] font-mono uppercase tracking-[0.4em] text-xs font-bold border-b border-[#33A5D3] pb-2">Misi Kami</span>
-                </FadeIn>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
-                <div className="col-span-1 lg:col-span-12 min-h-[220px]">
-                    <MisiCard number="1" title="Tata Kelola Profesional" text="Tata kelola organisasi Profesional berbasis kinerja (KPI) untuk memastikan setiap langkah strategis terukur dan berdampak." color="blue" delay={0.1} />
-                </div>
-                <div className="col-span-1 lg:col-span-6 min-h-[250px]">
-                    <MisiCard number="2" title="Kolaborasi Sinergis" text="Menjalin kolaborasi erat dengan organisasi internal, institusi, dan industri luar untuk memperluas jaringan." color="orange" delay={0.2} />
-                </div>
-                <div className="col-span-1 lg:col-span-6 min-h-[250px]">
-                    <MisiCard number="3" title="Jembatan Aspirasi" text="Menjadi garda terdepan dalam memperhatikan hak & kesejahteraan mahasiswa melalui advokasi yang responsif." color="blue" delay={0.3} />
-                </div>
-                <div className="col-span-1 lg:col-span-6 min-h-[250px]">
-                    <MisiCard number="4" title="Pengembangan Prestasi" text="Fokus pada pengembangan Hard Skill & Soft Skill mahasiswa untuk mencetak prestasi di tingkat nasional maupun internasional." color="orange" delay={0.4} />
-                </div>
-                <div className="col-span-1 lg:col-span-6 min-h-[250px]">
-                    <MisiCard number="5" title="Inovasi Fungsional" text="Menghadirkan inovasi program kerja yang tidak hanya baru, tapi juga tepat sasaran dan fungsional bagi mahasiswa." color="blue" delay={0.5} />
-                </div>
-            </div>
-        </div>
-      </section>
-
-      {/* --- JOURNEY CTA --- */}
-      <section className="relative z-10 py-32 px-6 text-center border-t border-white/5 bg-[#050505] overflow-hidden">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-sky-900/10 blur-[120px] rounded-full pointer-events-none"></div>
-
-          <FadeIn delay={0.2}>
-            <div className="relative z-10 flex flex-col items-center">
-                <p className="text-gray-400 mb-8 font-light tracking-wide text-sm md:text-base">
-                    Siap berkenalan dengan wajah-wajah di balik <span className="text-white font-bold">Innovara</span>?
-                </p>
-                
-                <Link 
-                    to="/struktur" 
-                    className="group relative inline-flex items-center gap-4 px-10 py-5 bg-[#0A0A0A] rounded-full overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_30px_rgba(14,165,233,0.3)] border border-white/10"
-                >
-                    <div className="absolute inset-0 bg-gradient-to-r from-sky-500 via-amber-500 to-sky-500 opacity-20 group-hover:opacity-40 blur-md transition-opacity"></div>
-                    <div className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out"></div>
-
-                    <span className="relative z-10 font-bold text-white uppercase tracking-[0.2em] text-xs md:text-sm">
-                        Explore Struktur
-                    </span>
-                    <div className="relative z-10 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-white/10 group-hover:translate-x-1 transition-all">
-                        <ArrowRight size={16} className="text-sky-400 group-hover:text-amber-400 transition-colors" />
-                    </div>
-                </Link>
-            </div>
-          </FadeIn>
-      </section>
-
-    </div>
-  );
-}

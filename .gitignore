@@ -25,3 +25,8 @@ dist-ssr
 
 .config/
 !.env
+
+# Image backups (original uncompressed)
+public/assets/leaders/backup/
+public/assets/logos/backup/
+public/assets/logos/images/backup/

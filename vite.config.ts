@@ -19,6 +19,16 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     outDir: "dist/spa",
+    cssCodeSplit: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-motion': ['framer-motion'],
+          'vendor-ui': ['@radix-ui/react-tooltip', '@radix-ui/react-toast', '@tanstack/react-query'],
+        },
+      },
+    },
   },
   plugins: [react(), expressPlugin()],
   resolve: {

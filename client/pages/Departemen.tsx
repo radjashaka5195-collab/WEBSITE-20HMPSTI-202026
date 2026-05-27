@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { ArrowUpRight, X, CheckCircle2, User } from "lucide-react"; 
+import { ArrowUpRight, X, CheckCircle2, User, Instagram, Quote } from "lucide-react"; 
 
 // --- DATA DEPARTEMEN ---
 const departments = [
@@ -46,8 +46,8 @@ const departments = [
     focus: ["Company Profile & Branding", "Workshop Design & Video", "Medinfo Class"],
     leaders: [
       { nama: "Muhammad Raihan Hidayah", jabatan: "Ketua Departemen", foto: "/assets/leaders/Han_Kepala Departemen Medinfo.JPG", ig: "raihanhidayah06" },
-      { nama: "Tiara Nurfadilah", jabatan: "Wakil Ketua 1", foto: "/assets/leaders/Tiara_Wakil Departemen 1_MEDINFO.png", ig: "tiaraa_nfh" },
-      { nama: "Latisha Syifa Pratiwi", jabatan: "Wakil Ketua 2", foto: "/assets/leaders/Latisha_Wakil Departemen 2_MEDINFO.png", ig: "latisha.prtiwi" },
+      { nama: "Tiara Nurfadilah", jabatan: "Wakil Ketua 1", foto: "/assets/leaders/Tiara_Wakil Departemen 1_MEDINFO.jpg", ig: "tiaraa_nfh" },
+      { nama: "Latisha Syifa Pratiwi", jabatan: "Wakil Ketua 2", foto: "/assets/leaders/Latisha_Wakil Departemen 2_MEDINFO.jpg", ig: "latisha.prtiwi" },
     ]
   },
   {
@@ -75,7 +75,7 @@ const departments = [
     motto: "The Synergy Hub.",
     focus: ["Vistech 2.0 (Visit Technology)", "Tech Career Radar", "Ramadhan Charity Connect"],
     leaders: [
-      { nama: "Nathanael Eleazar Handata", jabatan: "Ketua Departemen", foto: "/assets/leaders/nathanael_ketua departemen_hubeks.png", ig: "nthanaellll" },
+      { nama: "Nathanael Eleazar Handata", jabatan: "Ketua Departemen", foto: "/assets/leaders/nathanael_ketua departemen_hubeks.jpg", ig: "nthanaellll" },
       { nama: "Evan Swardana Adinata", jabatan: "Wakil Ketua", foto: "/assets/leaders/Evan_Wakil Kepala Departemen_HUBEKS.jpg", ig: "epanlagi_" },
     ]
   },
@@ -90,7 +90,7 @@ const departments = [
     focus: ["Jelajah Teknologi", "TI Merch", "Inspired Talk", "Creatrip"],
     leaders: [
       { nama: "Muktabar Zaki Pramana Wlbisono", jabatan: "Ketua Departemen", foto: "/assets/leaders/Muktabar Zaki_KadepEkraf_HMPSTI.jpg", ig: "muktabarzaki" },
-      { nama: "Dinda Eka Cantika", jabatan: "Wakil Ketua", foto: "/assets/leaders/Dinda_WakilDepartemen_EKRAF.png", ig: "dindaecaa" },
+      { nama: "Dinda Eka Cantika", jabatan: "Wakil Ketua", foto: "/assets/leaders/Dinda_WakilDepartemen_EKRAF.jpg", ig: "dindaecaa" },
     ]
   },
   {
@@ -110,12 +110,28 @@ const departments = [
   },
 ];
 
-// --- COMPONENT: Dept Card ---
+// --- HELPER: Theme Colors ---
+const getThemeColors = (theme: string) => {
+  const isAmber = theme === "amber";
+  return {
+    isAmber,
+    accent: isAmber ? "text-amber-500" : "text-sky-500",
+    accentBg: isAmber ? "bg-amber-500" : "bg-sky-500",
+    accentBgSoft: isAmber ? "bg-amber-500/10" : "bg-sky-500/10",
+    accentBorder: isAmber ? "border-amber-500/30" : "border-sky-500/30",
+    accentBorderHover: isAmber ? "hover:border-amber-500/50" : "hover:border-sky-500/50",
+    accentGlow: isAmber ? "rgba(245,158,11,0.4)" : "rgba(14,165,233,0.4)",
+    accentShadow: isAmber 
+      ? "hover:shadow-[0_0_30px_-5px_rgba(245,158,11,0.3)]" 
+      : "hover:shadow-[0_0_30px_-5px_rgba(14,165,233,0.3)]",
+    gradientFrom: isAmber ? "from-amber-950/40" : "from-sky-950/40",
+  };
+};
+
+// --- COMPONENT: Dept Card (with leader preview avatars) ---
 const DeptCard = ({ data, index, onClick }: { data: any, index: number, onClick: () => void }) => {
-  const isAmber = data.theme === "amber";
-  const mainColor = isAmber ? "text-amber-500" : "text-sky-500";
-  const borderHover = isAmber ? "group-hover:border-amber-500/50" : "group-hover:border-sky-500/50";
-  const glowColor = isAmber ? "rgba(245,158,11,0.4)" : "rgba(14,165,233,0.4)";
+  const tc = getThemeColors(data.theme);
+  const leadersWithPhoto = data.leaders.filter((l: any) => l.foto);
 
   return (
     <motion.div
@@ -123,109 +139,186 @@ const DeptCard = ({ data, index, onClick }: { data: any, index: number, onClick:
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      transition={{ duration: 0.5, delay: index * 0.08 }}
       className={cn(
-        "group relative h-[380px] w-full rounded-[2.5rem] bg-[#0A0A0A] border border-white/5 p-8 flex flex-col justify-between overflow-hidden transition-all duration-500 hover:-translate-y-2 cursor-pointer",
-        borderHover
+        "group relative h-[420px] w-full rounded-[2.5rem] bg-[#0A0A0A] border border-white/5 p-8 flex flex-col justify-between overflow-hidden transition-all duration-500 hover:-translate-y-2 cursor-pointer",
+        tc.accentBorderHover, tc.accentShadow
       )}
     >
+      {/* Background glow */}
       <div 
         className="absolute -right-20 -top-20 w-64 h-64 blur-[100px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-        style={{ background: glowColor }}
+        style={{ background: tc.accentGlow }}
       ></div>
 
+      {/* Top content */}
       <div className="relative z-10">
-        <div className={cn("w-16 h-16 rounded-2xl flex items-center justify-center p-3 bg-white/5 border border-white/10 mb-6 transition-all duration-500 group-hover:scale-110 group-hover:bg-black/50 backdrop-blur-sm", mainColor)}>
+        <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center p-2.5 bg-white/5 border border-white/10 mb-5 transition-all duration-500 group-hover:scale-110 group-hover:bg-black/50 backdrop-blur-sm", tc.accent)}>
             <img 
                 src={data.logo} 
                 alt={`${data.nama} logo`} 
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-contain drop-shadow-lg" 
             />
         </div>
         
-        <h3 className="text-3xl font-black text-white uppercase tracking-tighter mb-2">{data.nama}</h3>
-        <p className={cn("text-[10px] font-mono font-bold tracking-widest uppercase mb-4 opacity-70 group-hover:opacity-100 transition-opacity", mainColor)}>
+        <h3 className="text-3xl font-black text-white uppercase tracking-tighter mb-1">{data.nama}</h3>
+        <p className={cn("text-[10px] font-mono font-bold tracking-widest uppercase mb-3 opacity-70 group-hover:opacity-100 transition-opacity", tc.accent)}>
             {data.panjang}
         </p>
-        <p className="text-gray-400 text-sm leading-relaxed max-w-[90%] line-clamp-3 group-hover:text-gray-200 transition-colors">
+        <p className="text-gray-400 text-sm leading-relaxed max-w-[90%] line-clamp-2 group-hover:text-gray-200 transition-colors">
             {data.desc}
         </p>
       </div>
 
-      <div className={cn("absolute bottom-8 right-8 text-white/20 transition-all duration-500 group-hover:text-white group-hover:rotate-[-45deg] group-hover:scale-125")}>
-         <ArrowUpRight size={32} />
+      {/* Bottom: Leader preview avatars + arrow */}
+      <div className="relative z-10 flex items-center justify-between mt-4">
+        {/* Avatar Stack */}
+        <div className="flex items-center">
+          <div className="flex -space-x-3">
+            {data.leaders.slice(0, 3).map((leader: any, idx: number) => (
+              <div 
+                key={idx} 
+                className={cn(
+                  "w-10 h-10 rounded-full border-2 border-[#0A0A0A] overflow-hidden bg-white/5 transition-transform duration-300 group-hover:translate-x-0",
+                  idx === 1 && "group-hover:-translate-x-0.5",
+                  idx === 2 && "group-hover:-translate-x-1",
+                )}
+                style={{ zIndex: 10 - idx }}
+              >
+                {leader.foto ? (
+                  <img 
+                    src={leader.foto} 
+                    alt={leader.nama}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover object-top"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = 'none';
+                      (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
+                    }}
+                  />
+                ) : null}
+                <div className={cn("w-full h-full flex items-center justify-center text-white/30 bg-white/5", leader.foto ? "hidden" : "")}>
+                  <User size={16} />
+                </div>
+              </div>
+            ))}
+          </div>
+          <span className="ml-3 text-[10px] font-mono text-gray-500 uppercase tracking-wider group-hover:text-gray-300 transition-colors">
+            {data.leaders.length} Leaders
+          </span>
+        </div>
+
+        <div className="text-white/20 transition-all duration-500 group-hover:text-white group-hover:rotate-[-45deg] group-hover:scale-125">
+           <ArrowUpRight size={28} />
+        </div>
       </div>
     </motion.div>
   );
 };
 
-// --- COMPONENT: Leader Card (With Photo & Clickable IG) ---
-const LeaderCard = ({ leader, theme }: { leader: any, theme: string }) => {
-    const isAmber = theme === "amber";
-    const accentColor = isAmber ? "bg-amber-500" : "bg-sky-500";
-    const textColor = isAmber ? "group-hover:text-amber-400" : "group-hover:text-sky-400";
-    
-    // buat nampung isian fotonya aja biar rapi
-    const ImageContent = () => (
-        <div className={cn(
-            "w-14 h-14 rounded-xl overflow-hidden border-2 border-white/10 transition-all duration-500",
-            leader.ig ? "hover:border-white/50 cursor-pointer" : "",
-            isAmber ? "group-hover:shadow-[0_0_15px_rgba(245,158,11,0.3)]" : "group-hover:shadow-[0_0_15px_rgba(14,165,233,0.3)]"
-        )}>
-            {leader.foto ? (
-                <img 
-                    src={leader.foto} 
-                    alt={leader.nama} 
-                    className="w-full h-full object-cover object-top transition-all duration-500 hover:scale-110"
-                    onError={(e) => {
-                        // kalo file ga nemu, balikin ke icon user
-                        (e.target as HTMLImageElement).style.display = 'none';
-                        (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
-                    }}
-                />
-            ) : null}
-            <div className={cn("w-full h-full bg-black/50 flex items-center justify-center text-white/20", leader.foto ? "hidden" : "")}>
-                <User size={24} />
-            </div>
-        </div>
-    );
+// --- COMPONENT: Big Leader Card (for modal) ---
+const BigLeaderCard = ({ leader, theme, index }: { leader: any, theme: string, index: number }) => {
+  const tc = getThemeColors(theme);
+  const isKetua = leader.jabatan.toLowerCase().includes("ketua departemen") || leader.jabatan.toLowerCase().includes("kepala departemen");
 
-    return (
-        <div className="group relative flex items-center gap-4 p-3 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 transition-all duration-300">
-            {/* bagian foto yang bisa di-klik */}
-            <div className="relative shrink-0 z-10">
-                {leader.ig ? (
-                    <a href={`https://instagram.com/${leader.ig.replace('@', '')}`} target="_blank" rel="noreferrer" title={`Instagram @${leader.ig.replace('@', '')}`}>
-                        <ImageContent />
-                    </a>
-                ) : (
-                    <ImageContent />
-                )}
-                
-                {/* titik/badge warna sesuai tema departemen */}
-                <div className={cn("absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-[#0A0A0A] pointer-events-none", accentColor)}></div>
-            </div>
-            
-            <div className="flex-1">
-                <p className={cn("text-white font-bold text-sm md:text-base leading-tight transition-colors", textColor)}>
-                    {leader.nama}
-                </p>
-                <div className="flex flex-col gap-0.5 mt-1">
-                    <p className="text-[10px] md:text-xs font-mono uppercase tracking-widest text-gray-400">
-                        {leader.jabatan}
-                    </p>
-                    {leader.ig && (
-                        <span className="text-[10px] text-gray-500 hover:text-white transition-colors">
-                            <a href={`https://instagram.com/${leader.ig.replace('@', '')}`} target="_blank" rel="noreferrer">
-                                @{leader.ig.replace('@', '')}
-                            </a>
-                        </span>
-                    )}
-                </div>
-            </div>
+  const cardContent = (
+    <motion.div 
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: 0.15 + index * 0.1 }}
+      className={cn(
+        "group relative flex flex-col items-center text-center p-6 rounded-3xl border transition-all duration-500",
+        "bg-white/[0.02] border-white/5",
+        tc.accentBorderHover,
+        tc.accentShadow,
+        isKetua && tc.accentBorder,
+        isKetua && "bg-white/[0.04]",
+      )}
+    >
+      {/* Photo */}
+      <div className={cn(
+        "relative mb-5 rounded-2xl overflow-hidden border-2 transition-all duration-500",
+        isKetua ? "w-28 h-28 sm:w-32 sm:h-32" : "w-24 h-24 sm:w-28 sm:h-28",
+        "border-white/10 group-hover:border-white/30",
+        tc.isAmber 
+          ? "group-hover:shadow-[0_0_25px_-5px_rgba(245,158,11,0.4)]" 
+          : "group-hover:shadow-[0_0_25px_-5px_rgba(14,165,233,0.4)]",
+      )}>
+        {leader.foto ? (
+          <img 
+            src={leader.foto} 
+            alt={leader.nama}
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = 'none';
+              (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
+            }}
+          />
+        ) : null}
+        <div className={cn(
+          "w-full h-full flex items-center justify-center bg-gradient-to-br from-white/5 to-white/[0.02]",
+          leader.foto ? "hidden" : ""
+        )}>
+          <User size={40} className="text-white/15" />
         </div>
-    )
-}
+
+        {/* Ketua badge overlay */}
+        {isKetua && (
+          <div className={cn("absolute bottom-0 left-0 right-0 py-1 text-center text-[9px] font-black uppercase tracking-widest", tc.accentBg, "text-black")}>
+            Ketua
+          </div>
+        )}
+      </div>
+
+      {/* Name & Role */}
+      <h4 className={cn(
+        "font-bold text-white leading-tight mb-1 transition-colors",
+        isKetua ? "text-lg" : "text-base",
+        tc.isAmber ? "group-hover:text-amber-400" : "group-hover:text-sky-400"
+      )}>
+        {leader.nama}
+      </h4>
+      <p className="text-[10px] font-mono uppercase tracking-widest text-gray-500 mb-3">
+        {leader.jabatan}
+      </p>
+
+      {/* Instagram link */}
+      {leader.ig && (
+        <div className={cn(
+          "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold transition-all duration-300",
+          "bg-white/5 border border-white/5",
+          tc.isAmber 
+            ? "text-amber-400/70 group-hover:bg-amber-500/10 group-hover:border-amber-500/20 group-hover:text-amber-400" 
+            : "text-sky-400/70 group-hover:bg-sky-500/10 group-hover:border-sky-500/20 group-hover:text-sky-400"
+        )}>
+          <Instagram size={12} />
+          <span>@{leader.ig.replace('@', '')}</span>
+        </div>
+      )}
+    </motion.div>
+  );
+
+  // Wrap with link if IG exists
+  if (leader.ig) {
+    return (
+      <a 
+        href={`https://instagram.com/${leader.ig.replace('@', '')}`} 
+        target="_blank" 
+        rel="noreferrer"
+        className="block"
+      >
+        {cardContent}
+      </a>
+    );
+  }
+
+  return cardContent;
+};
 
 // --- MAIN PAGE ---
 export default function Departemen() {
@@ -236,7 +329,7 @@ export default function Departemen() {
       
       {/* BACKGROUND FX */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.04] brightness-100 contrast-150 mix-blend-overlay"></div>
+         <div className="absolute inset-0 opacity-[0.04] brightness-100 contrast-150 mix-blend-overlay" style={{backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%270 0 256 256%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cfilter id=%27noise%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%270.65%27 numOctaves=%273%27 stitchTiles=%27stitch%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23noise)%27/%3E%3C/svg%3E")'}}></div>
          <div className="absolute top-0 left-0 w-[50vw] h-[50vw] bg-sky-600/10 blur-[150px] rounded-full mix-blend-screen animate-pulse-slow"></div>
          <div className="absolute bottom-0 right-0 w-[50vw] h-[50vw] bg-amber-600/10 blur-[150px] rounded-full mix-blend-screen animate-pulse-slow delay-1000"></div>
       </div>
@@ -270,10 +363,12 @@ export default function Departemen() {
         </div>
       </div>
 
-      {/* === MODAL / POPUP === */}
+      {/* === MODAL / POPUP (REDESIGNED - Leader Focused) === */}
       <AnimatePresence>
-        {selectedDept && (
-          <div className="fixed inset-0 z-[200] flex items-center justify-center px-4 py-8 overflow-y-auto">
+        {selectedDept && (() => {
+          const tc = getThemeColors(selectedDept.theme);
+          return (
+          <div className="fixed inset-0 z-[200] flex items-start sm:items-center justify-center px-4 py-6 sm:py-8 overflow-y-auto">
             
             {/* Backdrop Blur */}
             <motion.div 
@@ -284,90 +379,123 @@ export default function Departemen() {
                 className="fixed inset-0 bg-black/90 backdrop-blur-md"
             />
 
-            {/* Content Container */}
+            {/* Content Container - Single Column, Scrollable */}
             <motion.div 
-                layoutId={`card-${selectedDept.id}`}
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                initial={{ opacity: 0, scale: 0.95, y: 30 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                className="relative w-full max-w-6xl bg-[#0A0A0A] border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl flex flex-col md:flex-row min-h-[600px] max-h-[90vh]"
+                exit={{ opacity: 0, scale: 0.95, y: 30 }}
+                transition={{ type: "spring", damping: 30, stiffness: 300 }}
+                className="relative w-full max-w-3xl bg-[#0A0A0A] border border-white/10 rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden shadow-2xl my-auto"
             >
                 {/* Close Button */}
-                <button onClick={() => setSelectedDept(null)} className="absolute top-6 right-6 z-50 p-2 bg-black/50 backdrop-blur-md rounded-full hover:bg-white/20 transition-colors border border-white/10 group">
-                    <X size={20} className="text-white group-hover:rotate-90 transition-transform" />
+                <button 
+                  onClick={() => setSelectedDept(null)} 
+                  className="absolute top-5 right-5 z-50 p-2 bg-black/60 backdrop-blur-md rounded-full hover:bg-white/20 transition-colors border border-white/10 group"
+                >
+                    <X size={18} className="text-white group-hover:rotate-90 transition-transform" />
                 </button>
 
-                {/* Left Side: Info Utama & Leaders */}
-                <div className={cn("p-8 md:p-12 w-full md:w-5/12 flex flex-col justify-start relative overflow-hidden overflow-y-auto scrollbar-hide", selectedDept.theme === "amber" ? "bg-gradient-to-br from-amber-950/40 to-black" : "bg-gradient-to-br from-sky-950/40 to-black")}>
-                      
-                      {/* Logo Besar */}
-                      <div className="relative z-10 mb-8">
-                        <div className={cn("w-20 h-20 rounded-3xl flex items-center justify-center p-3 bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl")}>
-                            <img 
-                                src={selectedDept.logo} 
-                                alt={selectedDept.nama} 
-                                className="w-full h-full object-contain" 
-                            />
-                        </div>
-                      </div>
-                      
-                      <div className="relative z-10">
-                        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none mb-4 text-white">{selectedDept.nama}</h2>
-                        
-                        <p className="text-gray-300 text-sm leading-relaxed mb-8 border-l-2 border-white/10 pl-4">
-                            {selectedDept.desc}
-                        </p>
+                {/* ===== HEADER SECTION ===== */}
+                <div className={cn("relative p-8 sm:p-10 pb-8 overflow-hidden", `bg-gradient-to-br ${tc.gradientFrom} to-[#0A0A0A]`)}>
+                  {/* Subtle glow */}
+                  <div 
+                    className="absolute -top-20 -right-20 w-60 h-60 blur-[80px] rounded-full opacity-30 pointer-events-none" 
+                    style={{ background: tc.accentGlow }}
+                  ></div>
 
-                        <div className="inline-flex items-center gap-3 px-4 py-2 rounded-lg bg-white/5 border border-white/10 backdrop-blur-sm mb-10">
-                            <span className="text-xs font-bold uppercase tracking-widest text-white">"{selectedDept.motto}"</span>
-                        </div>
-                        
-                        {/* LEADERS SECTION (With Photo) */}
-                        <div className="mt-2">
-                            <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 mb-5 flex items-center gap-2">
-                                <span className="w-4 h-[1px] bg-white/20"></span>
-                                Board of Leaders
-                            </h3>
-                            <div className="flex flex-col gap-3">
-                                {selectedDept.leaders?.map((leader: any, idx: number) => (
-                                    <LeaderCard key={idx} leader={leader} theme={selectedDept.theme} />
-                                ))}
-                            </div>
-                        </div>
+                  <div className="relative z-10 flex items-start gap-5">
+                    {/* Logo */}
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center p-3 bg-white/5 border border-white/10 backdrop-blur-md shrink-0">
+                      <img 
+                        src={selectedDept.logo} 
+                        alt={selectedDept.nama} 
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-contain" 
+                      />
+                    </div>
 
-                      </div>
+                    {/* Info */}
+                    <div className="flex-1 min-w-0">
+                      <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tighter leading-none text-white mb-1">
+                        {selectedDept.nama}
+                      </h2>
+                      <p className={cn("text-[10px] sm:text-xs font-mono font-bold tracking-widest uppercase mb-3", tc.accent)}>
+                        {selectedDept.panjang}
+                      </p>
+                      <p className="text-gray-400 text-sm leading-relaxed line-clamp-3 sm:line-clamp-none">
+                        {selectedDept.desc}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Motto */}
+                  <div className="relative z-10 mt-6 flex items-center gap-3">
+                    <Quote size={14} className={cn("shrink-0 rotate-180", tc.accent)} />
+                    <span className={cn("text-xs font-bold italic tracking-wide", tc.accent)}>
+                      {selectedDept.motto}
+                    </span>
+                  </div>
                 </div>
 
-                {/* Right Side: Focus Grid */}
-                <div className="w-full md:w-7/12 bg-black/40 p-8 md:p-12 flex flex-col justify-center overflow-y-auto relative">
-                      {/* Grid Background */}
-                      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.02]"></div>
+                {/* ===== LEADERS SECTION (THE STAR!) ===== */}
+                <div className="p-8 sm:p-10 pt-6">
+                  {/* Section Header */}
+                  <div className="flex items-center gap-3 mb-6">
+                    <span className={cn("w-1 h-6 rounded-full", tc.accentBg)}></span>
+                    <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-white/60">
+                      Board of Leaders
+                    </h3>
+                    <div className="flex-1 h-px bg-white/5"></div>
+                  </div>
 
-                      <div className="relative z-10 mb-8">
-                          <h3 className="text-xl font-bold text-white uppercase tracking-widest flex items-center gap-3">
-                              <span className={cn("w-1.5 h-8 rounded-full", selectedDept.theme === "amber" ? "bg-amber-500" : "bg-sky-500")}></span>
-                              Focus & Program
-                          </h3>
-                      </div>
+                  {/* Leaders Grid - Responsive */}
+                  <div className={cn(
+                    "grid gap-4",
+                    selectedDept.leaders.length === 2 
+                      ? "grid-cols-1 sm:grid-cols-2" 
+                      : "grid-cols-1 sm:grid-cols-3",
+                  )}>
+                    {selectedDept.leaders?.map((leader: any, idx: number) => (
+                      <BigLeaderCard key={idx} leader={leader} theme={selectedDept.theme} index={idx} />
+                    ))}
+                  </div>
+                </div>
 
-                      <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          {selectedDept.focus.map((item: string, idx: number) => (
-                              <div 
-                                  key={idx} 
-                                  className="group flex items-center gap-4 p-5 rounded-2xl bg-[#0F0F0F] border border-white/5 hover:border-white/20 hover:bg-white/5 transition-all duration-300 hover:-translate-y-1"
-                              >
-                                  <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors", selectedDept.theme === "amber" ? "bg-amber-500/10 text-amber-500 group-hover:bg-amber-500 group-hover:text-black" : "bg-sky-500/10 text-sky-500 group-hover:bg-sky-500 group-hover:text-black")}>
-                                      <CheckCircle2 size={18} />
-                                  </div>
-                                  <span className="text-sm font-bold text-gray-300 group-hover:text-white transition-colors leading-snug">{item}</span>
-                              </div>
-                          ))}
-                      </div>
+                {/* ===== FOCUS & PROGRAMS ===== */}
+                <div className="px-8 sm:px-10 pb-8 sm:pb-10">
+                  {/* Section Header */}
+                  <div className="flex items-center gap-3 mb-5">
+                    <span className={cn("w-1 h-6 rounded-full", tc.accentBg)}></span>
+                    <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-white/60">
+                      Focus & Program
+                    </h3>
+                    <div className="flex-1 h-px bg-white/5"></div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    {selectedDept.focus.map((item: string, idx: number) => (
+                      <motion.div 
+                        key={idx}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.3 + idx * 0.05 }}
+                        className={cn(
+                          "inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all duration-300",
+                          "bg-white/[0.02] border-white/5 hover:bg-white/5 hover:border-white/10",
+                        )}
+                      >
+                        <CheckCircle2 size={14} className={cn(tc.accent, "shrink-0")} />
+                        <span className="text-sm font-medium text-gray-300">{item}</span>
+                      </motion.div>
+                    ))}
+                  </div>
                 </div>
 
             </motion.div>
           </div>
-        )}
+          );
+        })()}
       </AnimatePresence>
     </div>
   );

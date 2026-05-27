@@ -4,21 +4,21 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 
-// Import Components
+// Import Components (always loaded - they're on every page)
 import { Navbar } from "./components/Navbar";
 import Footer from "./components/Footer";
 import { AspirasiFab } from "./components/AspirasiFab"; 
 
-// Import Pages
-import Home from "./pages/Home"; // Home di-import, tapi dipake DI DALAM ROUTES aja
-import NotFound from "./pages/NotFound";
-import Announcement from "./pages/Announcement";
-import Struktur from "./pages/Struktur";
-import Departemen from "./pages/Departemen";
-import KalenderPage from "./pages/KalenderPage";
-import Merch from "./pages/Merch"; 
+// Lazy-load Pages (code splitting - only load when needed)
+const Home = lazy(() => import("./pages/Home"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const Announcement = lazy(() => import("./pages/Announcement"));
+const Struktur = lazy(() => import("./pages/Struktur"));
+const Departemen = lazy(() => import("./pages/Departemen"));
+const KalenderPage = lazy(() => import("./pages/KalenderPage"));
+const Merch = lazy(() => import("./pages/Merch"));
 
 const queryClient = new QueryClient();
 
@@ -27,6 +27,15 @@ const ScrollToTop = () => {
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return null;
 };
+
+// Loading fallback yang ringan
+const PageLoader = () => (
+  <div className="min-h-screen bg-[#050505] flex items-center justify-center">
+    <div className="flex flex-col items-center gap-4">
+      <div className="w-10 h-10 border-2 border-sky-500/30 border-t-sky-500 rounded-full animate-spin"></div>
+    </div>
+  </div>
+);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -40,14 +49,16 @@ const App = () => (
         <Navbar /> 
         
         {/* Area Gonta-Ganti Halaman */}
-        <Routes>
-          <Route path="/" element={<Home />} /> {/* Home cuma boleh ada DISINI */}
-          <Route path="/struktur" element={<Struktur />} />
-          <Route path="/departemen" element={<Departemen />} />
-          <Route path="/kalender" element={<KalenderPage />} /> 
-          <Route path="/merch" element={<Merch />} /> 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<Home />} /> {/* Home cuma boleh ada DISINI */}
+            <Route path="/struktur" element={<Struktur />} />
+            <Route path="/departemen" element={<Departemen />} />
+            <Route path="/kalender" element={<KalenderPage />} /> 
+            <Route path="/merch" element={<Merch />} /> 
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
 
         {/* Footer Global */}
         <Footer /> 

@@ -1,9 +1,6 @@
-import { Navbar } from "../components/Navbar";
-
 export default function KalenderPage() {
   return (
     <div className="min-h-screen bg-[#050505] flex flex-col">
-      <Navbar />
       
       {/* Container Iframe Full Screen */}
       <div className="flex-1 pt-20 w-full h-full relative">
@@ -18,6 +15,7 @@ export default function KalenderPage() {
           src="https://kalender.hmpstiub.web.id/" 
           className="relative z-10 w-full h-[calc(100vh-5rem)] border-none"
           title="Kalender HMPSTI"
+          loading="lazy"
           allowFullScreen
         />
       </div>

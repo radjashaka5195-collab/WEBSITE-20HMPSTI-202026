@@ -69,28 +69,44 @@ const BPHCard = ({ item, className }: any) => {
       target="_blank"
       rel="noopener noreferrer"
       variants={itemVar}
-      whileHover={{ y: -8 }}
-      className={cn("group relative flex flex-col items-center justify-end w-full cursor-pointer will-change-transform", isLeader ? "h-[420px]" : "h-[320px]", className)}
+      className={cn("group block relative w-full cursor-pointer will-change-transform", className)}
     >
-      <div className={cn("absolute bottom-0 w-full rounded-3xl border border-white/10 bg-[#0A0A0A] overflow-hidden transition-all duration-500 group-hover:border-sky-500/40 group-hover:shadow-[0_0_40px_-10px_rgba(14,165,233,0.3)]", isLeader ? "h-[300px]" : "h-[220px]")}>
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-3/4 bg-sky-500/20 blur-[60px] opacity-40 group-hover:opacity-60 transition-opacity"></div>
-          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05] mix-blend-overlay"></div>
-      </div>
-      <div className={cn("absolute left-1/2 -translate-x-1/2 z-10 transition-transform duration-500 group-hover:scale-105 drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)]", isLeader ? "bottom-[100px] h-[340px] w-auto" : "bottom-[80px] h-[260px] w-auto")}>
-          <img 
-            src={item.foto} 
-            alt={item.nama} 
-            decoding="async"
-            className="h-full w-full object-contain filter contrast-110 brightness-110" 
-          />
-      </div>
-      <div className="relative z-20 text-center w-full px-4 mb-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 mb-3 group-hover:border-sky-500/50 transition-colors shadow-lg">
-             <span className="text-[10px] font-bold tracking-widest uppercase text-sky-400">{item.jabatan}</span>
-             <Instagram className="w-3 h-3 text-white/80" />
+      <div className={cn(
+        "relative rounded-2xl bg-[#0A0A0A] overflow-hidden border transition-all duration-500",
+        isLeader ? "h-[400px] border-white/10 group-hover:border-[#33A5D3]/40" : "h-[320px] border-white/5 group-hover:border-[#33A5D3]/30"
+      )}>
+        {/* Photo Container */}
+        <div className="absolute inset-0 pt-10 px-6 flex justify-center items-end bg-gradient-to-t from-black via-[#0A0A0A]/20 to-transparent z-10 transition-transform duration-700 group-hover:scale-105">
+           <img 
+             src={item.foto} 
+             alt={item.nama} 
+             loading="lazy"
+             decoding="async"
+             className={cn("w-auto object-contain filter contrast-110 grayscale-[15%] group-hover:grayscale-0 transition-all duration-500", isLeader ? "h-[320px]" : "h-[240px]")} 
+           />
+        </div>
+        
+        {/* Content Overlay */}
+        <div className="absolute inset-x-0 bottom-0 p-6 z-20 bg-gradient-to-t from-black via-black/80 to-transparent">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="text-[10px] font-mono text-[#33A5D3] uppercase tracking-widest mb-1">{item.jabatan}</p>
+              <h3 className={cn("font-black text-white leading-tight", isLeader ? "text-2xl" : "text-xl group-hover:text-[#33A5D3]/90 transition-colors")}>
+                {item.nama}
+              </h3>
+            </div>
+            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-[#33A5D3] group-hover:text-black transition-all">
+               <Instagram size={14} className="text-white group-hover:text-black" />
+            </div>
           </div>
-          <h3 className={cn("font-black text-white leading-tight drop-shadow-xl", isLeader ? "text-3xl" : "text-xl")}>{item.nama}</h3>
-          {isLeader && item.quote && <p className="text-gray-400 text-xs italic mt-2 opacity-60 group-hover:opacity-100 transition-opacity">"{item.quote}"</p>}
+          {isLeader && item.quote && (
+            <div className="overflow-hidden">
+              <p className="text-gray-400 text-xs italic mt-3 pr-8 leading-relaxed translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                "{item.quote}"
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </motion.a>
   );
@@ -104,29 +120,31 @@ const KompasLeaderCard = ({ item }: any) => (
     initial={{ opacity: 0, x: -20 }}
     whileInView={{ opacity: 1, x: 0 }}
     viewport={{ once: true }}
-    className="group relative flex flex-col items-center justify-end h-[500px] w-full cursor-pointer will-change-transform" 
+    className="group block relative w-full cursor-pointer will-change-transform h-[450px]" 
   >
-      <div className="absolute bottom-0 w-full h-[380px] rounded-[2.5rem] border border-white/10 bg-[#0A0A0A] overflow-hidden group-hover:border-amber-500/40 group-hover:shadow-[0_0_50px_-10px_rgba(245,158,11,0.3)] transition-all duration-500">
-          <div className="absolute inset-0 bg-gradient-to-t from-amber-950/30 to-transparent opacity-60"></div>
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-amber-500/10 blur-[80px] group-hover:opacity-60 transition-opacity"></div>
-      </div>
-      
-      <div className="absolute left-1/2 -translate-x-1/2 bottom-[120px] h-[400px] w-auto z-10 transition-transform duration-500 group-hover:scale-105 drop-shadow-[0_15px_30px_rgba(0,0,0,0.6)]">
-          <img 
-            src={item.foto} 
-            alt={item.nama} 
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-contain filter contrast-110 brightness-110" 
-          />
-      </div>
+      <div className="absolute inset-0 rounded-2xl bg-[#0A0A0A] overflow-hidden border border-white/10 group-hover:border-[#F59E0B]/40 transition-all duration-500">
+         
+         <div className="absolute inset-0 pt-10 flex justify-center items-end bg-gradient-to-t from-black via-[#0A0A0A]/50 to-transparent z-10 transition-transform duration-700 group-hover:scale-105">
+           <img 
+             src={item.foto} 
+             alt={item.nama} 
+             loading="lazy"
+             decoding="async"
+             className="h-[380px] w-auto object-contain filter contrast-110 grayscale-[15%] group-hover:grayscale-0 transition-all duration-500" 
+           />
+         </div>
 
-      <div className="relative z-20 text-center w-full px-6 mb-10">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/70 backdrop-blur-xl border border-amber-500/30 mb-4 group-hover:border-amber-500/80 transition-all shadow-xl">
-              <span className="text-xs font-black tracking-widest uppercase text-amber-500">Ketua Kompas</span>
-              <Instagram className="w-3 h-3 text-amber-500" />
-          </div>
-          <h3 className="font-black text-white text-4xl leading-none drop-shadow-2xl">{item.nama}</h3>
+         <div className="absolute inset-x-0 bottom-0 p-8 z-20 bg-gradient-to-t from-black via-black/90 to-transparent">
+            <div className="flex items-end justify-between gap-4">
+              <div>
+                <p className="text-[11px] font-mono text-[#F59E0B] uppercase tracking-widest mb-1.5">{item.jabatan}</p>
+                <h3 className="font-black text-white text-3xl leading-tight">{item.nama}</h3>
+              </div>
+              <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-[#F59E0B] group-hover:text-black transition-all">
+                 <Instagram size={16} className="text-white group-hover:text-black" />
+              </div>
+            </div>
+         </div>
       </div>
   </motion.a>
 );
@@ -137,27 +155,26 @@ const KompasMemberCard = ({ nama, jabatan, instagram, foto }: any) => (
     target="_blank"
     rel="noopener noreferrer"
     variants={itemVar} 
-    className="group relative flex flex-col items-center justify-end h-[300px] w-full cursor-pointer will-change-transform"
+    className="group block relative w-full cursor-pointer will-change-transform h-[280px]"
   >
-      <div className="absolute bottom-0 w-full h-[200px] rounded-2xl border border-white/5 bg-[#0F0F0F] overflow-hidden group-hover:border-amber-500/30 group-hover:bg-amber-950/10 transition-all duration-300">
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-      </div>
+      <div className="absolute inset-0 rounded-2xl bg-[#080808] overflow-hidden border border-white/5 group-hover:border-[#F59E0B]/30 group-hover:bg-[#0A0A0A] transition-all duration-300">
+          
+          <div className="absolute inset-0 pt-8 flex justify-center items-end z-10 transition-transform duration-500 group-hover:scale-105 group-hover:-translate-y-2">
+             <img 
+               src={foto || PLACEHOLDER_MAN} 
+               alt={nama} 
+               loading="lazy"
+               decoding="async"
+               className="h-[220px] w-auto object-contain filter contrast-110 grayscale-[30%] group-hover:grayscale-0 transition-all duration-500" 
+             />
+          </div>
 
-      <div className="absolute left-1/2 -translate-x-1/2 bottom-[80px] h-[240px] w-auto z-10 transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-2 drop-shadow-lg">
-           <img 
-             src={foto || PLACEHOLDER_MAN} 
-             alt={nama} 
-             loading="lazy"
-             decoding="async"
-             className="h-full w-full object-contain filter contrast-110 transition-all duration-500" 
-           />
-      </div>
-
-      <div className="relative z-20 text-center w-full px-2 mb-5">
-          <h4 className="text-lg font-bold text-white leading-tight group-hover:text-amber-400 transition-colors drop-shadow-md">{nama}</h4>
-          <div className="flex items-center justify-center gap-2 mt-1">
-             <p className="text-[9px] font-mono text-gray-500 uppercase tracking-widest group-hover:text-amber-500/70">{jabatan}</p>
-             <Instagram className="w-3 h-3 text-gray-600 group-hover:text-amber-500 transition-colors" />
+          <div className="absolute inset-x-0 bottom-0 p-5 z-20 bg-gradient-to-t from-black via-black/80 to-transparent">
+             <h4 className="text-base font-bold text-white mb-1 group-hover:text-[#F59E0B] transition-colors">{nama}</h4>
+             <div className="flex items-center justify-between">
+                <p className="text-[9px] font-mono text-gray-500 uppercase tracking-widest">{jabatan}</p>
+                <Instagram size={12} className="text-gray-600 group-hover:text-[#F59E0B] transition-colors" />
+             </div>
           </div>
       </div>
   </motion.a>
@@ -166,57 +183,56 @@ const KompasMemberCard = ({ nama, jabatan, instagram, foto }: any) => (
 // --- MAIN PAGE ---
 export default function Struktur() {
   return (
-    <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-sky-500/30 overflow-x-hidden relative flex flex-col">
+    <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-[#33A5D3]/30 overflow-x-hidden relative flex flex-col">
       
-      {/* BACKGROUND GLOBAL */}
+      {/* BACKGROUND AMBIENT LIGHT */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-          <div className="absolute inset-0 bg-[#050505]"></div>
-          <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-sky-900/15 blur-[120px] rounded-full opacity-60"></div>
-          <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-amber-900/10 blur-[150px] rounded-full opacity-50"></div>
-          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-overlay hidden md:block"></div>
+          <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-[#33A5D3]/5 blur-[120px] rounded-full pointer-events-none"></div>
+          <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-[#F59E0B]/5 blur-[150px] rounded-full pointer-events-none"></div>
       </div>
 
       <div className="relative z-10 pt-32 pb-10 px-6 max-w-7xl mx-auto w-full">
-        {/* HEADER */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20 border-b border-white/10 pb-10">
-            <div>
-                <motion.div initial={{ width: 0 }} animate={{ width: "40px" }} transition={{ duration: 1 }} className="h-1 bg-sky-500 mb-6 rounded-full"></motion.div>
-                <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-sky-500 font-mono text-xs uppercase tracking-[0.3em] mb-3 block font-bold">Organization Chart</motion.span>
-                <motion.h1 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-5xl md:text-8xl font-black uppercase tracking-tighter text-white leading-none">
-                    Struktur<br/>
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-white to-sky-200">Kabinet.</span>
-                </motion.h1>
-            </div>
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="text-gray-400 max-w-md text-sm md:text-base leading-relaxed text-right md:text-right">
-                Susunan punggawa <strong className="text-white">INNOVARA</strong> yang menjadi otak dan penggerak di balik setiap inovasi HMPSTI UB Periode 2026/2027.
-            </motion.p>
+        {/* HEADER - Editorial Style */}
+        <div className="mb-24">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+                <span className="text-xs uppercase tracking-[0.3em] text-[#33A5D3] font-medium mb-4 block">Organization Chart</span>
+                <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter text-white leading-[0.85] mb-6">
+                    STRUK<span className="text-[#33A5D3]">TUR</span>
+                </h1>
+                <p className="text-gray-400 max-w-lg text-base md:text-lg leading-relaxed">
+                    Susunan punggawa <strong className="text-white font-semibold">INNOVARA</strong> yang menjadi otak dan penggerak di balik setiap inovasi HMPSTI UB Periode 2026/2027.
+                </p>
+            </motion.div>
         </div>
 
         {/* --- BADAN PENGURUS INTI --- */}
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="flex items-center gap-4 mb-20">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-sky-500/30"></div>
-            <div className="px-4 py-1.5 rounded-full border border-sky-500/20 bg-sky-500/10 backdrop-blur-md"><span className="text-xs font-bold text-sky-400 tracking-widest uppercase">Badan Pengurus Inti</span></div>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-sky-500/30"></div>
-        </motion.div>
+        <div className="mb-32">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-8">
+              <h2 className="text-lg md:text-xl font-bold uppercase tracking-widest text-white mb-3">Badan Pengurus Inti</h2>
+              <div className="w-12 h-1 bg-[#33A5D3] rounded-full"></div>
+          </motion.div>
 
-        <motion.div variants={containerVar} initial="hidden" animate="visible" className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24 mb-40">
-            <div className="md:col-span-1 flex justify-center"><BPHCard item={bphInti[0]} /></div>
-            <div className="md:col-span-1 flex justify-center"><BPHCard item={bphInti[1]} /></div>
-            <div className="md:col-span-2 mt-12">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-                    {bphInti.slice(2).map((item, idx) => (<BPHCard key={idx} item={item} />))}
-                </div>
-            </div>
-        </motion.div>
+          <motion.div variants={containerVar} initial="hidden" animate="visible" className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="md:col-span-1"><BPHCard item={bphInti[0]} /></div>
+              <div className="md:col-span-1"><BPHCard item={bphInti[1]} /></div>
+              <div className="md:col-span-2 mt-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                      {bphInti.slice(2).map((item, idx) => (<BPHCard key={idx} item={item} />))}
+                  </div>
+              </div>
+          </motion.div>
+        </div>
 
         {/* --- BAGIAN KOMPAS --- */}
-        <div className="relative pt-24 border-t border-white/10">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
-                <div className="lg:col-span-3 flex flex-col gap-8">
-                      <div>
-                        <h2 className="text-4xl font-black text-white mb-2">KOMPAS</h2>
-                        <p className="text-gray-500 text-sm">Komisi Pengawas Kinerja Organisasi</p>
-                    </div>
+        <div className="relative pt-24 border-t border-white/[0.04]">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
+                <h2 className="text-lg md:text-xl font-bold uppercase tracking-widest text-white mb-2">KOMPAS</h2>
+                <p className="text-gray-500 text-sm mb-4">Komisi Pengawas Kinerja Organisasi</p>
+                <div className="w-12 h-1 bg-[#F59E0B] rounded-full"></div>
+            </motion.div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div className="lg:col-span-4">
                     <KompasLeaderCard item={dataKompas.ketua} />
                 </div>
 
@@ -225,7 +241,7 @@ export default function Struktur() {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true }}
-                    className="lg:col-span-9 grid grid-cols-2 md:grid-cols-4 gap-4" 
+                    className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-4" 
                 >
                     {dataKompas.anggota.map((item, idx) => (
                         <KompasMemberCard key={idx} {...item} />
@@ -233,41 +249,34 @@ export default function Struktur() {
                 </motion.div>
             </div>
         </div>
-
       </div>
 
-      {/* --- JOURNEY CTA (NEXT: DEPARTEMEN) --- */}
-      <section className="relative z-10 py-24 px-6 text-center border-t border-white/5 bg-[#050505] overflow-hidden mt-12">
-          {/* Background Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[200px] bg-amber-900/10 blur-[100px] rounded-full pointer-events-none"></div>
-
-          <motion.div 
+      {/* --- JOURNEY CTA --- */}
+      <section className="relative z-10 py-24 px-6 border-t border-white/[0.04] bg-[#030303] mt-24">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative z-10 flex flex-col items-center"
+            className="flex flex-col items-center"
           >
-            <p className="text-gray-400 mb-8 font-light tracking-wide text-sm md:text-base">
-                Penasaran dengan bidang gerak kami? <span className="text-white font-bold">Cek Divisi HMPSTI.</span>
+            <p className="text-gray-500 text-sm md:text-base mb-3">
+              Penasaran dengan bidang gerak kami?
             </p>
+            <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight mb-10 leading-tight">
+              Cek Divisi <span className="text-[#F59E0B]">HMPSTI.</span>
+            </h3>
             
             <Link 
-                to="/departemen" 
-                className="group relative inline-flex items-center gap-4 px-10 py-5 bg-[#0A0A0A] rounded-full overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_30px_rgba(245,158,11,0.3)] border border-white/10"
+              to="/departemen" 
+              className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-[#050505] rounded-full font-bold text-sm uppercase tracking-wider hover:bg-[#F59E0B] hover:text-white transition-all duration-300"
             >
-                {/* Gradient Border & Shimmer */}
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-500 via-sky-500 to-amber-500 opacity-20 group-hover:opacity-40 blur-md transition-opacity"></div>
-                <div className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out"></div>
-
-                <span className="relative z-10 font-bold text-white uppercase tracking-[0.2em] text-xs md:text-sm">
-                    Explore Departemen
-                </span>
-                <div className="relative z-10 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-white/10 group-hover:translate-x-1 transition-all">
-                    <ArrowRight size={16} className="text-amber-400 group-hover:text-sky-400 transition-colors" />
-                </div>
+              Explore Departemen
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </motion.div>
+        </div>
       </section>
       
     </div>

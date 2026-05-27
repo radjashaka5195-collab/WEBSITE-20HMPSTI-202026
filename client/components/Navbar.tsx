@@ -6,7 +6,7 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import path from "path";
+
 
 // Fungsi Utility
 export function cn(...inputs: ClassValue[]) {
@@ -50,7 +50,8 @@ export const Navbar = () => {
             <img 
               src="/assets/logos/logo-kabinet.png" 
               alt="Logo Kabinet Innovara" 
-              className="h-10 w-auto object-contain drop-shadow-[0_0_10px_rgba(51,165,211,0.5)] transition-transform group-hover:scale-105" 
+              className="h-10 w-auto object-contain drop-shadow-[0_0_10px_rgba(51,165,211,0.5)] transition-transform group-hover:scale-105"
+              decoding="async" 
             />
             
             {/* Teks Kabinet */}

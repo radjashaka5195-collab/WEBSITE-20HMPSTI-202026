@@ -227,7 +227,7 @@ export default function Struktur() {
         <div className="relative pt-24 border-t border-white/[0.04]">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
                 <h2 className="text-lg md:text-xl font-bold uppercase tracking-widest text-white mb-2">KOMPAS</h2>
-                <p className="text-gray-500 text-sm mb-4">Komisi Pengawas Kinerja Organisasi</p>
+                <p className="text-gray-500 text-sm mb-4">Komisi Pengawas dan Standarisasi</p>
                 <div className="w-12 h-1 bg-[#F59E0B] rounded-full"></div>
             </motion.div>
 
